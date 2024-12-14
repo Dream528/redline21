@@ -1,0 +1,140 @@
+<style>
+  .tableGenders{
+    border-collapse:separate !important; 
+    border-spacing:0 2px !important;     
+  }
+</style>
+<?php
+global $mysqli;
+if(isset($_GET['u'])){
+  $id = secureEncode($_GET['u']);
+  $days = secureEncode($_GET['days']);
+  $amount = secureEncode($_GET['amount']);
+  $discount = secureEncode($_GET['discount']);
+  $mysqli->query("UPDATE config_subscriptions_prices set days = ".$days.",amount = ".$amount.",discount = ".$discount." where id = '".$id."'");
+  header('Location:'.$sm['config']['site_url'].'index.php?page=admin&p=subscriptions');
+}
+if(isset($_GET['a'])){
+  $id = secureEncode($_GET['a']);
+  $days = secureEncode($_GET['days']);
+  $amount = secureEncode($_GET['amount']);
+  $discount = secureEncode($_GET['discount']);
+
+  $mysqli->query("INSERT INTO config_subscriptions_prices (id,days,amount,discount) VALUES ('".$id."','".$days."','".$amount."','".$discount."')");
+    
+  header('Location:'.$sm['config']['site_url'].'index.php?page=admin&p=subscriptions');
+}
+if(isset($_GET['d'])){
+  $id = secureEncode($_GET['d']);
+  $mysqli->query("DELETE FROM config_subscriptions_prices where id = '".$id."'");
+  header('Location:'.$sm['config']['site_url'].'index.php?page=admin&p=subscriptions');
+}
+?>
+<script>
+  aurl = 'subscriptions';
+  currentMenu = 'plugins';
+  currentMenuCollapse = 'accounts';  
+</script>
+
+<!-- SECTION CONTENT -->
+<div class="container-fluid page__container" style="padding-top:25px;min-height: 500px ">
+  <div class="page__heading d-flex align-items-center">
+      <div class="flex">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="#" onclick="goTo('plugins','','')">Plugins</a></li>
+                <li class="breadcrumb-item"><a href="#" onclick="goTo('plugins','','Software')">Software</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Subscriptions Default Pricing Settings</li>
+            </ol>            
+          </nav>
+      </div>
+      <a href="#" class="btn btn-light ml-3" onclick="goTo('plugins','','')"><i class="material-icons mr-1">arrow_back</i></a>
+  </div>  
+  <div class="row">
+    <div class="col-lg-12" >   
+      <div class="card card-form">
+          <div class="card-header card-header-large bg-white d-flex align-items-center">
+            <h4 class="card-header__title flex m-0">Default pricings</h4>
+            <div></div>
+          </div>    
+          <div class="row no-gutters">
+            <div class="col-lg-12 card-form__body card-body d-flex align-items-center bg-light" >
+              <table class="tableGenders"  style="width: 100%;text-align: left;" >
+                <tr style="width: 100%;margin-bottom: 20px">
+                  <td style="display: inline-table;width: 25%;padding-right: 20px;">Suscription time in Days</td>
+                  <td style="display: inline-table;width: 25%;padding-right: 20px;"> Amount in <?= $sm['plugins']['settings']['currency']; ?></td>
+
+                  <td style="display: inline-table;width: 35%padding-right: 20px;"> Discount in %</td>                  
+                </tr>
+              <?php
+                $all = end($sm['config']['subscriptions']);
+                $all = $all['id'] + 1;                  
+                foreach($sm['config']['subscriptions'] as $entry){
+                  ?>
+                  <tr style="margin-top: 10px;">
+                    <td style="display: inline-table;width: 25%">
+                      <input class="form-control" id="subDays<?= $entry['id'];?>" type="number" value="<?= $entry['days']?>" style="width: 85%"/>
+                    </td> 
+                    <td style="display: inline-table;width: 25%">
+                      <input class="form-control" id="subAmount<?= $entry['id'];?>" type="number" value="<?= $entry['amount']?>" style="width: 85%"/>                       
+                    </td>  
+                    <td style="display: inline-table;width: 25%">
+                      <input class="form-control" id="subDiscount<?= $entry['id'];?>" type="number" value="<?= $entry['discount']?>" style="width: 85%"/>                       
+                    </td>                                                            
+                    <td style="display: inline-table;width: 20%">
+                      <a href="#" onClick="uSubscription(<?= $entry['id'];?>)" class="btn btn-light" style="display: inline-table;margin-right: 3px"><i class="material-icons">update</i></a>                                
+                      <a href="#" onClick="dSubscription(<?= $entry['id'];?>)" class="btn btn-danger" style="display: inline-table;"><i class="material-icons">delete</i></a>                      
+                    </td>                       
+                  </tr> 
+                <?php } ?>
+                  
+                  <tr style="margin-top: 10px;">
+                    <input class="form-control" type="hidden" disabled value="<?= $all;?>" style="display: none"  />
+                    <td style="display: inline-table;width: 25%">
+                      <input class="form-control" id="subDays" type="number" placeholder="Days" value="" style="width: 85%"/>
+                    </td> 
+                    <td style="display: inline-table;width: 25%">
+                      <input class="form-control" id="subAmount" placeholder="Price in <?= $sm['plugins']['settings']['currency']; ?>" value="" type="number" style="width: 85%"/>
+                    </td> 
+                    <td style="display: inline-table;width: 25%">
+                      <input class="form-control" id="subDiscount" placeholder="Discount in %" value="" type="number" style="width: 85%"/>
+                    </td>                                                           
+                    <td style="display: inline-table;width: 20%">
+                      <a href="#" id="addSubscription" class="btn btn-success" style="display: inline-table;margin-right: 3px"><i class="material-icons">add_circle</i></a>                                                     
+                    </td>                       
+                  </tr>                    
+                 </table>                     
+            </div>           
+          </div>
+        <div class="card-footer bg-secundary" data-footer="1" >
+            <p>
+                This is for base suscription price, however each creator can set his own prices in the front end<br>But the admin is the only one that can set the time periods, creators can only change discount and price<br><br>
+                <code>Discount is added to the amount in the front end</code>
+            </p>
+        </div>      
+      </div> 
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+document.getElementById("addSubscription").addEventListener("click", addSubscription);
+function addSubscription(){
+  var id = <?= $all; ?>;
+  var days = $('#subDays').val();
+  var a = $('#subAmount').val();
+  var d = $('#subDiscount').val();
+  window.location.href = 'index.php?page=admin&p=subscriptions&a='+id+'&days='+days+'&amount='+a+'&discount='+d;
+}
+function uSubscription(id){
+  var days = $('#subDays'+id).val();
+  var a = $('#subAmount'+id).val();  
+  var d = $('#subDiscount'+id).val();
+  window.location.href = 'index.php?page=admin&p=subscriptions&u='+id+'&days='+days+'&amount='+a+'&discount='+d;
+}
+function dSubscription(id){
+  window.location.href = 'index.php?page=admin&p=subscriptions&d='+id;
+}
+</script>
