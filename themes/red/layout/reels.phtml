@@ -1,0 +1,39 @@
+<script>
+    url = 'reels';
+</script>
+<div class="page" style="padding-top: 15px;">    
+    <div class="page__content">
+        <div class="bJ__header">
+            <h1 class="trending-header">Watching <span class="accent-color-text">reels</span></h1>
+            <div class="bJ__tabs-container">
+                <div class="pill-page-tabs pill-page-tabs--style--primary">
+                    <div class="pill-control pill-control--style--default">
+                        <div class="pill-control__ghost pill-control__ghost--style--default"></div>
+
+                        <div data-filter-model-tab="top" onclick="filterReels('top',false)" class="pill-control__item pill-control__item--style--default pill-control__item--active">Top</div>
+                        <div data-filter-model-tab="trending" onclick="filterReels('trending',false)" class="pill-control__item pill-control__item--style--default">Trending</div>
+                        <div data-filter-model-tab="new" onclick="filterReels('new',false)" class="pill-control__item pill-control__item--style--default ">New</div>                                   
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="bL bL--squad discoverReels" id="reelsResult">
+            <?php
+            for ($x = 0; $x <= 44; $x++) { 
+                $customStyle = ''; 
+                ?>
+                <div class="bL__item bL__item--squad " id="model<?=$x; ?>" <?= $customStyle; ?>>
+                    <div class="a a--hover a--clickable a--top-shadow a--squad">
+                        <div class="a__cover a__cover--image loading-feed"></div>
+                        <a class="a__cover" href="jvascript:;"></a>
+                        <div class="a__bottom-shadow"></div>
+                    </div>
+                </div>                                     
+            <?php } ?> 
+        </div>
+
+
+    </div>
+</div>

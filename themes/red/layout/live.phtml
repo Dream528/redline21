@@ -1,0 +1,43 @@
+<script>
+url = 'live';
+</script>
+
+<div class="page" style="padding-top: 15px;">    
+    <div class="page__content">
+        <div class="bJ__header">
+            <h1 class="trending-header">Watch <span id="totalLive"></span> <span class="accent-color-text">live models</span></h1>
+        </div>
+
+        <div class="bL liveModels" id="modelsResult" style="grid-gap: 5px">
+            <?php
+            for ($x = 0; $x <= 49; $x++) {
+            ?>
+                <div class="bL__item" id="model<?=$x; ?>" data-model-loaded="0">
+                    <div class="a a--hover a--clickable a--top-shadow" style="height:200px">
+                        <div class="live-badge">Live</div>
+                        <div class="a__cover a__cover--image loading-live"></div>
+                        <a class="a__cover" href="javascript:;"></a>
+                        <div class="a__bottom-shadow" style="border-radius: 0;"></div>
+                        <div class="a__controls">
+                            <a class="username-inline-card white-color-text" href="javascript:;">
+                                <div class="username-inline-card__avatar-wrapper username-inline-card__avatar-wrapper--space-size--small">
+                                    <span class="avatar" style="--avatar-size: 30px; --avatar-border-size: 2px;">
+                                        <span class="avatar__story-border"></span>                                    
+                                        <span class="avatar__img loading-story"></span>
+                                    </span>
+                                </div>
+                                <div>
+                                    <div class="displayname displayname--size--small-x">
+                                        <div class="displayname__name displayname__name--text-overflow"></div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>                                     
+            <?php } ?> 
+        </div>
+
+        <span class="observer-page"></span>
+    </div>
+</div>

@@ -1,0 +1,1266 @@
+<div class="modal-ds-overlay" data-modal="register" style="display:none">
+    <div class="modal-ds-overlay__background"></div>
+    <div class="modal-ds-body modal-ds-body--background--none modal-ds-body--size--wide">
+        <div class="modal-ds-header">
+            <svg class="icon icon-close-3 modal-ds-close-icon modal-ds-close-icon-in-header close-icon close-icon-medium icon--default-size" onclick="closeModal();"><use xlink:href="#icons-close-3"></use></svg>
+        </div>
+        <div class="modal-ds-content modal-ds-content--radius--big">
+            <div class="scroll-bar-container modal-body ps">
+                <div class="common-sign-up-grid common-sign-up-grid--model-content">
+                    <div class="common-sign-up-grid__modal"></div>
+                    <div class="common-sign-up-grid__left">
+                        <form class="auth-form" id="registerModal">
+                            <div class="auth-form__title">Register your account</div>
+                            <div>
+                                <div class="auth-form__fading-input">
+                                    <div class="input-wrapper">
+                                        <div class="input-wrapper__text-wrapper">
+                                            <input class="input text-default theme-light inline-block login-form__input" type="text" id="sign_up_input_login" autocapitalize="none" maxlength="255" placeholder="Username" name="username"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="auth-form__fading-input">
+                                    <div class="input-wrapper">
+                                        <div class="input-wrapper__text-wrapper">
+                                            <input class="input email-default theme-light inline-block login-form__input" type="email" autocapitalize="none" maxlength="255" id="sign_up_input_email" placeholder="Email" name="email" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="auth-form__fading-input">
+                                    <div class="input-wrapper">
+                                        <div class="input-wrapper__text-wrapper">
+                                            <input class="input password-default theme-light inline-block login-form__input" type="password" id="sign_up_input_password" autocapitalize="none" maxlength="255" placeholder="Password" name="pass" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="action" value="register">
+                            <input type="hidden" value="<?= $sm['referral']; ?>" name="ref" />
+                            <div class="auth-form__hint register-error" style="display:none;color: #ff5050;"></div>                                 
+                            <button class="auth-form__join btn btn-apply btn-large" type="submit">Join now</button>
+                            <div class="auth-form__divider"><div class="auth-form__divider-text">or continue with</div></div>
+                            <div class="auth-form__social-login" style="grid-template-columns: repeat(2, 1fr);">
+                                <a href="index.php?social=google" class="btn btn-light btn-large" type="button">
+                                    <svg class="icon icon-google" style="min-width: 24px; height: 24px; width: 24px;"><use xlink:href="#icons-google"></use></svg>Google
+                                </a>
+                                <button id="twitter_authorization_id" class="btn btn-light btn-large" type="button">
+                                    <svg class="icon icon-twitter icon--default-size" style="color: rgb(29, 161, 242); height: 24px; width: 24px;"><use xlink:href="#icons-twitter"></use></svg>Twitter
+                                </button>
+                            </div>
+                            <div class="auth-form__hint">
+                                <span>By joining you confirm that you are at least 18 years old and agree to <?= $sm['config']['name']; ?> <a class="link link-after-text terms-link" href="/terms" target="_blank">Terms and Conditions</a></span>
+                            </div>
+                            <div class="auth-form__form-switcher">Already a member? <button class="accent-color-text btn btn-text" type="button" onclick="closeModal();openModal('login')">Sign In</button></div>
+                        </form>
+                    </div>
+                    <div class="common-sign-up-grid__right-image" style="background-image: url('');"></div>
+                    <div class="common-sign-up-grid__right common-sign-up-grid__right--min-fixed">
+                        <div class="common-sign-up-grid__right-content" style="padding:15px">
+                            <div class="signup-wrapper__right-content">
+                                <ul class="landing-webcam-page__benefit-list" style="margin:0">
+                                    <li class="landing-webcam-page__benefit" style="padding: 0;">
+                                        <span id="registerModalModel" class="white-color-text" style="font-weight: bold"></span> <span class="white-color-text">is waiting for you to register at <?= $sm['config']['name']; ?> to live chat with you and have some fun together</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ps__rail-x" style="width: 810px; left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 729px;"></div></div>
+                <div class="ps__rail-y" style="top: 0px; height: 452px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 406px;"></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-ds-overlay" data-modal="login" style="display:none">
+    <div class="modal-ds-overlay__background"></div>
+    <div class="modal-ds-body modal-ds-body--background--none modal-ds-body--size--wide">
+        <div class="modal-ds-header">
+            <svg class="icon icon-close-3 modal-ds-close-icon modal-ds-close-icon-in-header close-icon close-icon-medium icon--default-size" onclick="closeModal();">
+                <use xlink:href="#icons-close-3"></use>
+            </svg>
+        </div>
+        <div class="modal-ds-content modal-ds-content--radius--big">
+            <div class="scroll-bar-container modal-body ps">
+                <div class="login-wrapper login-bg">
+                    <form class="auth-form" id="login">
+                        <div class="auth-form__title">
+                            Welcome Back!
+                        </div>
+                        <div>
+                            <div class="auth-form__fading-input" data-recover-input style="display:none">
+                                <div class="input-wrapper">
+                                    <div class="input-wrapper__text-wrapper"><input class="input text-default theme-light inline-block login-form__input" type="text" id="login_login_or_email" autocapitalize="none" maxlength="255" placeholder="Username or email" name="recover_email" required></div>
+                                </div>
+                            </div>                            
+                            <div class="auth-form__fading-input" data-login-input>
+                                <div class="input-wrapper">
+                                    <div class="input-wrapper__text-wrapper"><input class="input text-default theme-light inline-block login-form__input" type="text" id="login_login_or_email" autocapitalize="none" maxlength="255" placeholder="Username or email" name="login_email" required></div>
+                                </div>
+                            </div>
+                            <div class="auth-form__fading-input" data-login-input>
+                                <div class="input-wrapper">
+                                    <div class="input-wrapper__text-wrapper"><input class="input password-default theme-light inline-block login-form__input" type="password" id="login_password" autocapitalize="none" maxlength="255" placeholder="Password" name="login_pass" required></div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="login_action" name="action" value="login">
+                        <div class="auth-form__hint">
+                            <a href="javascript:;" data-login-input id="recover-pswd">Forgot password?</a>
+                            <a href="javascript:;" data-recover-input id="login-account" style="display: none;">Login to your account</a>
+                        </div>
+                        <div class="auth-form__hint login-error" style="display:none;color: #ff5050;"></div>
+                        <button class="auth-form__join btn btn-apply btn-large" type="submit" id="login-now">Sign In</button>
+                        <div class="auth-form__divider">
+                            <div class="auth-form__divider-text">or continue with</div>
+                        </div>
+                        <div class="auth-form__social-login" style="grid-template-columns: repeat(2, 1fr);">
+                            <a href="index.php?social=google" class="btn btn-light btn-large" type="button">
+                                <svg class="icon icon-google" style="min-width: 24px; height: 24px; width: 24px;"><use xlink:href="#icons-google"></use></svg>Google
+                            </a>
+                            <button id="twitter_authorization_id" class="btn btn-light btn-large" type="button">
+                                <svg class="icon icon-twitter icon--default-size" style="color: rgb(29, 161, 242); height: 24px; width: 24px;"><use xlink:href="#icons-twitter"></use></svg>Twitter
+                            </button>
+                        </div>
+                        <div class="auth-form__form-switcher">Not a member yet? Scandalous! <a class="accent-color-text btn btn-text" href="javascript:;" onclick="closeModal();openModal('register')">Join now</a></div>
+                    </form>
+                </div>
+                <div class="ps__rail-x" style="width: 360px; left: 0px; bottom: 0px;">
+                    <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 324px;"></div>
+                </div>
+                <div class="ps__rail-y" style="top: 0px; height: 387px; right: 0px;">
+                    <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 348px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-ds-overlay"  data-modal="tip" style="display:none">
+    <div class="modal-ds-overlay__background"></div>
+    <div class="modal-ds-body modal-ds-body--background--none modal-ds-body--size--regular">
+        <div class="modal-ds-header">
+            <svg class="icon icon-close-3 modal-ds-close-icon modal-ds-close-icon-in-header close-icon close-icon-medium icon--default-size" onclick="closeModal('tip')"><use xlink:href="#icons-close-3"></use></svg>
+        </div>
+        <div class="modal-ds-content modal-ds-content--background--dark modal-ds-content--radius--middle" style="background: #0a0a0a;">
+            <div class="scroll-bar-container modal-body">
+                <div class="tip-modal__user" style="margin-left:0px">
+                    <span class="avatar" style="--avatar-border-size: 0px;"><span class="avatar__img" id="tip-avatar"></span></span>
+                    <div class="tip-modal__user-meta">
+                        <div class="tip-modal__user-subtitle">Show support for</div>
+                        <div class="displayname displayname--size--medium">
+                            <div class="displayname__name"><a class="white-color-text opacity-hover" href="javascript:;" id="tip-username"></a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tip-modal__content">
+                    <div>
+                        <div class="radio-pill-controls radio-pill-controls--content--space-between">
+                            <button data-tip-tab="5" onclick="sendTipTabs(5)" class="radio-pill-controls__item radio-pill-controls__item--grow" type="button">$5</button>
+
+                            <button data-tip-tab="10" onclick="sendTipTabs(10)" class="radio-pill-controls__item radio-pill-controls__item--grow" type="button">$10</button>
+
+                            <button data-tip-tab="25" onclick="sendTipTabs(25)" class="radio-pill-controls__item radio-pill-controls__item--grow" type="button">$25</button>
+
+                            <button data-tip-tab="50" onclick="sendTipTabs(50)" class="radio-pill-controls__item radio-pill-controls__item--grow" type="button">$50</button>
+
+                            <button data-tip-tab="200" onclick="sendTipTabs(200)" class="radio-pill-controls__item radio-pill-controls__item--grow" type="button">$200</button>
+
+                            <button data-tip-tab="500" onclick="sendTipTabs(500)" class="radio-pill-controls__item radio-pill-controls__item--grow" type="button">$500</button>
+
+                        </div>
+                    </div>
+                    <label class="textarea">
+                        <textarea class="textarea__field textarea__field--size--small textarea__field--hide-focus-placeholder" onkeyup="sendTipCustomMsg(this.value)"></textarea>
+                        <div class="textarea__placeholder textarea__placeholder--size--small">
+                            <div class="text-area-icon__placeholder">
+                                <svg class="icon icon-who-can-chat icon--default-size"><use xlink:href="#icons-who-can-chat"></use></svg>Add a comment if you wish...
+                            </div>
+                        </div>
+                    </label>
+                    <button class="tip-modal__submit btn-block btn btn-apply btn-large subscribeBtnDisabled" disabled id="sendTipBtn" type="button" onclick="sendTipNow()">Select amount</button>
+                    <div class="tip-modal__vat text-center">Your current balance is <strong class="user-balance"><?= $sm['plugins']['settings']['currencySymbol']; ?><?= $sm['user']['credits']; ?></strong></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-ds-overlay" data-modal="report_post" style="display:none">
+    <div class="modal-ds-overlay__background"></div>
+    <div class="modal-ds-body modal-ds-body--background--none modal-ds-body--size--small">
+        <div class="modal-ds-header">
+            <svg onclick="closeModal()" class="icon icon-close-3 modal-ds-close-icon modal-ds-close-icon-in-header close-icon close-icon-medium icon--default-size"><use xlink:href="#icons-close-3"></use></svg>
+        </div>
+        <div class="modal-ds-content modal-ds-content--background--regular modal-ds-content--radius--middle">
+            <div class="scroll-bar-container modal-body modal-body--padding--regular">
+                <h3 class="confirmation-modal-title">Report?</h3>
+                <h3 class="confirmation-modal-description">
+                    <div class="do">
+                        <span>If blocked, they cannot view or be a member of your club.</span>
+                        <div class="select spacer-small-s has-value select-default">
+                            <select class="select-control" style="appearance: none;padding-left: 10px;">
+                                <option>Offensive or violates <?= $sm['config']['name']; ?> rules</option>
+                            </select>
+                            <span class="select-arrow-zone">
+                                <svg class="icon icon-arrow-down icon--default-size"><use xlink:href="#icons-arrow-down"></use></svg>
+                            </span>
+                        </div>
+                    </div>
+                </h3>
+                <div class="confirmation-modal-controls controls">
+                    <button class="btn btn-second btn-large" type="button" onclick="closeModal()">Cancel</button><button class="confirmation-modal-btn-confirm btn btn-accept btn-large btn--width--medium" type="button">Report</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-ds-overlay" data-modal="share" style="display:none">
+    <div class="modal-ds-overlay__background"></div>
+    <div class="modal-ds-body modal-ds-body--background--none modal-ds-body--size--regular">
+        <div class="modal-ds-header modal-ds-header--background--dark">
+            <svg onclick="closeModal()" class="icon icon-close-3 modal-ds-close-icon modal-ds-close-icon-in-header close-icon close-icon-medium icon--default-size"><use xlink:href="#icons-close-3"></use></svg>        
+        </div>        
+        <div class="modal-ds-content modal-ds-content--background--dark modal-ds-content--radius--middle" style="background:#101010">
+            <div class="scroll-bar-container modal-body modal-body--padding--regular-top">
+                <div class="ew">
+                    <div class="cf cf--align--left cf--clickable cf--size--reqular-long"  
+                                    onclick="copyShareLink()">
+                        <div class="cf__left-part">
+                            <span class="avatar model-avatar" style="--avatar-size: 48px; --avatar-border-size: 0px;">
+                                <span class="avatar__img" id="share-modal-photo" style="background-image: url();"><span class="user-status-icon online" title="Online"></span></span>
+                            </span>
+                        </div>
+                        <div class="cf__right-part cf__right-part--grow cf__right-part--overflow-hidden">
+                            <div class="ev__wrapper">
+                                <div class="overflow-hidden">
+                                    <div class="text-overflow white-color-text text-s16-w700">
+                                        <span id="share-url"></span>
+                                    </div>
+                                    <div class="white-color-text-6 text-s14-w500 spacer-small-x">
+                                        Copy link
+                                    </div>
+                                </div>
+                                <div><svg class="icon icon-copy white-color-text-4" style="min-width: 24px; height: 24px; width: 24px;"><use xlink:href="#icons-copy"></use></svg></div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="cf cf--align--left cf--clickable cf--size--reqular-long" target="_blank" rel="nofollow noreferrer noopener" data-share="twitter" href="javascript:;">
+                        <div class="cf__left-part"><svg class="icon icon-twitter" style="color: rgb(29, 155, 240); min-width: 24px; height: 24px; width: 24px;"><use xlink:href="#icons-twitter"></use></svg></div>
+                        <div class="cf__right-part cf__right-part--grow cf__right-part--overflow-hidden">
+                            <div class="ev__wrapper">
+                                <div class="overflow-hidden">
+                                    <div class="text-overflow white-color-text text-s16-w700">Share on Twitter</div>
+                                </div>
+                                <div><svg class="icon icon-external-link white-color-text-4" style="min-width: 24px; height: 24px; width: 24px;"><use xlink:href="#icons-external-link"></use></svg></div>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="cf cf--align--left cf--clickable cf--size--reqular-long" target="_blank" rel="nofollow noreferrer noopener" data-share="telegram" href="javascript:;">
+                        <div class="cf__left-part"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" fill="url(#paint0_linear_192_30849)"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M6.52657 11.8945C9.44177 10.6244 11.3857 9.78702 12.3583 9.38246C15.1354 8.22737 15.7125 8.02672 16.0886 8.02009C16.1714 8.01863 16.3563 8.03913 16.4761 8.13635C16.5773 8.21844 16.6051 8.32934 16.6184 8.40717C16.6318 8.485 16.6484 8.6623 16.6352 8.80083C16.4847 10.3821 15.8335 14.2193 15.5022 15.9903C15.362 16.7397 15.086 16.991 14.8188 17.0156C14.2381 17.069 13.7971 16.6318 13.2347 16.2631C12.3545 15.6861 11.8573 15.327 11.003 14.764C10.0157 14.1134 10.6557 13.7558 11.2184 13.1714C11.3656 13.0184 13.9243 10.6911 13.9738 10.48C13.98 10.4536 13.9858 10.3552 13.9273 10.3032C13.8688 10.2513 13.7825 10.269 13.7202 10.2832C13.632 10.3032 12.226 11.2325 9.50219 13.0711C9.1031 13.3452 8.74161 13.4787 8.41773 13.4717C8.06068 13.464 7.37385 13.2698 6.86327 13.1039C6.23702 12.9003 5.73929 12.7927 5.78263 12.4469C5.8052 12.2669 6.05318 12.0827 6.52657 11.8945Z" fill="white"></path><defs><linearGradient id="paint0_linear_192_30849" x1="1002" y1="2" x2="1002" y2="1987.17" gradientUnits="userSpaceOnUse"><stop stop-color="#2AABEE"></stop><stop offset="1" stop-color="#229ED9"></stop></linearGradient></defs></svg></div>
+                        <div
+                            class="cf__right-part cf__right-part--grow cf__right-part--overflow-hidden">
+                            <div class="ev__wrapper">
+                                <div class="overflow-hidden">
+                                    <div class="text-overflow white-color-text text-s16-w700">Share on Telegram</div>
+                                </div>
+                                <div><svg class="icon icon-external-link white-color-text-4" style="min-width: 24px; height: 24px; width: 24px;"><use xlink:href="#icons-external-link"></use></svg></div>
+                            </div>
+                </div>
+                </a>
+                <a class="cf cf--align--left cf--clickable cf--size--reqular-long" target="_blank" rel="nofollow noreferrer noopener" data-share="whatsapp" href="javascript:;">
+                    <div class="cf__left-part"><svg class="icon icon-whatsapp" style="color: rgb(37, 211, 102); min-width: 24px; height: 24px; width: 24px;"><use xlink:href="#icons-whatsapp"></use></svg></div>
+                    <div class="cf__right-part cf__right-part--grow cf__right-part--overflow-hidden">
+                        <div class="ev__wrapper">
+                            <div class="overflow-hidden">
+                                <div class="text-overflow white-color-text text-s16-w700">Share on WhatsApp</div>
+                            </div>
+                            <div><svg class="icon icon-external-link white-color-text-4" style="min-width: 24px; height: 24px; width: 24px;"><use xlink:href="#icons-external-link"></use></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a class="cf cf--align--left cf--clickable cf--size--reqular-long" target="_blank" rel="nofollow noreferrer noopener" data-share="messenger" href="javascript:;" style="display:none">
+                    <div class="cf__left-part"><svg class="icon icon-fb-messenger" style="min-width: 24px; height: 24px; width: 24px;"><use xlink:href="#icons-fb-messenger"></use></svg></div>
+                    <div class="cf__right-part cf__right-part--grow cf__right-part--overflow-hidden">
+                        <div class="ev__wrapper">
+                            <div class="overflow-hidden">
+                                <div class="text-overflow white-color-text text-s16-w700">Share on Messenger</div>
+                            </div>
+                            <div><svg class="icon icon-external-link white-color-text-4" style="min-width: 24px; height: 24px; width: 24px;"><use xlink:href="#icons-external-link"></use></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a class="cf cf--align--left cf--clickable cf--size--reqular-long" target="_blank" rel="nofollow noreferrer noopener" data-share="facebook" href="javascript:;">
+                    <div class="cf__left-part"><svg class="icon icon-facebook-color" style="min-width: 24px; height: 24px; width: 24px;"><use xlink:href="#icons-facebook-color"></use></svg></div>
+                    <div class="cf__right-part cf__right-part--grow cf__right-part--overflow-hidden">
+                        <div class="ev__wrapper">
+                            <div class="overflow-hidden">
+                                <div class="text-overflow white-color-text text-s16-w700">Share on Facebook</div>
+                            </div>
+                            <div><svg class="icon icon-external-link white-color-text-4" style="min-width: 24px; height: 24px; width: 24px;"><use xlink:href="#icons-external-link"></use></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a class="cf cf--align--left cf--clickable cf--size--reqular-long" target="_blank" data-share="email" href="javascript:;">
+                    <div class="cf__left-part"><svg class="icon icon-mail" style="min-width: 24px; height: 24px; width: 24px;"><use xlink:href="#icons-mail"></use></svg></div>
+                    <div class="cf__right-part cf__right-part--grow cf__right-part--overflow-hidden">
+                        <div class="ev__wrapper">
+                            <div class="overflow-hidden">
+                                <div class="text-overflow white-color-text text-s16-w700">Share via Email</div>
+                            </div>
+                            <div><svg class="icon icon-external-link white-color-text-4" style="min-width: 24px; height: 24px; width: 24px;"><use xlink:href="#icons-external-link"></use></svg></div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+
+<div class="modal-ds-overlay" data-modal="edit_account" style="display:none">
+    <div class="modal-ds-overlay__background"></div>
+    <div class="modal-ds-body modal-ds-body--background--none modal-ds-body--size--small">
+        <div class="modal-ds-header">
+            <svg class="icon icon-close-3 modal-ds-close-icon modal-ds-close-icon-in-header close-icon close-icon-medium icon--default-size"><use xlink:href="#icons-close-3"></use></svg>
+        </div>
+        <div class="modal-ds-content modal-ds-content--background--regular modal-ds-content--radius--middle">
+            <div class="scroll-bar-container modal-body modal-body--padding--regular">
+                <h3 class="confirmation-modal-title">Edit your account</h3>
+                <h3 class="confirmation-modal-description">
+                    <div class="do">
+                        <span>Change account email</span>
+                        <div class="select spacer-small-s has-value select-default">
+                            <input class="select-control" type="text" style="appearance: none;padding-left: 10px;"/>
+                        </div>
+                    </div>
+                </h3>
+                <div class="confirmation-modal-controls controls">
+                    <button class="btn btn-second btn-large" type="button">Cancel</button>
+                    <button class="confirmation-modal-btn-confirm btn btn-accept btn-large btn--width--medium" type="button">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="media-gallery media-gallery--desktop media-gallery--aside" data-modal="post" style="display:none">
+    <section class="media-gallery__content-wrapper">
+        <div class="media-gallery__content">
+        </div>
+        <div class="media-gallery__bottom-shadow"></div>
+        <div class="media-gallery__image-thumbs media-gallery__image-thumbs--left-edge">
+            <div class="media-gallery__image-thumbs-scroll">
+                <div class="media-gallery__thumb media-gallery__thumb--active" style="background-image: url(&quot;https://cdn.my.club/cdn/photos/c/1/3/c13f3291f20d39a0de362cd361c221ff-thumb&quot;);"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable" style="background-image: url(&quot;https://cdn.my.club/cdn/photos/4/d/2/4d2dc64cbaccc0dd44a0de107d7c925e-thumb&quot;);"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable" style="background-image: url(&quot;https://video-thumbs.my.club/public/378035/8955ec0ae8172eed6e5b28a60826ada6/1080p/thumb-0004.jpg&quot;);">
+                    <div class="media-gallery__play"><svg class="icon icon-play" style="height: 10px; width: 10px;"><use xlink:href="#icons-play"></use></svg></div>
+                </div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable" style="background-image: url(&quot;https://cdn.my.club/cdn/photos/8/0/1/8016a4e19131f2fbc3e641de18293ba5-thumb&quot;);"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable" style="background-image: url(&quot;https://cdn.my.club/cdn/photos/2/0/3/203609f529ed3c75bbeae4d9cdf278b2-thumb&quot;);"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable" style="background-image: url(&quot;https://cdn.my.club/cdn/photos/0/0/4/00445e6083cecf704dc0f92b8ef505e3-thumb&quot;);"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable" style="background-image: url(&quot;https://cdn.my.club/cdn/photos/7/4/c/74ce5a798f740e8b511f8f3c22426e31-thumb&quot;);"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable" style="background-image: url(&quot;https://cdn.my.club/cdn/photos/e/6/d/e6d422c6ea8efbfbb18bb5ff57218985-thumb&quot;);"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable" style="background-image: url(&quot;https://cdn.my.club/cdn/photos/1/0/2/1025d677caa32be9c70c8c3447bd4675-thumb&quot;);"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable" style="background-image: url(&quot;https://cdn.my.club/cdn/photos/a/1/8/a18919370ee2d22c5a918b597850e52c-thumb&quot;);"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable" style="background-image: url(&quot;https://cdn.my.club/cdn/photos/d/9/9/d995b83095eccf37d2cdffc5d8b5d92e-thumb&quot;);"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable" style="background-image: url(&quot;https://cdn.my.club/cdn/photos/5/9/e/59eda5cbd0430704d9f9ff16a63eaf8c-thumb&quot;);"></div>
+            </div>
+        </div>
+        <div class="media-gallery__info">
+            <div class="media-gallery__info-text"></div>
+        </div>
+        <div class="media-gallery__controls-panel">
+            <div class="cj__controls">
+                <div class="tile-button tile-button--size--small tile-button--color--pale"><svg class="icon icon-gift tile-button__icon tile-button__icon--size--small"><use xlink:href="#icons-eye-on"></use></svg><span class="tile-button__text streamerViewers"></span></div>
+            </div>
+        </div>
+    </section>
+    <aside class="media-gallery__aside-panel">
+        <div class="cj__comments">
+            <div class="comments-gallery">
+                <div class="comments-gallery__wrapper">
+                    <div class="comments-gallery__wrapper-swiper">
+                        <div class="comments-gallery__close"><svg width="52" height="10" viewBox="0 0 52 10" fill="none"><path d="M2.85739 0.861576C1.63783 0.617664 0.5 1.55046 0.5 2.79417C0.5 3.73365 1.16312 4.54253 2.08435 4.72677L23.7447 9.05884C25.2335 9.3566 26.7665 9.3566 28.2553 9.05884L49.9156 4.72677C50.8369 4.54253 51.5 3.73365 51.5 2.79417C51.5 1.55046 50.3622 0.617664 49.1426 0.861576L28.0592 5.07825C26.6999 5.35012 25.3001 5.35012 23.9408 5.07825L2.85739 0.861576Z" fill="#fff" stroke="#fff"></path></svg></div>
+                        <div class="comments-gallery__header">
+                            <div class="tile-header">
+                                <div>
+                                    <a class="avatar-wrapper" href="javascript:;"><span class="avatar model-avatar" style="--avatar-size:36px; --avatar-border-size:0px;"><span class="avatar__img streamerPhoto"></span></span>
+                                    </a>
+                                </div>
+                                <div class="content-wrapper">
+                                    <div class="content">
+                                        <div class="displayname displayname--size--small">
+                                            <div class="displayname__name">
+                                                <a class="white-color-text opacity-hover displayname__short-name streamerName" href="javascript:;">
+                                                    asdsad
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <a class="posted-at" href="javascript:;" style="color:#41ff49">
+                                            Live now
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comments-gallery__text streamerCaption"></div>
+                            <a class="spacer-small btn btn-apply btn-medium btn--width--wide" href="javascript:;" ><svg class="icon icon-gift tile-button__icon tile-button__icon--size--small"><use xlink:href="#icons-gift"></use></svg><span class="tile-button__text">Send Tokens</span></a>
+                            <div class="spacer-small"></div>
+                        </div>
+                    </div>
+                    <div class="comments-gallery__count">
+                        <span>Live chat <span class="pale-text"></span></span>
+                    </div>
+                    <div class="scroll-bar-container comments-gallery__content">
+                        <div class="comments-gallery__comments">
+                            <div>
+                                <div class="X">
+                                    <div class="X__left">
+                                        <span class="avatar" style="--avatar-size:24px; --avatar-border-size:0px;">
+                                            <span class="avatar__img"><svg viewBox="0 0 20 20" style="height: 100%; width: 100%;"><text x="10" y="10" dy="0.35em" text-anchor="middle" fill="#a349fc" style="font-size: 10px;">j</text></svg></span>
+                                        </span>
+                                    </div>
+                                    <div class="X__right">
+                                        <div class="X__name">
+                                            <a class="X__username opacity-hover" href="#">
+                                                <div class="displayname displayname--size--small-xx">
+                                                    <div class="displayname__name displayname__name--text-overflow">JEFFREY HENRY</div>
+                                                </div>
+                                            </a>
+                                            <div class="X__date">4h</div>
+                                        </div>
+                                        <div class="X__content">Hello! I’m new here today Nice😊 profile you got here and I would love to buy your lovely 🥰 Feet Pics babe, So if interested
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="comments-gallery__footer">
+                        <div>
+                            <div class="comments-gallery__recaptcha-wrapper"></div>
+                            <div class="chat-controls">
+                                <div class="chat-controls-content">
+                                    <div class="input-wrapper">
+                                        <div class="chat-controls-input__wrapper" translate="no">
+                                            <div class="chat-controls-input chat-controls-input--style--multy-line" contenteditable="true" autocorrect="off" autocapitalize="off" translate="no" spellcheck="false" data-gramm="false" placeholder="Write a comment..."></div>
+                                        </div>
+                                        <div class="input-buttons" style="display:none">
+                                            <div class="smiles-dropdown"><a class="smiles-dropdown__icon"><svg class="icon icon-smile" style="height: 18px; width: 18px;"><use xlink:href="#icons-smile"></use></svg></a></div>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="control-button send-button a11y-button"><svg class="icon icon-send control-icon send-icon icon--default-size"><use xlink:href="#icons-send"></use></svg></button>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <div class="media-gallery__close" onclick="closeModal('reels_pc');"><svg class="icon icon-close-5" style="height: 20px; width: 20px;"><use xlink:href="#icons-close-5"></use></svg></div>
+</div>
+
+<div class="media-gallery media-gallery--desktop media-gallery--aside" data-modal="live_pc" style="display:none">
+    <section class="media-gallery__content-wrapper">
+
+        <div class="media-gallery__content streamingWrapper">
+        </div>
+        <div class="media-gallery__bottom-shadow"></div>
+        <div class="media-gallery__image-thumbs media-gallery__image-thumbs--left-edge">
+            <div class="media-gallery__image-thumbs-scroll">
+                <div class="media-gallery__thumb media-gallery__thumb--active"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable streamOpenPreview"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable streamOpenPreview"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable streamOpenPreview"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable streamOpenPreview"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable streamOpenPreview"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable streamOpenPreview"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable streamOpenPreview"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable streamOpenPreview"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable streamOpenPreview"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable streamOpenPreview"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable streamOpenPreview"></div>
+            </div>
+        </div>
+        <div class="media-gallery__info">
+            <div class="media-gallery__info-text"></div>
+        </div>
+        <div class="media-gallery__controls-panel">
+            <div class="cj__controls">
+                <div class="tile-button tile-button--size--small tile-button--color--pale"><svg class="icon icon-gift tile-button__icon tile-button__icon--size--small"><use xlink:href="#icons-eye-on"></use></svg><span class="tile-button__text streamerViewers"></span></div>
+            </div>
+        </div>
+    </section>
+    <aside class="media-gallery__aside-panel">
+        <div class="cj__comments">
+            <div class="comments-gallery">
+                <div class="comments-gallery__wrapper">
+                    <div class="comments-gallery__wrapper-swiper">
+                        <div class="comments-gallery__close"><svg width="52" height="10" viewBox="0 0 52 10" fill="none"><path d="M2.85739 0.861576C1.63783 0.617664 0.5 1.55046 0.5 2.79417C0.5 3.73365 1.16312 4.54253 2.08435 4.72677L23.7447 9.05884C25.2335 9.3566 26.7665 9.3566 28.2553 9.05884L49.9156 4.72677C50.8369 4.54253 51.5 3.73365 51.5 2.79417C51.5 1.55046 50.3622 0.617664 49.1426 0.861576L28.0592 5.07825C26.6999 5.35012 25.3001 5.35012 23.9408 5.07825L2.85739 0.861576Z" fill="#fff" stroke="#fff"></path></svg></div>
+                        <div class="comments-gallery__header">
+                            <div class="tile-header">
+                                <div>
+                                    <a class="avatar-wrapper" href="javascript:;"><span class="avatar model-avatar" style="--avatar-size:36px; --avatar-border-size:0px;"><span class="avatar__img streamerPhoto"></span></span>
+                                    </a>
+                                </div>
+                                <div class="content-wrapper">
+                                    <div class="content">
+                                        <div class="displayname displayname--size--small">
+                                            <div class="displayname__name">
+                                                <a class="white-color-text opacity-hover displayname__short-name streamerName" href="javascript:;">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <a class="posted-at" href="javascript:;" style="color:#41ff49">
+                                            Live now
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comments-gallery__text streamerCaption"></div>
+                            <a class="spacer-small btn btn-apply btn-medium btn--width--wide" href="javascript:;" id="sendLiveGift"><svg class="icon icon-gift tile-button__icon tile-button__icon--size--small"><use xlink:href="#icons-gift"></use></svg><span class="tile-button__text">Send Tokens</span></a>
+                            <div class="spacer-small"></div>
+                        </div>
+                    </div>
+                    <div class="comments-gallery__count">
+                        <span>Live chat <span class="pale-text"></span></span>
+                    </div>
+                    <div class="scroll-bar-container comments-gallery__content livecommentscontainer">
+                        <div class="comments-gallery__comments" id="live-comments">
+                        </div>
+                    </div>
+
+                    <footer class="comments-gallery__footer" id="liveCommentSignIn" style="display:none">
+                        <div class="messenger-chat-stub">
+                            <div class="messenger-chat-stub__message-icon-wrapper">
+                                <svg class="icon icon-private-locked">
+                                    <use xlink:href="#icons-private-locked-light"></use>
+                                </svg>
+                            </div>
+                            <span class="stub-title">Sign In to Comment</span>
+                            <span class="stub-description">Only registered <?= $sm['config']['name']; ?> members can comment on this live.</span>
+                            <button class="btn btn-apply btn-medium" type="button" onclick="openModal('login')">Sign in</button>
+                        </div>
+                    </footer>
+
+                    <footer class="comments-gallery__footer">
+                        <div>
+                            <div class="comments-gallery__recaptcha-wrapper"></div>
+                            <div class="chat-controls">
+                                <div class="chat-controls-content">
+                                    <div class="input-wrapper">
+                                        <div class="chat-controls-input__wrapper" translate="no">
+                                            <div class="chat-controls-input chat-controls-input--style--multy-line" id="live-message" contenteditable="true" autocorrect="off" autocapitalize="off" translate="no" spellcheck="false" data-gramm="false" placeholder="Write a comment..."></div>
+                                        </div>
+                                        <div class="input-buttons" style="display:none">
+                                            <div class="smiles-dropdown"><a class="smiles-dropdown__icon"><svg class="icon icon-smile" style="height: 18px; width: 18px;"><use xlink:href="#icons-smile"></use></svg></a></div>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="control-button send-button a11y-button" onclick="sendLiveMessage();"><svg class="icon icon-send control-icon send-icon icon--default-size"><use xlink:href="#icons-send" ></use></svg></button>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </aside>
+    <div class="media-gallery__close" onclick="closeModal('live_pc');"><svg class="icon icon-close-5" style="height: 20px; width: 20px;"><use xlink:href="#icons-close-5"></use></svg></div>
+</div>
+
+<div class="media-gallery media-gallery--mobile-portrait liveMobileMain" data-modal="live_mobile" style="display:none">
+
+
+    <div class="media-gallery__close" onclick="closeModal('live_mobile')" style="z-index: 999;position: absolute;width: 32px;height: 32px;"><svg class="icon icon-close-5" style="height: 24px; width: 24px;;"><use xlink:href="#icons-close-5"></use></svg></div>
+
+    <section class="media-gallery__content-wrapper">
+        <div class="media-gallery__content" style="z-index: 1;">
+            <div class="media-gallery__image-swiper">
+                <div class="video-player streamingWrapperMobile">
+                </div>
+            </div>
+        </div>
+        <div class="media-gallery__bottom-shadow"></div>
+    </section>
+
+    <aside class="media-gallery__aside-panel media-gallery__aside-panel--mobile" style="display:block">
+        <div class="ch__comments">
+            <div class="comments-gallery">
+                <div class="comments-gallery__wrapper" style="background:none">
+                    <div class="comments-gallery__wrapper-swiper">
+                        <div class="comments-gallery__header">
+                            <div class="tile-header">
+                                <div><a class="avatar-wrapper" href="javascript:;"><span class="avatar model-avatar " style="--avatar-size:36px; --avatar-border-size:0px;"><span class="avatar__img  streamerPhoto"></span></span></a></div>
+                                <div class="content-wrapper">
+                                    <div class="content">
+                                        <div class="displayname displayname--size--small">
+                                            <div class="displayname__name"><a class="white-color-text opacity-hover displayname__short-name streamerName" href="javascript:;"></a> <span class="displayname__verified "><svg class="icon icon--default-size"><use xlink:href="#icons-verified-gradient"></use></svg></span></div>
+                                        </div>
+                                        <a class="posted-at" href="javascript:;" style="color:#41ff49">Live now</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comments-gallery__text streamerCaption">
+                                <div class="spacer-small"></div>
+                            </div>
+                            <a class="spacer-small btn btn-apply btn-medium" id="sendLiveGiftMobile" href="javascript:;" style="position: absolute;top:2px;right: 35px;"><svg class="icon icon-gift tile-button__icon tile-button__icon--size--small"><use xlink:href="#icons-gift"></use></svg><span class="tile-button__text" style="display:block">Send Tokens</span></a>                            
+                        </div>
+                        <footer class="comments-gallery__footer">
+                            <div>
+                            </div>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+    </aside>
+
+</div>
+
+<div class="media-gallery media-gallery--desktop media-gallery--aside" data-modal="desktop_modal" style="display:none">
+    <section class="media-gallery__content-wrapper">
+
+        <div class="media-gallery__content" style="background-image: url(&quot;https://cdn.my.club/cdn/photos/c/1/3/c13f3291f20d39a0de362cd361c221ff-thumb&quot;);">
+            <div class="media-gallery__image-desktop" style="background-image: url(&quot;https://cdn.my.club/cdn/photos/c/1/3/c13f3291f20d39a0de362cd361c221ff-preview&quot;);"></div>
+        </div>
+        
+        <div class="media-gallery__arrow media-gallery__arrow--left media-gallery__arrow--active"><svg class="icon icon-chevron-left" style="height: 25px; width: 25px;"><use xlink:href="#icons-chevron-left"></use></svg></div>
+        <div class="media-gallery__arrow media-gallery__arrow--right media-gallery__arrow--active"><svg class="icon icon-chevron-right" style="height: 25px; width: 25px;"><use xlink:href="#icons-chevron-right"></use></svg></div>
+        <div class="media-gallery__bottom-shadow"></div>
+        <div class="media-gallery__image-thumbs media-gallery__image-thumbs--left-edge">
+            <div class="media-gallery__image-thumbs-scroll">
+                <div class="media-gallery__thumb media-gallery__thumb--clickable media-gallery__thumb--active">
+                    <div class="cj__arrow-thumb cj__arrow-thumb--prev" id="gallery-thumb-prev"><svg class="icon icon-arrow-long-right icon--default-size"><use xlink:href="#icons-arrow-long-right"></use></svg></div>
+                </div>
+                <div class="media-gallery__thumb media-gallery__thumb--active" style="background-image: url(&quot;https://cdn.my.club/cdn/photos/c/1/3/c13f3291f20d39a0de362cd361c221ff-thumb&quot;);"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable" style="background-image: url(&quot;https://cdn.my.club/cdn/photos/4/d/2/4d2dc64cbaccc0dd44a0de107d7c925e-thumb&quot;);"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable" style="background-image: url(&quot;https://video-thumbs.my.club/public/378035/8955ec0ae8172eed6e5b28a60826ada6/1080p/thumb-0004.jpg&quot;);">
+                    <div class="media-gallery__play"><svg class="icon icon-play" style="height: 10px; width: 10px;"><use xlink:href="#icons-play"></use></svg></div>
+                </div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable" style="background-image: url(&quot;https://cdn.my.club/cdn/photos/8/0/1/8016a4e19131f2fbc3e641de18293ba5-thumb&quot;);"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable" style="background-image: url(&quot;https://cdn.my.club/cdn/photos/2/0/3/203609f529ed3c75bbeae4d9cdf278b2-thumb&quot;);"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable" style="background-image: url(&quot;https://cdn.my.club/cdn/photos/0/0/4/00445e6083cecf704dc0f92b8ef505e3-thumb&quot;);"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable" style="background-image: url(&quot;https://cdn.my.club/cdn/photos/7/4/c/74ce5a798f740e8b511f8f3c22426e31-thumb&quot;);"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable" style="background-image: url(&quot;https://cdn.my.club/cdn/photos/e/6/d/e6d422c6ea8efbfbb18bb5ff57218985-thumb&quot;);"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable" style="background-image: url(&quot;https://cdn.my.club/cdn/photos/1/0/2/1025d677caa32be9c70c8c3447bd4675-thumb&quot;);"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable" style="background-image: url(&quot;https://cdn.my.club/cdn/photos/a/1/8/a18919370ee2d22c5a918b597850e52c-thumb&quot;);"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable" style="background-image: url(&quot;https://cdn.my.club/cdn/photos/d/9/9/d995b83095eccf37d2cdffc5d8b5d92e-thumb&quot;);"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable" style="background-image: url(&quot;https://cdn.my.club/cdn/photos/5/9/e/59eda5cbd0430704d9f9ff16a63eaf8c-thumb&quot;);"></div>
+                <div class="media-gallery__thumb media-gallery__thumb--clickable media-gallery__thumb--active">
+                    <div class="cj__arrow-thumb" id="gallery-thumb-next"><svg class="icon icon-arrow-long-right icon--default-size"><use xlink:href="#icons-arrow-long-right"></use></svg></div>
+                </div>
+            </div>
+        </div>
+        <div class="media-gallery__info">
+            <div class="media-gallery__info-text"></div>
+        </div>
+        <div class="media-gallery__controls-panel">
+            <div class="cj__controls">
+                <div class="cj__user">
+                    <div class="cj__user-card">
+                        <a class="username-inline-card white-color-text" href="/PollyHoffman">
+                            <div class="username-inline-card__avatar-wrapper username-inline-card__avatar-wrapper--space-size--medium"><span class="avatar" style="--avatar-size:40px; --avatar-border-size:0px;"><span class="avatar__img" style="background-image: url(&quot;https://cdn.my.club/cdn/avatars/c/3/4/c3439f740f0a952a3b2853d864e0c6ce-full&quot;);"></span></span>
+                            </div>
+                            <div>
+                                <div class="display-full-name">
+                                    <div class="displayname displayname--size--small">
+                                        <div class="displayname__name displayname__name--text-overflow">Polly Hoffman</div>
+                                    </div><span class="display-full-name__nickname display-full-name__nickname--text-overflow">@PollyHoffman</span></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="tile-button tile-button--size--small tile-button--color--pale"><svg class="icon icon-heart tile-button__icon tile-button__icon--size--small"><use xlink:href="#icons-heart"></use></svg><span class="tile-button__text">2</span></div>
+                <div class="tile-button tile-button--size--small tile-button--color--white"><svg class="icon icon-chat tile-button__icon tile-button__icon--size--small"><use xlink:href="#icons-chat"></use></svg><span class="tile-button__text">1</span></div>
+                <div class="tile-button tile-button--size--small tile-button--color--pale"><svg class="icon icon-gift tile-button__icon tile-button__icon--size--small"><use xlink:href="#icons-gift"></use></svg><span class="tile-button__text">Send Tip</span></div>
+                <div class="tile-button tile-button--size--small tile-button--color--pale"><svg class="icon icon-bookmark tile-button__icon tile-button__icon--size--small"><use xlink:href="#icons-bookmark"></use></svg></div>
+                <div class="tile-button tile-button--size--small tile-button--color--pale"><svg class="icon icon-forward_link tile-button__icon tile-button__icon--size--small"><use xlink:href="#icons-forward_link"></use></svg></div>
+            </div>
+        </div>
+    </section>
+    <aside class="media-gallery__aside-panel">
+        <div class="cj__comments">
+            <div class="comments-gallery">
+                <div class="comments-gallery__wrapper">
+                    <div class="comments-gallery__wrapper-swiper">
+                        <div class="comments-gallery__close"><svg width="52" height="10" viewBox="0 0 52 10" fill="none"><path d="M2.85739 0.861576C1.63783 0.617664 0.5 1.55046 0.5 2.79417C0.5 3.73365 1.16312 4.54253 2.08435 4.72677L23.7447 9.05884C25.2335 9.3566 26.7665 9.3566 28.2553 9.05884L49.9156 4.72677C50.8369 4.54253 51.5 3.73365 51.5 2.79417C51.5 1.55046 50.3622 0.617664 49.1426 0.861576L28.0592 5.07825C26.6999 5.35012 25.3001 5.35012 23.9408 5.07825L2.85739 0.861576Z" fill="#fff" stroke="#fff"></path></svg></div>
+                        <div
+                            class="comments-gallery__header">
+                            <div class="tile-header">
+                                <div><a class="avatar-wrapper" href="#"><span class="avatar model-avatar" style="--avatar-size:36px; --avatar-border-size:0px;"><span class="avatar__img" style="background-image: url(&quot;https://cdn.my.club/cdn/avatars/c/3/4/c3439f740f0a952a3b2853d864e0c6ce-full&quot;);"></span></span></a></div>
+                                <div
+                                    class="content-wrapper">
+                                    <div class="content">
+                                        <div class="displayname displayname--size--small">
+                                            <div class="displayname__name"><a class="white-color-text opacity-hover displayname__short-name" href="#"></a> <span class="displayname__verified"><svg class="icon icon--default-size"><use xlink:href="#icons-verified-gradient"></use></svg></span></div>
+                                        </div><a class="posted-at" href="/pollyhoffman/post/422800">about 10 hours ago</a></div>
+                            </div>
+                    </div>
+                    <div class="comments-gallery__header-menu">
+                        <div class="menu-button-dots css-popover">
+                            <div><button type="button" class="menu-button-dots__menu-button menu-button-dots__menu-button--size--normal menu-button-dots__menu-button--theme--light"><div class="menu-button-dots__icon-wrapper"><svg class="icon icon-three-dots menu-icon icon--default-size"><use xlink:href="#icons-three-dots"></use></svg></div></button></div>
+                            <div
+                                class="css-popover-content-bottomright">
+                                <ul class="ba ba--style--default">
+                                    <li>
+                                        <div class="ba__menu-item ba__menu-item--split"><svg class="icon icon-wrong-2 ba__menu-item-icon icon--default-size"><use xlink:href="#icons-wrong-2"></use></svg>Report</div>
+                                    </li>
+                                    <li>
+                                        <div class="ba__menu-item"><svg class="icon icon-chain-link ba__menu-item-icon icon--default-size"><use xlink:href="#icons-chain-link"></use></svg>Copy Post Link</div>
+                                    </li>
+                                </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="comments-gallery__text">I haven't done photo shoots for a long time, I feel a little embarrassed, how do you like the result?
+                </div>
+                <a class="spacer-small btn btn-apply btn-medium btn--width--wide" href="/PollyHoffman">View Club<svg class="icon icon-chevron-right indent-left-small white-color-text-opacity-6" style="height: 14px; width: 14px;"><use xlink:href="#icons-chevron-right"></use></svg></a>
+                <div
+                    class="spacer-small"></div>
+        </div>
+    </div>
+    <div class="comments-gallery__count"><span>Comment <span class="pale-text">1</span></span>
+    </div>
+    <div class="scroll-bar-container comments-gallery__content">
+        <div class="comments-gallery__comments">
+            <div>
+                <div class="X">
+                    <div class="X__left"><a href="/jeffrey756"><span class="avatar" style="--avatar-size:24px; --avatar-border-size:0px;"><span class="avatar__img"><svg viewBox="0 0 20 20" style="height: 100%; width: 100%;"><text x="10" y="10" dy="0.35em" text-anchor="middle" fill="#a349fc" style="font-size: 10px;">j</text></svg></span></span></a></div>
+                    <div
+                        class="X__right">
+                        <div class="X__name">
+                            <a class="X__username opacity-hover" href="/jeffrey756">
+                                <div class="displayname displayname--size--small-xx">
+                                    <div class="displayname__name displayname__name--text-overflow">JEFFREY HENRY</div>
+                                </div>
+                            </a>
+                            <div class="X__date">4h</div>
+                        </div>
+                        <div class="X__content">Hello! I’m new here today Nice😊 profile you got here and I would love to buy your lovely 🥰 Feet Pics babe, So if interested let’s talk Business on SNAPCHAT-&gt; <a class="accent-color-text" href="/johnynsddy">@johnynsddy</a> or Kik-&gt;
+                            Johnnynelson223 or telegram <a class="accent-color-text" href="/Daddynelson531">@Daddynelson531</a></div>
+                        <div class="X__footer"><button class="likes-counter likes-counter--clickable likes-counter--size--small" type="button"><svg class="icon icon-heart like-icon like-icon--size--small"><use xlink:href="#icons-heart"></use></svg></button>
+                            <div class="X__reply">Reply</div>
+                        </div>
+                </div>
+                <div class="X__menu">
+                    <div class="menu-button-dots css-popover">
+                        <div><button type="button" class="menu-button-dots__menu-button menu-button-dots__menu-button--size--small menu-button-dots__menu-button--theme--light"><div class="menu-button-dots__icon-wrapper"><svg class="icon icon-three-dots menu-icon icon--default-size"><use xlink:href="#icons-three-dots"></use></svg></div></button></div>
+                        <div
+                            class="css-popover-content-bottomright">
+                            <ul class="ba ba--style--default">
+                                <li>
+                                    <div class="ba__menu-item"><svg class="icon icon-wrong-2 ba__menu-item-icon icon--default-size"><use xlink:href="#icons-wrong-2"></use></svg>Report</div>
+                                </li>
+                            </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    <footer class="comments-gallery__footer">
+        <div>
+            <div class="comments-gallery__recaptcha-wrapper"></div>
+            <div class="chat-controls">
+                <div class="chat-controls-content">
+                    <div class="input-wrapper">
+                        <div class="chat-controls-input__wrapper" translate="no">
+                            <div class="chat-controls-input chat-controls-input--style--multy-line" contenteditable="true" autocorrect="off" autocapitalize="off" translate="no" spellcheck="false" data-gramm="false" placeholder="Leave a comment..."></div>
+                        </div>
+                        <div class="input-buttons">
+                            <div class="smiles-dropdown"><a class="smiles-dropdown__icon"><svg class="icon icon-smile" style="height: 18px; width: 18px;"><use xlink:href="#icons-smile"></use></svg></a></div>
+                        </div>
+                    </div><button type="button" class="control-button send-button a11y-button"><svg class="icon icon-send control-icon send-icon icon--default-size"><use xlink:href="#icons-send"></use></svg></button></div>
+            </div>
+        </div>
+    </footer>
+    </div>
+    </div>
+    </div>
+    <div class="media-gallery__aside-panel-expand"><svg class="icon icon-expand-screen" style="height: 28px; width: 28px;"><use xlink:href="#icons-expand-screen"></use></svg></div>
+    </aside>
+    <div class="media-gallery__close" onclick="closeModal();"><svg class="icon icon-close-5" style="height: 20px; width: 20px;"><use xlink:href="#icons-close-5"></use></svg></div>
+</div>
+
+<div class="personal-notifications-modal" style="display:none">
+    <div class="personal-notifications-modal-title">
+        <div class="personal-notifications-modal-panel-tabs"><div class="personal-notifications-modal-panel-tabs-item active">Chats</div></div>
+    </div>
+    <div class="personal-notifications-modal-panel-controls">
+        <button type="button" class="personal-notifications-modal-panel-controls-btn a11y-button">
+            <svg class="icon icon-close-3" style="min-width: 24px; height: 24px; width: 24px;"><use xlink:href="#icons-close-3"></use></svg>
+        </button>
+    </div>
+    <div class="scroll-bar-container">
+        <div class="bb bb--menu--bottom">
+            <div class="bb__avatar-wrapper">
+                <span class="avatar" style="--avatar-border-size: 0px;"><span class="avatar__img" style="background-image: url('https://cdn.my.club/cdn/avatars/0/3/1/03182c093636bcafd3b18422643b05dc-full');"></span></span>
+            </div>
+            <div class="bb__content">
+                <div class="bb__name">
+                    <div class="displayname displayname--size--medium">
+                        <div class="displayname__name displayname__name--text-overflow">
+                            Marta
+                            <span class="displayname__verified">
+                                <svg class="icon icon--default-size"><use xlink:href="#icons-verified-gradient"></use></svg>
+                            </span>
+                        </div>
+                    </div>
+                    <span class="bb__time">12:57 AM</span>
+                </div>
+                <div class="bb__text"><span class="personal-notifications-message-item-body">hey marta</span></div>
+            </div>
+            <span class="bb__menu">
+                <svg class="icon icon-three-dots icon--default-size"><use xlink:href="#icons-three-dots"></use></svg>
+            </span>
+        </div>
+    </div>
+    <div class="personal-notifications-modal-panel-footer empty-on-desktop">
+        <div class="personal-notifications-modal-panel-footer-left"></div>
+        <div class="personal-notifications-modal-panel-footer-right"></div>
+    </div>
+</div>
+
+<div class="messages-overlay" data-modal="messages" onclick="closeModal()" style="display:none"></div>
+<div class="messages-container" data-modal="messages" style="display:none">
+    <div class="eU">
+        <div class="eU__left-part">
+            <div class="eU__header">
+                <div class="cC__tabs-item cC__tabs-item--active">
+                    <div class="cC__tabs-item-content">Messages</div>
+                </div>
+            </div>
+            <div class="eU__header-text" style="text-align: left;display: none;" onclick="goTo('discover');">
+                <svg class="icon icon-info mobile-show" style="min-width: 16px; height: 16px; width: 16px;margin-top:12px;margin-right: 5px;"><use xlink:href="#icons-info"></use></svg>
+
+
+
+                You dont have conversation yet<br>Search for creators and start messaging.
+            </div>        
+            <div class="scroll-bar-container eU__content-scroll ps" id="conversation-list">
+
+                <div class="bDc bDc--menu--bottom bDc--mode--page" id="new-chat" data-creator-chat="0" data-unread="0" style="display:none">
+                    <div class="bDc__avatar-wrapper">
+                        <span class="avatar" style="--avatar-border-size: 0px;">
+                            <span class="avatar__img" 
+                            style="background-image: url()"></span>
+                            <span class="user-status-icon" title="Online"></span>
+                        </span>
+                    </div>
+                    <div class="bDc__content">
+                        <div class="bDc__name">
+                            <div class="displayname">
+                                <div class="displayname__name displayname__name--text-overflow">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bDc__text">
+                            <span class="personal-notifications-message-item-body" data-chat-lastm></span>
+                        </div>
+                    </div>
+                    <span class="bDc__new" data-chat-unread-count style="display:none">0</span>
+                </div>
+                <div id="new-chats"></div>
+                <div id="userConversations"><?= getUserConversations($sm['user']['id']); ?></div>
+            </div>
+        </div>
+        <div class="eU__right-part">
+
+            <div class="eU__empty-state" style="display:none">
+                Select a chat to start messaging
+            </div>
+            <div class="bsc bsc--expanded bsc--mode--page" id="conversation-page">
+                <div class="bCa bCa--mode--page" style="height: 64px!important;max-height: 64px!important;">
+                    <div class="bCa__content">
+
+                        <div class="bCa__back-block mobile-show" onclick="openModal('messages','menu');">
+                            <svg class="icon icon--default-size">
+                                <use xlink:href="#icons-arrow-left"></use>
+                            </svg>                            
+                        </div>
+
+                        <div class="bCa__left-block">
+                            <a class="bCa__avatar-wrapper" href="javascript:;">
+                                <span class="avatar" style="--avatar-size: 30px; --avatar-border-size: 0px;">
+                                    <span class="avatar__img" data-current-chat="photo"></span>
+                                </span>
+                            </a>
+                            <div class="bCa__name">
+                                <div class="displayname displayname--size--small-x">
+                                    <div class="displayname__name displayname__name--text-overflow">
+                                        <a class="white-color-text opacity-hover" href="javascript:;"  data-current-chat="name"></a> 
+                                        <span class="displayname__verified" style="display:none">
+                                            <svg class="icon icon--default-size">
+                                                <use xlink:href="#icons-verified-gradient"></use>
+                                            </svg>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="bCa__header-button indent-left-small btn btn-text" type="button"><svg class="icon icon-three-dots" style="min-width: 22px; height: 22px; width: 22px;display: none;"><use xlink:href="#icons-three-dots"></use></svg>
+                            </button>                    
+                        </div>
+                        
+                        <button class="bCa__header-button indent-right-small btn btn-text" type="button" onclick="closeModal()"><svg class="icon icon-three-dots" style="min-width: 22px; height: 22px; width: 22px;position: absolute;right: 20px;z-index: 3;display: none;"><use xlink:href="#icons-close-3"></use></svg>
+                            </button>    
+                    </div>
+                </div>
+                <div class="bsc__content bsc__content--expanded">
+                    <div class="scroll-bar-container bzz" >
+                        <div class="bzz__list">
+                            <div id="chat-messages" data-current-chat="chat">
+                            </div>
+                            <div style="height: 8px;"></div><span></span>
+                            <div class="qc__wrapper" id="only-premium-message" style="display:none;margin-top: 15px;">
+                                <div class="qc">
+                                    <div class="qc__message-icon-wrapper">
+                                        <a class="avatar-wrapper" href="javascript:;"><span class="avatar model-avatar" style="--avatar-size:66px; --avatar-border-size:0px;"><span class="avatar__img" id="only-premium-message-photo" style="background-image: url();"></span></span>
+                                        </a>
+                                    </div>
+                                    <span class="qc__stub-title">Become <span class="only-premium-message-username"></span> fan to Chat privately</span><span class="qc__stub-description">Only subscribers can send private messages.<br>Get paid membership to unlock all private content and get replied by <span class="only-premium-message-username"></span>!</span>
+                                    <button class="btn btn-apply btn-medium" type="button" id="subscribeChatBtn">
+                                        Subscribe for chat
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bAc">
+                        <div class="bAc__content">
+                            <div class="bAc__control-button css-popover">
+                                <div><button class="bAc__control-button btn btn-text" type="button" id="send-tip-from-chat"><svg class="icon icon-private-tip control-icon tip-icon icon--default-size" style=""><use xlink:href="#icons-gift"></use></svg></button>
+                                </div>
+                                <div class="css-popover-content-topright"></div>
+                            </div>
+                            <button type="button" class="messenger-upload-button-wrapper a11y-button" style="display:none;"><svg class="icon icon-photo-3 upload-icon" style="min-width: 24px; height: 24px; width: 24px;"><use xlink:href="#icons-photo-3"></use></svg>
+                            </button>
+
+                            <div class="bAc__input-wrapper">
+                                <div class="chat-controls-input__wrapper" translate="no">
+                                    <div class="chat-controls-input chat-controls-input--style--multy-line emoji-input" contenteditable="true" autocorrect="off" autocapitalize="off" translate="no" spellcheck="false" data-gramm="false" placeholder="" id="chat-message"></div>
+                                </div>
+                                <div>
+                                    <div class="smiles-dropdown"><a class="smiles-dropdown__icon" href="javascript:;" onclick="showEmoji('show')"><svg class="icon icon-smile" style="min-width: 18px; height: 18px; width: 18px;"><use xlink:href="#icons-smile"></use></svg></a></div>
+                                </div>
+                            </div>
+                            <input id="r_id" value="0" type="hidden" style='display:none'>
+                            <input id="rid" value="0" type="hidden" style='display:none'>
+                       
+                            <button class="bAc__control-button bAc__send-button btn btn-text" id="chat-send" type="button"><svg class="icon icon-send-2 control-icon send-icon" style="min-width: 24px; height: 24px; width: 24px;"><use xlink:href="#icons-send-2"></use></svg></button>
+                        </div>
+                        <div class="smiles-dropdown__list smiles-dropdown__list--visible showEmoji" style="--dropdown-max-height: 300px;right: 50px;bottom: 60px;display: none;">
+                            <div class="scroll-bar-container">
+
+                            <?php 
+                                $path = 'emoji';
+                                foreach (array_filter(glob($path.'/*'), 'is_file') as $emoji) {
+                                    $emojiOC = "selectEmoji('".$emoji."')";
+                                    echo '<a class="active-smile" onclick="'.$emojiOC.'"><img src="'.$sm['config']['site_url'].$emoji.'" class="smile smile--size--small"></a>';
+                                }
+                            ?>
+                            </div>
+                        </div>                    
+                    </div>  
+                   
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="fs" id="header-user-notification-dropdown" style="display: none;">
+    <div class="fs__title">
+        <div class="dt__tabs">
+            <div class="dt__tabs-item " style="display:none">
+                <div class="dt__tabs-item-content">Everyone</div>
+            </div>
+            <div class="dt__tabs-item dt__tabs-item--active">
+                <div class="dt__tabs-item-content">Activity</div>
+            </div>            
+        </div>
+    </div>
+    <div class="scroll-bar-container ps ps--active-y">
+        <div class="header-dropdown-content-item">
+
+            <?php 
+            //latest activity all
+
+            $activity = getArray('activity','WHERE uid = '.$sm['user']['id'],'id desc','limit 0,100'); 
+
+            foreach ($activity as $value) {  ?>
+            <?php if($value['a_type'] == 'like' || $value['a_type'] == 'tip' || $value['a_type'] == 'subscribe'){ 
+                $a = json_decode($value['message'], true); 
+
+                $notification = '
+                    You are following 
+                    <span class="personal-notification__username">
+                        '.$a['u2']['name'].'
+                    </span>
+                ';
+
+                if($value['a_type'] == 'tip'){
+                    $notification = '
+                        You sent <strong>'.$sm['plugins']['settings']['currencySymbol'].$a['tip']['amount'].'</strong> tip to 
+                        <span class="personal-notification__username">
+                            '.$a['u2']['name'].'
+                        </span>
+                    ';                    
+                }
+
+                if($value['a_type'] == 'subscribe'){
+                    $notification = '
+                        You have subscribed for <strong>'.$sm['plugins']['settings']['currencySymbol'].$a['sub']['amount'].'</strong> to 
+                        <span class="personal-notification__username">
+                            '.$a['u2']['name'].'
+                        </span>
+                    ';                    
+                }
+
+                ?>
+                <div class="personal-notification tip-personal-notification" onclick="goToProfile(event,<?=$a['u2']['id'];?>)">
+                    <div class="personal-notification-body">
+                        <div class="personal-notification-body-left"><a class="personal-notification-profile-link" href="#"><span class="avatar personal-notification-image" style="--avatar-border-size: 0px;"><span class="avatar__img" style="background-image: url(<?= $a['u2']['photo']; ?>);"></span></span></a></div>
+                        <div
+                            class="personal-notification-body-middle">
+                            <div class="personal-notification-body-middle-body">
+                                <span class="personal-notification-body-text">
+                                    <?= $notification; ?>
+                                </span>
+                            </div>
+                            <div class="personal-notification-body-middle-footer"><span class="personal-notification-description-text"><span><?= date('d M',$value['time']); ?></span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php 
+            }
+        } ?>
+        </div>
+    </div>
+</div>
+
+<div class="modal-ds-overlay"  data-modal="founds" style="display:none">
+    <div class="modal-ds-overlay__background"></div>
+    <div class="modal-ds-body modal-ds-body--background--none modal-ds-body--size--regular">
+        <div class="modal-ds-header">
+            <svg class="icon icon-close-3 modal-ds-close-icon modal-ds-close-icon-in-header close-icon close-icon-medium icon--default-size" onclick="closeModal()"><use xlink:href="#icons-close-3"></use></svg>
+        </div>
+        <div class="modal-ds-content modal-ds-content--background--dark modal-ds-content--radius--middle" style="background:#0a0a0a;">
+            <div class="scroll-bar-container modal-body" style="overflow-y:hidden">
+                <div class="tip-modal__user">
+                    <span class="avatar" style="--avatar-border-size: 0px;"><span class="avatar__img"  style="background-image: url('<?= $sm['user']['profile_photo']; ?>');"></span></span>
+                    <div class="tip-modal__user-meta">
+                        <div class="tip-modal__user-subtitle">Add founds to your account</div>
+                        <div class="displayname displayname--size--medium">
+                            <div class="displayname__name"><a class="white-color-text opacity-hover" href="javascript:;"><?= $sm['user']['username']; ?></a></div>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="tip-modal__content founds-modal__content">
+                    <div>
+                        <div class="radio-pill-controls add-founds-pill radio-pill-controls--content--space-between">
+                            <button data-pay-tab="0" onclick="addMoneyTabs(0)" class="radio-pill-controls__item radio-pill-controls__item--grow" type="button"><?= $sm['plugins']['settings']['currencySymbol']; ?>10</button>  
+
+                            <button data-pay-tab="1" onclick="addMoneyTabs(1)" class="radio-pill-controls__item radio-pill-controls__item--grow" type="button"><?= $sm['plugins']['settings']['currencySymbol']; ?>25</button>
+
+                            <button data-pay-tab="2" onclick="addMoneyTabs(2)" class="radio-pill-controls__item radio-pill-controls__item--grow radio-pill-controls__item--active" type="button"><?= $sm['plugins']['settings']['currencySymbol']; ?>50</button>
+
+                            <button data-pay-tab="3" onclick="addMoneyTabs(3)" class="radio-pill-controls__item radio-pill-controls__item--grow" type="button"><?= $sm['plugins']['settings']['currencySymbol']; ?>100</button>
+
+                            <button data-pay-tab="4" onclick="addMoneyTabs(4)" class="radio-pill-controls__item radio-pill-controls__item--grow" type="button"><?= $sm['plugins']['settings']['currencySymbol']; ?>250</button>
+
+                            <button data-pay-tab="5" onclick="addMoneyTabs(5)" class="radio-pill-controls__item radio-pill-controls__item--grow" type="button"><?= $sm['plugins']['settings']['currencySymbol']; ?>500</button>
+                        </div>
+                    </div>
+
+                    <div class="payments__options">
+                        <iframe id="iframePayment" src="<?= $sm['config']['site_url'];?>pay/index.php?type=credits&package=2" class="payments__iframe"></iframe>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="ageRestricted" data-modal="age" style="display:none">
+    <div class="scroll-bar-container cV__scroll">
+        <div class="ageRestricted__content">
+            <div class="ageRestricted__header"><svg class="icon icon-eye-off-fill white-color-text-6" style="min-width: 62px; height: 62px; width: 62px;"><use xlink:href="#icons-eye-off-fill"></use></svg>
+                <div class="spacer-medium"></div>
+                <div class="text-s24-w700">Age Restricted</div>
+                <div class="spacer-medium-x"></div>
+                <div class="text-s13-w500 white-color-text-opacity-6 align-center">We created an enhanced content creator experience for adults 18+ Join our community and start interacting for FREE.</div>
+                <div class="spacer-medium"></div><button class="btn btn-ai-gradient btn-large" type="button" style="background: #ff2828;
+    color: #fff;" onclick="ageRestricted('Yes');"><span class="indent-right-small-10">I’m over 18</span><svg class="icon icon-chevron-right" style="min-width: 16px; height: 16px; width: 16px;"><use xlink:href="#icons-chevron-right"></use></svg></button></div>
+            <div
+                class="cV__agreement">
+                <div class="white-color-text-4 text-s12-w500 align-center">By entering and using this website, you confirm that you’re at least eighteen (18) years of age or at least the age of majority in your jurisdiction and agree to abide by our <a class="white-color-text-6 text-s12-w700" href="<?= $sm['config']['site_url']; ?>terms" target="_blank">Terms of Use</a>                    and<a class="white-color-text-6 text-s12-w700" href="<?= $sm['config']['site_url']; ?>privacy" target="_blank"> Privacy Policy</a>, as well as<a class="white-color-text-6 text-s12-w700" href="<?= $sm['config']['site_url']; ?>2257"> 18 U.S.C. 2257 Record-Keeping Requirements Compliance Statement.</a></div>
+                <div
+                    class="spacer-medium-x"></div>
+        <div class="flex-align-center"><button class="ageRestricted__reject-button btn btn-dark-700 btn-large" type="button"  onclick="ageRestricted('No');">I’m under 18</button></div>
+        <div class="spacer-medium-x"></div>
+        <div class="text-s11-w500 white-color-text-opacity-4 align-center">By providing sensitive personal data to the website, you give your explicit consent to process this data to tailor the website to your preferences.</div>
+        <div class="spacer-medium-x"></div>
+        <div class="text-s11-w500 white-color-text-opacity-4 align-center">THIS WEBSITE CONTAINS MATERIAL THAT IS SEXUALLY EXPLICIT. Use of this Website is not permitted in regions where it is prohibited by law.</div>
+        <div class="spacer-medium-x"></div>
+        <div class="text-s11-w500 white-color-text-opacity-4 align-center">This Website also requires the use of cookies. More information about our cookies can be found at our Privacy Policy. BY ENTERING AND USING THIS WEBSITE YOU AGREE TO THE USE OF COOKIES.</div>
+    </div>
+</div>
+</div>
+</div>
+
+<div class="modal-ds-overlay" data-modal="unsub" style="display:none">
+    <div class="modal-ds-overlay__background"></div>
+    <div class="modal-ds-body modal-ds-body--background--none modal-ds-body--size--small">
+        <div class="modal-ds-header">
+            <svg onclick="closeModal()" class="icon icon-close-3 modal-ds-close-icon modal-ds-close-icon-in-header close-icon close-icon-medium icon--default-size"><use xlink:href="#icons-close-3"></use></svg>
+        </div>
+        <div class="modal-ds-content modal-ds-content--background--regular modal-ds-content--radius--middle">
+            <div class="scroll-bar-container modal-body modal-body--padding--regular">
+                <h3 class="confirmation-modal-title">End <span id="unsubModalUsername"></span> subscription?</h3>
+                <h3 class="confirmation-modal-description">
+                    <div class="do">
+                        <span>Reason for cancellation.</span>
+                        <div class="select spacer-small-s has-value select-default">
+                            <select class="select-control" style="appearance: none;padding-left: 10px;">
+                                <option>No specific reason</option>
+                                <option>Private messages not replied</option>
+                                <option>Subscription price too high</option>
+                                <option>No longer want to be subscribed</option>
+                            </select>
+                            <span class="select-arrow-zone">
+                                <svg class="icon icon-arrow-down icon--default-size"><use xlink:href="#icons-arrow-down"></use></svg>
+                            </span>
+                        </div>
+                    </div>
+                </h3>
+                <div class="confirmation-modal-controls controls">
+                    <button class="btn btn-second btn-large" type="button" onclick="closeModal()">Cancel</button><button class="confirmation-modal-btn-confirm btn btn-accept btn-large btn--width--medium" id="unsubModalBtn" type="button">Unsubscribe</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-ds-overlay" data-modal="publish" style="display:none">
+    <div class="modal-ds-overlay__background"></div>
+    <div class="modal-ds-body modal-ds-body--background--none modal-ds-body--size--wide">
+        <div class="modal-ds-content modal-ds-content--background--dark modal-ds-content--radius--middle">
+            <div class="scroll-bar-container modal-body ps">
+                <div class="bm4">
+                    <div class="blr">
+                        <div class="blr__left"><a href="#"><span class="avatar blr__avatar" style="--avatar-border-size: 0px;"><span class="avatar__img" style="background-image: url(<?= $sm['user']['profile_photo']; ?>);"></span></span></a></div>
+                        <div
+                            class="blr__right">
+                            <div class="blr__title">Create new publication</div><span class="blr__sub-text"> Publish Now & Attract Subscribers!</span></div>
+                </div>
+                <div class="bm4__body">
+                    <div class="ft">
+                        <div class="ft__content">
+                        <div class="ft__description"></div>
+                        <div class="ft__details">
+                            <div class="ft__text-form">
+                                <div class="chat-controls-input__wrapper chat-controls-input__wrapper--form chat-controls-input__wrapper--dark" translate="no">
+                                    <div class="chat-controls-input chat-controls-input--style--multy-line chat-controls-input--form emoji-input" contenteditable="true" autocorrect="off" autocapitalize="off" translate="no" spellcheck="false" data-gramm="false" placeholder="Post caption..." id="postMessage"></div>
+                                </div>
+                                <div class="ft__attach-media">
+                                    <button class="btn btn-icon" type="button" onclick="uploadFeedMedia()"><svg class="icon icon-photo-3" style="min-width: 20px; height: 20px; width: 20px;"><use xlink:href="#icons-photo-3"></use></svg></button>
+                                </div>
+                                <div class="ft__text-form-controls">
+                                    <div class="smiles-dropdown"><a class="smiles-dropdown__icon" href="javascript:;" onclick="showEmoji('show')"><svg class="icon icon-smile" style="min-width: 18px; height: 18px; width: 18px;" ><use xlink:href="#icons-smile"></use></svg></a></div>
+                                </div>
+
+                                <div class="smiles-dropdown__list smiles-dropdown__list--visible showEmoji" style="--dropdown-max-height: 260px;right: 40px;bottom: 10px;display: none;">
+                                    <div class="scroll-bar-container">
+
+                                    <?php 
+                                        $path = 'emoji';
+                                        foreach (array_filter(glob($path.'/*'), 'is_file') as $emoji) {
+                                            $emojiOC = "selectEmoji('".$emoji."')";
+                                            echo '<a class="active-smile" onclick="'.$emojiOC.'"><img src="'.$sm['config']['site_url'].$emoji.'" class="smile smile--size--small"></a>';
+                                        }
+                                    ?>
+                                    </div>
+                                </div> 
+
+                            </div>
+
+                            
+                            <div class="o o--selectable o--state--not-selected" onclick="selectPostType(1,'free')" data-post-type="1" style="padding-left: 15px;">
+                                <div class="o__title" style="font-size:14px;margin:0;line-height:14px">
+                                    <svg class="icon icon-gift icon--default-size" style="height: 14px; width: 14px;"><use xlink:href="#icons-lock-opened"></use></svg> Free For Everyone
+                                </div>
+                            </div>
+                            <div class="o o--selectable o--state--not-selected" onclick="selectPostType(2,'subs')" data-post-type="2" style="padding-left: 15px;">
+                                <div class="o__title" style="font-size:14px;margin:0;line-height:14px">
+                                    <svg class="icon icon-gift icon--default-size" style="height: 14px; width: 14px;"><use xlink:href="#icons-lock-1"></use></svg> Only For Subscribers
+                                </div>
+                            </div>                            
+                            <div class="o o--selectable o--state--not-selected" onclick="selectPostType(3,'ppv')" data-post-type="3" style="padding-left: 15px;">
+                                <div class="o__title" style="font-size:14px;margin:0;line-height:14px">
+                                    <svg class="icon icon-gift icon--default-size" style="height: 16px; width: 16px;"><use xlink:href="#icons-dollar"></use></svg> Pay Per View
+                                </div>
+                            </div> 
+
+                            <div class="input-wrapper" id="payPerViewInput" style="display:none">
+                                <div class="input-wrapper__text-wrapper">
+                                    <input class="input text-default theme-default inline-block" type="number" id="ppvPostPrice" onkeyup="updatePPV(this.value)" placeholder="Post price in <?= $sm['plugins']['settings']['currency']; ?>" style="width: 130px;">
+                                </div>
+                            </div>
+
+                            <div class="ft__media-list">
+                                <div class="upload-file-list" style="min-height: auto;">                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-ds-footer-placeholder" style="height: 81px; min-height: 81px;"></div>
+    </div>
+    <div class="modal-ds-footer modal-ds-footer--background--dark">
+        <div class="footer-actions-container footer-actions-container--position--right footer-actions-container--spaced-x">
+            <div class="buttons-form-list">
+                <div class="buttons-form-list__item"><button class="btn btn-default btn-large" type="button" onclick="closeModal('publish')">Cancel</button></div>
+                <div class="buttons-form-list__item"><button class="fw__primary-button btn btn-apply btn-large" type="button" id="publishPostBtn" onclick="createFeedPost()">Publish</button></div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+
+
+<div class="modal-ds-overlay" data-modal="notification" style="display:none">
+    <div class="modal-ds-overlay__background"></div>
+    <div class="modal-ds-body modal-ds-body--background--none modal-ds-body--size--small">
+        <div class="modal-ds-content modal-ds-content--background--regular modal-ds-content--radius--middle">
+            <div class="scroll-bar-container modal-body modal-body--padding--regular psr">
+                <center><span class="avatar model-avatar" style="--avatar-size: 88px; --avatar-border-size: 5px;margin: 15px;">
+                    <span class="avatar__img" id="share-modal-photo" style="background-image: url(<?= $sm['user']['profile_photo']; ?>);"></span>
+                </span></center>               
+                <h3 class="confirmation-modal-title text-s24-w700 text-center" id="notificationModalHeader"></h3>
+                <h3 class="confirmation-modal-description" id="notificationModalText"></h3>
+                <div class="modal-ds-footer-placeholder"></div>
+            </div>
+            <div class="modal-ds-footer modal-ds-footer--background--regular">
+                <div>
+                    <div class="footer-actions-container footer-actions-container--position--right footer-actions-container--spaced-x">
+                        <div class="buttons-form-list">
+                            <div class="buttons-form-list__item" style="display:none"><button class="btn btn-second btn-large" type="button">Cancel</button></div>
+                            <div class="buttons-form-list__item"><button class="confirmation-modal-btn-confirm min-width-120 btn btn-apply btn-large" type="button" id="notificationModalBtn" onclick="closeModal('notification')">OK</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

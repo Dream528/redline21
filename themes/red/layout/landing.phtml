@@ -1,0 +1,231 @@
+<script>
+url = 'landing';
+</script>
+<div class="landing">
+    <div class="landing__content">
+        <section id="form-section" class="landing__section-login">
+            <div class="landing__login-wrapper">
+                <div class="landing__real-title">
+                    <div class="bYz">
+                        <div class="bYz__wrapper-center">
+                            <div class="bYz__wrapper" style="max-width: 1640px;min-width: 1640px;">
+                            <?php 
+                            $models = getSelectedArray('id,username','users','where creator = 1','rand()','LIMIT 0,21');
+                                foreach ($models as $m) { ?>
+                                <a class="bYz__item" href="javascript:;" onclick="goToProfile(event,'<?= $m['username']; ?>')">
+                                    <div class="bYz__image" style="background-image: url('<?= profilePhoto($m['id']); ?>');"></div>
+                                    <div class="bYz__item-bottom">
+                                        <span class="bYz__username">
+                                            <span class="bYz__name"><?= $m['username']; ?></span><svg class="icon icon-verified-gradient" style="min-width: 16px; height: 16px; width: 16px;"><use xlink:href="#icons-verified-gradient"></use></svg>
+                                        </span>
+                                    </div>
+                                </a>                                    
+                                <?php } ?>                                                     
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="landing-login-form landing-login-form--dark landing-login-form--with-margin" style="transform: translateY(0px);">
+                        <span class="bV" style="position:absolute;pointer-events: none;">
+                            <svg width="368" height="564" fill="none" class="bV__svg">
+                                <rect x="1" y="1" width="366" height="562" rx="44" stroke="url(#color-bordered-gradient)" stroke-width="2"></rect>
+                                <defs>
+                                    <linearGradient id="color-bordered-gradient" x1="98.5" y1="573" x2="368" y2="213.48" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#000" stop-opacity="0"></stop>
+                                        <stop offset="1" stop-color="#ff4d4d"></stop>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </span>
+                        <form class="auth-form" id="register">
+                            <div class="auth-form__title">Register your account</div>
+                            <div>
+                                <div class="auth-form__fading-input">
+                                    <div class="input-wrapper">
+                                        <div class="input-wrapper__text-wrapper">
+                                            <input class="input text-default theme-light inline-block login-form__input" type="text" id="auth-form-login" autocapitalize="none" maxlength="255" placeholder="Username" name="username" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="auth-form__fading-input">
+                                    <div class="input-wrapper">
+                                        <div class="input-wrapper__text-wrapper">
+                                            <input class="input email-default theme-light inline-block login-form__input" type="email" autocapitalize="none" maxlength="255" id="auth-form-email" placeholder="Email" name="email" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="auth-form__fading-input">
+                                    <div class="input-wrapper">
+                                        <div class="input-wrapper__text-wrapper">
+                                            <input class="input password-default theme-light inline-block login-form__input" type="password" id="auth-form-password" autocapitalize="none" maxlength="255" name="pass" placeholder="Password" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="action" value="register">
+                            <input type="hidden" value="<?= $sm['referral']; ?>" name="ref" />
+                            <div class="auth-form__hint register-error" style="display:none;color: #ff5050;"></div>                            
+                            <button class="auth-form__join btn btn-apply btn-large" type="submit" style="background:#bb1a1a" id="create-acc"> 
+                            Create Account</button>
+                            <div class="auth-form__divider"><div class="auth-form__divider-text">or continue with</div></div>
+                            <div class="auth-form__social-login" style="grid-template-columns: repeat(2, 1fr);">
+                                <a href="index.php?social=google" class="btn btn-light btn-large" type="button">
+                                    <svg class="icon icon-google" style="min-width: 24px; height: 24px; width: 24px;"><use xlink:href="#icons-google"></use></svg>Google
+                                </a>
+                                <button id="twitter_authorization_id" class="btn btn-light btn-large" type="button">
+                                    <svg class="icon icon-twitter icon--default-size" style="color: rgb(29, 161, 242); height: 24px; width: 24px;"><use xlink:href="#icons-twitter"></use></svg>Twitter
+                                </button>
+                            </div>
+                            <div class="auth-form__form-switcher">Already a member? <button class="accent-color-text btn btn-text" type="button" onclick="openModal('login');">Sign In</button></div>
+                        </form>
+                        <div class="landing-login-form__sub-footer">
+                            <div class="auth-form__hint">
+                                <span>By joining you confirm that you are at least 18 years old and agree to <?= $sm['config']['name']; ?> <a class="link link-after-text terms-link" href="/terms" target="_blank">Terms and Conditions</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="landing-ability landing-ability--animated--is-waiting" id="exclusive-content" style="margin-bottom:180px">
+            <h1 class="landing-abilities__title text-center"><span class="accent-color-text">World best</span> sexting hub with the most populars adult content creators</h1>
+            <div class="landing-abilities__subtitle">
+                Access tons of exclusive content and interact with the most famous models of the internet
+            </div>
+        </section>
+
+
+        <section class="landing-ability" id="message-chat">
+            <div class="landing-ability__content-wrapper landing-abilities__with-margin">
+                <div class="landing-ability__description">
+                    <h2 class="landing-ability__title">
+                        <div class="login-messages">
+                            <div class="login-message-wrapper">
+                                <div class="login-message login-message__dynamic login-message__small-margin">
+                                    <div class="login-message__absolute-emoji" style="background: url('<?= $sm['config']['site_url']; ?>emoji/thinking_face.avif') center center / contain no-repeat;"></div>
+                                    <img class="login-message__avatar" alt="" src="<?= $sm['config']['theme_url']; ?>/images/avatar.jpg" />
+                                    <div>
+                                        <div class="login-message__text">Are you looking</div>
+                                        <div aria-label="hidden">
+                                            <span class="login-message__text accent-color-text">
+                                                <span>for exclusive content?</span><span>&nbsp;</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="login-message-wrapper login-message-wrapper--answer">
+                                <div class="login-message login-message__small login-message__huge-margin">     <div class="login-message__text">
+                                        Yeah
+                                        <img src="<?= $sm['config']['site_url']; ?>emoji/star_struck.avif" alt=":heart_eyes:" class="login-message__inline-emoji" />                                        
+                                    </div>
+                            </div>
+                            <div class="login-message-wrapper" style="margin-top: 30px;">
+                                <div class="login-message login-message__dynamic login-message__small-margin">
+                                    <div class="login-message__absolute-emoji" style="background: url('<?= $sm['config']['site_url']; ?>emoji/flushed.avif') center center / contain no-repeat;"></div>
+                                    <img class="login-message__avatar" alt="" src="<?= $sm['config']['theme_url']; ?>/images/avatar.jpg" />
+                                    <div>
+                                        <div class="login-message__text">And what about</div>
+                                        <div aria-label="hidden">
+                                            <span class="login-message__text accent-color-text">
+                                                <span>the best sexting?</span><span>&nbsp;</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="login-message-wrapper login-message-wrapper--answer">
+                                <div class="login-message login-message__small login-message__huge-margin">
+                                    <div class="login-message__text">
+                                        Sure
+                                        <img src="<?= $sm['config']['site_url']; ?>emoji/smiling_imp.avif" alt=":heart_eyes:" class="login-message__inline-emoji" />                                        
+                                    </div>
+                                </div>
+                            </div>                            
+                            <div class="login-message-wrapper">
+                                <div class="login-message login-message__medium-margin">
+                                    <img class="login-message__avatar" alt="" src="<?= $sm['config']['theme_url']; ?>/images/avatar.jpg" />
+                                    <div>
+                                        <span class="login-message__text">
+                                            <span>You're in the <span class="accent-color-text"> right place my love</span></span>
+                                            <img src="<?= $sm['config']['site_url']; ?>emoji/heart_eyes.avif" alt=":heart_eyes:" class="login-message__inline-emoji" />
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </h2>
+                </div>
+                <div class="landing-ability__content">
+                    <div class="bWz__content">
+                        <h3 class="bWz__title">No Fake, No Chatbots, Authentic Models</h3>
+                        <div class="bWz__footer">
+                            <button class="btn btn-apply btn-large" type="button" onclick="goTo('discover')">
+                                <svg class="icon icon-chats-rounded indent-right-small-4" style="min-width: 24px; height: 24px; width: 24px;"><use xlink:href="#icons-chats-rounded"></use></svg>
+                                Discover models
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="landing-ability landing-ability--animated--type-1" style="display: none" id="unlock-content">
+            <div class="landing-ability__content-wrapper landing-abilities__unlock landing-abilities__with-margin landing-ability__content-wrapper--is-right">
+                <div class="landing-ability__content">
+                    <div class="landing-abilities__screen"></div>
+                </div>
+                <div class="landing-ability__description">
+                    <div class="landing-ability__suptitle">Exclusive</div>
+                    <h2 class="landing-ability__title">Unlock&nbsp;<br class="mobile-hide"><span class="accent-color-text">Exclusive Content</span></h2>
+                    <div class="landing-ability__subtitle">Get access to very exclusive content that cannot be found elsewhere.</div>
+                    </span>
+                </div>
+            </div>
+        </section>
+
+
+        <section>
+            <div class="landing-benefits">
+                <div class="landing-benefit">
+                    <div class="landing-benefit__icon-wrapper">
+                        <svg class="icon icon-star accent-color-text icon--default-size"><use xlink:href="#icons-star"></use></svg>
+                    </div>
+                    <div class="landing-benefit__title">Exclusive Content</div>
+                    <div class="landing-benefit__subtitle">Enjoy our unlimited pool of content from top creators from all over the globe.</div>
+                </div>
+                <div class="landing-benefit">
+                    <div class="landing-benefit__icon-wrapper">
+                        <svg class="icon icon-message accent-color-text icon--default-size"><use xlink:href="#icons-message"></use></svg>
+                    </div>
+                    <div class="landing-benefit__title">Private Chat</div>
+                    <div class="landing-benefit__subtitle">Get to know each other better and build a special connection in private messages.</div>
+                </div>
+                <div class="landing-benefit">
+                    <div class="landing-benefit__icon-wrapper">
+                        <svg class="icon icon-mobile accent-color-text icon--default-size"><use xlink:href="#icons-balance"></use></svg>
+                    </div>
+                    <div class="landing-benefit__title">Crypto & Cards</div>
+                    <div class="landing-benefit__subtitle"><?= $sm['config']['name']; ?> allows you to pay subscriptions with cryptocurrencies and payments cards</div>
+                </div>                
+            </div>
+        </section>
+
+        <section class="landing-ability landing-ability--animated--type-1" id="mobile">
+            <div class="landing-ability__content-wrapper">
+                <div class="landing-ability__description">
+                    <div class="landing-ability__suptitle">Mobile</div>
+                    <h3 class="landing-ability__title">In the&nbsp;<span class="accent-color-text">Palm<br class="mobile-hide"> of Your Hand</span></h3>
+                    <div class="landing-ability__subtitle">Your favorite models, creators, and chats are all in your pocket and just within arm's reach.</div>
+                </div>
+                <div class="landing-ability__content">
+                    <div class="landing-abilities__mobile-screen"></div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>

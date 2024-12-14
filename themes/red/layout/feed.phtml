@@ -1,0 +1,227 @@
+<script>
+    url = 'feed';
+</script>
+<div class="page" style="padding-top: 15px;">
+<div class="dominant-color dominant-color-3" style="display:none"></div>  
+<div class="page__content">
+    <div class="feed" id="feed">
+        <div class="feed-content">
+            <!-- STORIES -->
+            <div class="br__stories" style="padding-right: 2px;">
+                <div class="bp bp--style--pinned" id="feedStories" style="display:block;">
+                    <div class="bp__content" style="max-width: 100%;">
+                        <div class="scroll-bar-container-wrapper">
+                            <div class="scroll-bar-container" >
+                                <div class="feed_stories bp__list" id="feedStory">
+                                    <?php
+                                    for ($x = 1; $x <= 30; $x++) { ?>
+                                        <div class="bp__item" id="story<?=$x; ?>" data-current-story-position="<?=$x; ?>" data-story-loaded="0">
+                                            <span class="avatar" style="--avatar-size: 80px;">
+                                                <span class="avatar__story-border"></span>
+                                                <span class="avatar__img loading-story"></span>
+                                            </span>
+                                        </div>                                      
+                                    <?php } ?>                                            
+                                </div>
+                            </div>
+
+                            <div class="scroll-bar-container__shadow scroll-bar-container__shadow--top"></div>
+
+                            <div class="scroll-bar-container__shadow scroll-bar-container__shadow--bottom"></div>
+
+                            <div class="scroll-bar-container__shadow scroll-bar-container__shadow--right mobile-hide"></div>
+
+                            <div class="scroll-bar-container__arrow scroll-bar-container__arrow--right scroll-bar-container__arrow--visible mobile-hide" onclick="horizontalScroll('feedStories','right',650)"
+                             id="stories-right-btn" style="display:none">
+
+                            <div class="scroll-bar-container__shadow scroll-bar-container__shadow--left scroll-bar-container__shadow--visible stories-left-btn mobile-hide" style="display:none"></div>
+
+                            <div class="scroll-bar-container__arrow scroll-bar-container__arrow--left scroll-bar-container__arrow--visible stories-left-btn mobile-hide" style="display:none" onclick="horizontalScroll('feedStories','left',650)">
+                                <svg class="icon icon-arrow-round-right" style="height: 32px; width: 32px;"><use xlink:href="#icons-arrow-round-right"></use></svg>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <!-- POPULARS / TRENDS / NEWS -->
+            <div class="bLL" style="margin-top: 5px;">
+                <div class="bLL__header">
+                    <div class="bLL__tabs">
+                        <div class="bLL__tab bLL__tab--active" data-home-tab="top" 
+                            onclick="feedPopularLoad('top')">Top</div>
+                        <div class="bLL__tab" data-home-tab="trend" 
+                            onclick="feedPopularLoad('trend')">Trend</div>
+                        <div class="bLL__tab" data-home-tab="new" 
+                            onclick="feedPopularLoad('new')">New</div>
+                    </div>
+                    <a class="bLL__link" href="javascript:;" onclick="goTo('discover')" style="color:#f9f9f9">
+                        View all
+                        <svg class="icon icon-chevron-right indent-left-small-6" style="min-width: 14px; height: 14px; width: 14px;">
+                            <use xlink:href="#icons-chevron-right"></use>
+                        </svg>
+                    </a>
+                </div>
+                <div class="bK">
+                    <div class="scroll-bar-container-wrapper">
+                        <div class="scroll-bar-container" id="feedPopulars">
+                            <div class="bK__list" id="feedPopular">
+                                <?php
+                                for ($x = 0; $x <= 10; $x++) { ?>
+                                    <div class="bK__item" id="popularUser<?=$x; ?>" data-popular-loaded="0">
+                                        <div class="m m--clickable">
+                                            <div class="m__cover m__cover--image loading-popular"></div>
+                                            <a class="m__cover" href="javascript:;"></a>
+                                            <a class="username-inline-card white-color-text" href="javascript:;">
+                                                <div class="username-inline-card__avatar-wrapper username-inline-card__avatar-wrapper--space-size--small">
+                                                    <span class="avatar" style="--avatar-size: 40px;">
+                                                        <span class="avatar__story-border"></span>
+                                                        <span class="avatar__img loading-story"></span>
+                                                    </span>
+                                                </div>
+                                                <div>
+                                                    <div class="displayname displayname--size--small-x">
+                                                        <div class="displayname__name displayname__name--text-overflow"></div>
+                                                    </div>
+                                                    <span class="m__followers">
+                                                        <svg class="icon icon-people indent-right-small-6" style="min-width: 16px; height: 16px; width: 16px;">
+                                                            <use xlink:href="#icons-people"></use>
+                                                        </svg>
+                                                    </span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>                                      
+                                <?php } ?>  
+                            </div>
+
+                        </div>
+                        <div class="scroll-bar-container__shadow scroll-bar-container__shadow--top"></div>
+                        <div class="scroll-bar-container__shadow scroll-bar-container__shadow--bottom"></div>
+
+                        <div class="scroll-bar-container__shadow scroll-bar-container__shadow--left scroll-bar-container__shadow--visible populars-left-btn mobile-hide" style="display:none"></div>
+
+                        <div class="scroll-bar-container__shadow populars-right-btn scroll-bar-container__shadow--right scroll-bar-container__shadow--visible"></div>
+
+                        <div class="scroll-bar-container__arrow populars-left-btn scroll-bar-container__arrow--left scroll-bar-container__arrow--visible mobile-hide" 
+                        onclick="horizontalScroll('feedPopulars','left',600)" style="display:none">
+                            <svg class="icon icon-arrow-round-right" style="min-width: 32px; height: 32px; width: 32px;">
+                                <use xlink:href="#icons-arrow-round-right"></use>
+                            </svg>
+                        </div>
+
+                        <div class="scroll-bar-container__arrow populars-right-btn scroll-bar-container__arrow--right scroll-bar-container__arrow--visible mobile-hide" onclick="horizontalScroll('feedPopulars','right',600)">
+                            <svg class="icon icon-arrow-round-right" style="min-width: 32px; height: 32px; width: 32px;margin-right: 2px;">
+                                <use xlink:href="#icons-arrow-round-right"></use>
+                            </svg>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="spacer-large-x"></div>
+
+            <!-- FEED -->
+            <div class="feed" id="feed">
+
+                <?php
+                if($sm['user']['guest'] == 0){ ?>
+                <div class="pill-page-tabs pill-page-tabs--style--center" style="padding:10px;display:none">
+                    <div class="pill-control pill-control--style--default">
+                        <div class="pill-control__item pill-control__item--style--default pill-control__item--active" data-feed-pill="all_favs" >
+                            <svg class="icon icon-collection">
+                                <use xlink:href="#icons-collection"></use>
+                            </svg>
+                            All
+                        </div>
+                        <div class="pill-control__item pill-control__item--style--default" 
+                        data-feed-pill="favs">
+                            <svg class="icon icon-star-filled">
+                                <use xlink:href="#icons-star"></use>
+                            </svg>
+                            Favs
+                        </div>
+                        <div class="pill-control__item pill-control__item--style--default" 
+                        data-feed-pill="subs">
+                            <svg class="icon icon-star-filled">
+                                <use xlink:href="#icons-lock-1"></use>
+                            </svg>
+                            Subs
+                        </div>                        
+                    </div>
+                </div>
+
+                <?php } ?>
+
+                <div class="empty-page-content empty-page-content--big" id="noFeedYet" style="display:none">
+                    <svg class="icon icon-album empty-page-content__icon empty-page-content__icon--big"><use xlink:href="#icons-timeline"></use>
+                    </svg>
+                    <h3 class="empty-page-content__title empty-page-content__title--big">Nothing here... yet<img src="https://redline21.com/emoji/smirk.avif" class="smile smile--size--medium"></h3>
+                    <div class="empty-page-content__description empty-page-content__description--big">Hey <?= $sm['user']['username'];?> we don't have nothing to show you here yet, why dont you go to <a href="javascript:;" onclick="goTo('discover');" style="font-weight:bold;color:#fff;">discover page</a> so you can follow or subscribe to some creators </div>
+                </div>         
+
+                <div class="feed-content" id="feed-content" style="display: none;">                 
+                    <?php
+                    for ($x = 0; $x <= 24; $x++) { ?>          
+                        <div class="feed-post" data-feed-loaded="0" data-loading-feed="<?= $x; ?>">
+                            <div class="tile text-post-tile">
+                                <div class="feed-my-club__header">
+                                </div>
+                                <div class="tile-header">
+                                    <div>
+                                        <a class="avatar-wrapper" href="#">
+                                            <span class="avatar model-avatar" style="--avatar-size: 48px; --avatar-border-size: 0px;">
+                                                <span class="avatar__img loading-story"></span>
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="content-wrapper">
+
+                                    </div>
+                                </div>
+                                <div class="text-post">
+                                    <div class="data-hj-suppress S S--clickable">
+                                        <div class="image-swiper">
+                                            <div class="image-swiper__scroll" style="height: 325px;">
+                                                <div class="image-swiper__item loading-feed" style="width: 100%;height: 325px;">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="position:relative;margin-top:15px;width: 350px;
+                                    height: 30px;">
+                                        <div class="loading-feed"></div>
+                                    </div>                                                           
+                                </div>
+                                <div class="tile-footer">
+                                    <div class="content" style="height:80px;margin-left: 2px;border:none">
+                                        <div class="left-wrapper">
+                                            <button class="likes-counter likes-counter--size--medium loading-story" style="width: 32px;">
+                                            </button>
+                                            <button class="likes-counter likes-counter--size--medium loading-story" style="width: 24px;height:24px;margin-left: 10px;">
+                                            </button>
+                                            <button class="likes-counter likes-counter--size--medium loading-story" style="width: 32px;margin-left: 10px;">
+                                            </button>                                                     
+  
+                                        </div>
+                                        <div class="right-wrapper">
+                                            <button class="likes-counter likes-counter--size--medium loading-story" style="width: 32px;margin-left: 10px;">
+                                            </button>      
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                    
+                    <?php } ?>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

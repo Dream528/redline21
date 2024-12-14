@@ -1,0 +1,648 @@
+<html lang="en" style="" >
+<head prefix="og: https://ogp.me/ns# fb: https://ogp.me/ns/fb# website: https://ogp.me/ns/website#">
+<meta charset="utf-8" />
+<meta name="theme-color" content="#303133" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="msapplication-TileColor" content="#000000" />
+<title>Redline21 - International</title>
+
+<link rel="shortcut icon" href="favicon.png">
+<link rel="stylesheet" href="<?php echo $sm['config']['theme_url']; ?>/css/uikit.css">   
+<link rel="stylesheet" href="<?php echo $sm['config']['theme_url']; ?>/css/styles.css">          
+<link rel="stylesheet" href="<?php echo $sm['config']['theme_url']; ?>/css/belloored.css">
+
+<meta name="description" content="Redline21 - Chat and have fun with the hottest sexting partners in the world." />
+<meta name="robots" content="index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large" />
+
+<link rel="icon" type="image/png" href="" sizes="32x32">
+
+<link rel="stylesheet" type="text/css" href="<?php echo $sm['config']['site_url']; ?>themes/default/css/vendor/sweetalert.css">
+
+<link rel="stylesheet" href="<?php echo $sm['config']['site_url']; ?>themes/default/css/crossplatform.css"/>
+<link href="<?php echo $sm['config']['site_url']; ?>themes/default/css/vendor/jquery.dm-uploader.min.css" rel="stylesheet">
+<link href="<?php echo $sm['config']['site_url']; ?>themes/default/css/vendor/autocomplete.css" rel="stylesheet" type="text/css" /> 
+<link href="<?php echo $sm['config']['site_url']; ?>themes/red/css/vendor/nprogress.css" rel="stylesheet" type="text/css" />
+
+<link rel="stylesheet" type="text/css" href="<?php echo $sm['config']['site_url']; ?>themes/default/css/vendor/little-widgets.css"/>
+
+<?php foreach($sm['plugin'] as $plugin){ ?>
+    <?php if(!empty($plugin['css_file'])){
+        $show = true;
+        if($show){
+            echo '<link rel="stylesheet" id="style'.$plugin['css_file'].'" type="text/css" href="'.$sm['config']['theme_url'].'/css/vendor/'.$plugin['css_file'].'.css"/>';
+        }
+    } 
+} ?>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />   
+<link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;200;300;400;500;700;800&display=swap" rel="stylesheet">
+
+<script src="https://js.pusher.com/8.0.1/pusher.min.js"></script>
+<script src="<?php echo $sm['config']['site_url']; ?>themes/default/js/vendor/velocity.min.js"></script>
+
+<script>
+var loadedConversations = [];    
+function inIframe() {
+    try {
+      return window.self !== window.top;
+    } catch (e) {
+      return true;
+    }
+}    
+<?php 
+    $pk = $sm['plugins']['pusher']['key'];
+?>
+var rt = '';
+var channel = '';
+rt = new Pusher("<?= $pk; ?>", {
+  cluster: "<?=$sm['plugins']['pusher']['cluster']; ?>"
+});    
+channel = rt.subscribe("<?= $pk; ?>");
+
+
+
+</script>
+
+<script>
+var siteUrl = '<?= $sm['config']['site_url']; ?>';
+</script>
+
+<?php $actual_link = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']; ?> 
+<?php
+$site_config = json_encode($sm['config']);
+$site_plugins = array();
+$requiredPlugins = array('settings','videocall','accounts','populars','adsWeb','fortumo','meet','live','liveDiscover','profile','story','withdrawal','discover','chat','recordVideocall','verification','fakeUsersInteractions','facebook','pusher','ipstack','rewards','fgfeed','aiautoresponder','date');
+foreach ($sm['plugins'] as $plugin => $data) {
+    if (in_array($plugin, $requiredPlugins)) {
+        if($plugin == 'facebook'){
+            unset($data['secret']);
+        }
+        if($plugin == 'pusher'){
+            unset($data['secret']);
+        }
+        if($plugin == 'fortumo'){
+            unset($data['secret']);
+        }        
+        $site_plugins[$plugin] = $data;
+    }
+}
+
+if($sm['plugins']['adsWeb']['728x90'] == '[ADSMANAGER]'){
+    $sm['plugins']['adsWeb']['728x90'] = getAD('728x90');
+}
+if($sm['plugins']['adsWeb']['160x600'] == '[ADSMANAGER]'){
+    $sm['plugins']['adsWeb']['160x600'] = getAD('160x600');
+}
+if($sm['plugins']['adsWeb']['200x200'] == '[ADSMANAGER]'){
+    $sm['plugins']['adsWeb']['200x200'] = getAD('200x200');
+}
+
+$site_plugins = json_encode($site_plugins);
+$site_theme = json_encode($sm['theme']);
+$site_prices = json_encode($sm['price']);
+$account_basic = json_encode($sm['basic']);
+$account_premium = json_encode($sm['premium']);
+$site_lang = json_encode($sm['lang']);
+$seo_lang = json_encode($sm['seoLang']);
+$user_info = json_encode($sm['user']);
+$randomFakeOnline = json_encode(getRandomFakeOnline('id',$sm['user']['looking']));
+$filter_age = 0;
+$um = checkUnreadMessages($sm['user']['id']);
+$p = 'true';
+$f_age = explode( ',', $sm['user']['s_age'] );
+$allG = count($sm['genders']);
+$allG = $allG + 1;
+
+echo 
+'<script>
+var url;
+var allG = '.$allG.';
+var upType = 0;
+var totalDiscoverStories = 0;
+var distanceMeter = "KM";
+var distanceLimit = 50;
+var mobile = false;
+var noChat = false;
+var themeUpdate = "'.$sm['settings']['desktopThemePreset'].'";
+var siteUrl = "'.$sm['config']['site_url'].'";
+var chatLimit = false;
+
+var spotlightLoaded = false;';
+echo '
+
+var um = '.$um.';
+var mobileSite = false;
+var site_config = '. $site_config  . ';
+var plugins = '. $site_plugins  . ';
+var site_prices = '. $site_prices  . ';
+var site_theme = '. $site_theme  . ';
+var account_basic = '. $account_basic  . ';
+var account_premium = '. $account_premium  . ';
+var site_lang = '. $site_lang  . ';
+var seo_lang = '. $seo_lang  . ';
+var user_info = '. $user_info  . ';
+var rnd_f = '. $randomFakeOnline . ';
+var rnd_f_c = 0;
+var profile_info = '. $user_info  . ';
+var fage1 = 18;
+var fage2 = 25;
+function request_source(){
+    return \'' . $sm['config']['ajax_path'] . '\';
+}
+function site_title(){
+    return \'' . $sm['config']['title'] . '\';
+}   
+function theme_source(){
+    return \'' . $sm['config']['theme_url'] . '\';
+}
+function site_url(){
+    return \'' . $sm['config']['site_url'] . '\';
+}   
+function user_id(){
+    return \'' . $sm['user']['id'] . '\';
+}
+var current_user_id = 0;
+var current_page = "";
+var user_name;  
+var uploadStory = false;
+</script>';
+?>
+
+<?php 
+    echo '
+    <script>
+        var currentDiscoverPage = 0;
+    </script>
+    ';
+    if(isset($_GET['p'])){
+        echo '<script>currentDiscoverPage = '.secureEncode($_GET['p']).';</script>';
+    }
+?>
+
+<script>
+var gUrl = request_source()+'/rt.php';
+var aUrl = request_source()+'/api.php';    
+function defer(method) {
+    if (!window.jQuery) {
+        method();
+    } else {
+        setTimeout(function() { defer(method) }, 100);
+    }
+}
+
+var w = window,
+    d = document,
+    e = d.documentElement,
+    g = d.getElementsByTagName('body')[0],
+    x = w.innerWidth || e.clientWidth || g.clientWidth,
+    h = w.innerHeight|| e.clientHeight|| g.clientHeight; 
+
+</script>
+
+<?php $fonts = getArrayDSelected('font','theme_preset_fonts','where preset = "'.$_SESSION['preset'].'"');
+foreach ($fonts as $font) { 
+    $f = $font['font'];
+    $f = str_replace(' ','+', $f);
+    echo '<link href="https://fonts.googleapis.com/css?family='.$f.'" rel="stylesheet" type="text/css"/>';
+} ?>
+<style id="themeData">
+    <?= getAbsolutePage('styles'); ?>
+</style>
+
+<style>
+@media (max-width:720px) {  
+    input[type="text"],
+    input[type="date"],
+    input[type="email"],
+    input[type="number"],
+    input[type="search"],
+    input[type="password"],
+    select:focus,
+    textarea {
+      font-size: 16px!important;
+    }    
+    [contenteditable='true']:focus {
+        font-size: 16px!important;
+    }
+}
+</style>
+
+<?php if(!empty($sm['plugins']['analytics']['ga_id'])){ ?>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<?= $sm['plugins']['analytics']['ga_id']; ?>"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', '<?= $sm['plugins']['analytics']['ga_id']; ?>');
+    </script>    
+<?php } ?>
+
+<?= $sm['plugins']['customHtml']['website_header']; ?>
+
+</head>
+
+<body cz-shortcut-listen="true">
+    
+<div class="main-layout">
+    <div class="main-layout__wrapper">
+        <header>
+            <div class="header-top " id="main-header" style="display:none">
+                <div class="container">
+                    <nav class="nav-left">
+                        <a aria-label="Go to Main Page" class="header-top-logo header-logo-link" href="javascript:;" 
+                        onclick="goTo('landing')" data-header-menu="feed">
+                            <div class="header-logo site-logo--size--medium site-logo"></div>
+                        </a>
+                    </nav>
+                    <nav class="nav-center no-show-tablets" data-responsive="desktop">
+                        <a class="top-menu__link" href="javascript:;" 
+                        onclick="goTo('feed')" data-header-menu="feed">
+                            Feed
+                        </a>
+                        <a class="top-menu__link" href="javascript:;" 
+                        onclick="goTo('discover')" data-header-menu="discover">Discover</a>
+                        <a class="top-menu__link" href="javascript:;" 
+                        onclick="goTo('live')" data-header-menu="live">Live</a>
+
+                        <?php if($sm['user']['guest'] == 0){ ?>
+                        <a class="top-menu__link" href="javascript:;" data-header-menu="messages" onclick="openModal('messages','menu');">Messages <span class="has-unread-msg" style="display: none;">0</span></a>
+                        <?php } ?>
+                    </nav>
+
+                    <nav class="nav-right " data-responsive="desktop">
+                        <div class="bf bf--type--big-desktop top-search-hidden">
+                            <div class="bf__wrapper bf__wrapper--type--big-desktop">
+                                <label class="bf__label">
+                                    <svg class="icon icon-search bf__icon"><use xlink:href="#icons-search"></use></svg>
+                                    <input class="bf__input" placeholder="Search" type="search" autocapitalize="off" id="searchInput" onkeyup="searchCreator(this.value)" onfocus="searchCreator(this.value)" value="" />
+                                    <svg id="searchClose" style="display: none;pointer-events: auto;cursor: pointer!important;" onclick="hideSearch('')" class="icon icon-search bf__icon"><use xlink:href="#icons-close-3"></use></svg>
+                                </label>
+                                <div class="bd" id="searchResults" style="display:none">
+                                    <div class="island-block island-block--color--grey-500 island-block--radius--full island-block--overflow-hidden">
+                                        <div class="bd__content" id="searchResultContent">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>     
+                        </div>                              
+                        <span></span>
+
+                        <?php if($sm['user']['guest'] == 1){ ?>
+                        <a href="javascript:;" onclick="openModal('login')" class="btn btn-outline-pale btn-medium-x" style="margin-left: 10px;">
+                            <span class="white-color-text">Sign In</span>
+                        </a>
+                        
+                        <a href="javascript:;" onclick="openModal('register')" 
+                        class="btn btn-apply btn-medium-x" style="margin-left: 10px;margin-right: 10px;">
+                            Create Account
+                        </a>
+                        <?php } else { ?>
+
+                        <div class="header-dropdown header-user-menu header-notifications-menu" style="max-width: 40px;margin-left: 15px;">
+                            <!--  has-unread-notifications -->
+                            <a class="dropdown-link a11y-button" id="notifications-btn" href="javascript:;" onclick="showUserNotifications()">
+                                <span class="avatar" style="--avatar-size: 24px; --avatar-border-size: 0px;">
+
+                                <svg class="icon icon-notification" style="color: rgba(255, 255, 255, 0.6);"><use xlink:href="#icons-notification"></use></svg>
+
+                                </span>                                
+                            </a>                            
+                        </div>
+
+                        <div class="header-dropdown header-user-menu">
+                            <a class="dropdown-link" href="javascript:;" onclick="showUserMenu()">
+                                <span class="avatar" style="--avatar-size: 36px; --avatar-border-size: 0px;">
+                                    <span class="avatar__img headerAvatar"  style="background-image: url(<?= $sm['user']['profile_photo']; ?>);"></span>
+                                </span>
+                            </a>
+                            <div id="header-user-dropdown" class="header-dropdown-content-wrapper header-dropdown-content-wrapper-bordered" style="display:none">
+                                <div class="scroll-bar-container">
+                                    <ul class="header-dropdown-content">
+                                        <li>
+                                            <a class="user-menu-avatar-wrapper" href="javascript:;" onclick="goToProfile(event,<?= $sm['user']['id']; ?>);">
+                                                <span class="avatar user-menu-avatar" style="--avatar-size: 48px; --avatar-border-size: 0px;">
+                                                    <span class="avatar__img" style="background-image: url(<?= $sm['user']['profile_photo']; ?>);">
+                                                    </span>
+                                                </span>
+                                                <div class="account-container">
+                                                    <div class="display-full-name">
+                                                        <div class="displayname displayname--size--medium"><div class="displayname__name">
+                                                            <?= $sm['user']['username']; ?></div>
+                                                        </div>
+                                                        <span class="display-full-name__nickname">@<?= $sm['user']['username']; ?></span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="header-dropdown-content-split">
+                                            <a href="javascript:;" onclick="goToProfile(event,<?= $sm['user']['id']; ?>);">
+                                                <svg class="icon icon-user-profile header-dropdown-content__icon"><use xlink:href="#icons-user-profile"></use></svg>Profile
+                                            </a>
+                                        </li>
+                                        <li >
+                                            <a href="javascript:;" onclick="goTo('discover','subscribed')">
+                                                <svg class="icon icon-diamond header-dropdown-content__icon"><use xlink:href="#icons-lock-1"></use></svg>Suscribed
+                                            </a>
+                                        </li>                                                                         
+                                        <li >
+                                            <a href="javascript:;" onclick="goTo('discover','following')">
+                                                <svg class="icon icon-diamond header-dropdown-content__icon"><use xlink:href="#icons-star"></use></svg>Following
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:;" onclick="goTo('posts','liked')">
+                                                <svg class="icon icon-bookmark header-dropdown-content__icon"><use xlink:href="#icons-heart"></use></svg>Liked
+                                            </a>
+                                        </li> 
+
+                                        <li >
+                                            <a href="javascript:;" onclick="goTo('settings');">
+                                                <svg class="icon icon-settings header-dropdown-content__icon"><use xlink:href="#icons-settings"></use></svg>Settings
+                                            </a>
+                                        </li>                                                                               
+                                        <li class="header-dropdown-content-split">
+                                            <a href="javascript:;" target="_blank">
+                                                <svg class="icon icon-question-curly header-dropdown-content__icon"><use xlink:href="#icons-question-curly"></use></svg>Contact <?= $sm['config']['name']; ?>
+                                            </a>
+                                        </li>                                         
+                                        <li class="header-user-dropdown-item-logout">
+                                            <a href="<?= $sm['config']['site_url']; ?>logout">
+                                                <svg class="icon icon-turn-off header-dropdown-content__icon"><use xlink:href="#icons-turn-off"></use></svg>Sign Out
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <?php } ?>                                                    
+                    </nav>
+
+                    <nav class="nav-right" data-responsive="mobile" style="display: none;">
+                        <div class="bf bf--type--compact-phone" style="background: none;">
+                            <?php if($sm['user']['guest'] == 1){ ?>
+                            <div style="margin-right: 10px;">
+                                <a href="javascript:;" onclick="openModal('login')" class="btn btn-outline-pale btn-medium-x" style="margin-left: 10px;">
+                                    <span class="white-color-text">Sign In</span>
+                                </a>
+                            </div>
+                        <?php } else { ?>
+                        <div class="personal-notifications-modal-panel" onclick="goTo('discover','following')" style="margin-right: 15px;">
+                            <span class="avatar" style="--avatar-size: 20px; --avatar-border-size: 0px;">
+                                <svg class="icon icon-notification" style="color: rgba(255, 255, 255, 0.8);"><use xlink:href="#icons-star"></use></svg>
+                            </span>   
+                        </div>                            
+                        <div class="personal-notifications-modal-panel" onclick="goTo('discover','subscribed')" style="margin-right: 15px;">
+                            <span class="avatar" style="--avatar-size: 20px; --avatar-border-size: 0px;">
+                                <svg class="icon icon-notification" style="color: rgba(255, 255, 255, 0.8);"><use xlink:href="#icons-lock-1"></use></svg>
+                            </span>   
+                        </div>
+                        <div class="personal-notifications-modal-panel" onclick="goToProfile(event,<?= $sm['user']['id']; ?>)" style="margin-right: 15px;">
+                            <span class="avatar" style="--avatar-size: 32px; --avatar-border-size: 0px;border-radius: 14px;">
+                                <span class="avatar__img headerAvatar"  style="background-image: url(<?= $sm['user']['profile_photo']; ?>);"></span>
+                            </span>
+                        </div>                        
+
+                        <?php } ?>   
+                        </div>
+                    </nav>
+
+                </div>
+            </div>
+        </header>
+
+        <main id="app">
+            <div class="page-wrapper" id="data-content">
+                <?= $sm['content']; ?>
+            </div>
+        </main>
+
+        <div class="header-cta header-cta--visible" style="display:none">
+            <div class="header-cta__texts">
+                <a class="header-cta__logo" href="#" style="display:none">
+                    <img class="header-cta__logo-image" src="<?= $sm['config']['site_url'];?>themes/red/logo.png">
+                </a>
+                <div class="header-cta__text">Monetize your content with personal exclusive club!</div>
+            </div>
+            <div class="header-cta__action">
+                <a class="header-cta__button" href="#">
+                    <span> Start your fans page</span>
+                    <svg class="header-cta__button-icon" viewBox="0 0 8 13" fill="none"><path d="M1 1.2a1 1 0 0 1 1.4 0L7 5.77A1 1 0 0 1 7 7.2l-4.6 4.6A1 1 0 1 1 1 10.36l3.87-3.89L1 2.6a1 1 0 0 1 0-1.4z" fill="currentColor"></path></svg>
+                </a>
+            </div>
+        </div>
+
+        <div class="da mobile-menu" data-responsive="mobile" style="display:none">
+            <div class="da__container">
+                <nav class="da__navigation">
+                    <a class="da__menu-item-button" data-header-menu="feed" href="javascript:;" onclick="goTo('feed')">
+                        <svg class="icon icon-timeline da__menu-item-icon"><use xlink:href="#icons-timeline"></use></svg>Feed
+                    </a>
+                    <a class="da__menu-item-button" data-header-menu="discover" href="javascript:;" onclick="goTo('discover')">
+                        <svg class="icon icon-compass da__menu-item-icon"><use xlink:href="#icons-compass"></use></svg>Discover
+                    </a>
+                    <a class="da__menu-item-button" data-header-menu="live" href="javascript:;" onclick="goTo('live')">
+                        <svg class="icon icon-compass da__menu-item-icon"><use xlink:href="#icons-play"></use></svg>Live
+                    </a>   
+                    <?php if($sm['user']['guest'] == 0){ ?>                 
+                    <a class="da__menu-item-button" href="javascript:;" onclick="openModal('messages','menu');">
+                        <svg class="icon icon-message da__menu-item-icon"><use xlink:href="#icons-comment"></use></svg>Messages <span class="has-unread-msg" style="display:none">0</span>
+                    </a>
+
+                    <a class="da__menu-item-button" href="javascript:;" onclick="showUserNotifications()" >
+                        <svg class="icon icon-notification da__menu-item-icon"><use xlink:href="#icons-notification"></use></svg>Activity
+                    </a>
+                    <?php } ?>
+                </nav>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <div id="cookieDiv"></div>
+    <footer class="default-footer mobile-hide">
+        <div class="default-footer__content">
+            <div class="columns footer-top">
+                <div class="footer-left column xs-12 s-12 m-4">
+                    <div class="footer-logo">
+                        <a aria-label="Go to Main Page" class="footer-logo__icon" href="/"></a>
+                        <div class="footer-description">
+                            <p>
+                                <?= $sm['config']['name']; ?> is a platform where creators and their fans meet. Subscribe to models you like to get instant access to exclusive content from them. Or start your own and make it the
+                                one destination for your exclusive publications.
+                            </p>
+							COMPLAINTS / TAKE DOWN REQUEST
+							Click:
+							<li class="footer-section-item"><a rel="nofollow noopener" class="footer-section__link" href="<?= $sm['config']['site_url'];?>complaints_take_down.html">COMPLAINTS / TAKE DOWN</a></li>
+							</p>
+							Model/Agent Agreement
+							Click:
+							<li class="footer-section-item"><a rel="nofollow noopener" class="footer-section__link" href="<?= $sm['config']['site_url'];?>model_agent_agreement.html">Model/Agent Agreement</a></li>
+							</p>
+							A model will only be active on the site if the Terms and Conditions and the electronic version of the Model/Agent Agreement have been agreed to.
+							</p>
+                            <p>© <?= date('Y'); ?> <?= $sm['config']['name']; ?> | All Rights Reserved</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-right column span-8 xs-12 s-12 m-8" style="flex: 0 0 auto; width: 66%;">
+                    <div class="columns footer-nav">
+                        <div class="footer-section column">
+                        </div>
+                        <div class="footer-section column">
+                            <div class="footer-section-header text-s15-w500">Policy</div>
+                            <ul>
+                                <li class="footer-section-item"><a rel="nofollow noopener" class="footer-section__link" href="<?= $sm['config']['site_url'];?>privacy">Privacy Policy</a></li>
+                                <li class="footer-section-item"><a rel="nofollow noopener" class="footer-section__link" href="<?= $sm['config']['site_url'];?>terms">Terms &amp; Conditions</a></li>
+                                <li class="footer-section-item"><a rel="nofollow noopener" class="footer-section__link" href="<?= $sm['config']['site_url'];?>dmca">DMCA Policy</a></li>
+                                <li class="footer-section-item"><a rel="nofollow noopener" class="footer-section__link" href="<?= $sm['config']['site_url'];?>cookies">Cookies Policy</a></li>
+                            </ul>
+                        </div>
+                        <div class="footer-section column">
+                            <div class="footer-section-header text-s15-w500">Contact Us</div>
+                            <ul>
+                                <li class="footer-section-item">
+                                    <a href="mailto:<?= $sm['config']['email'];?>" target="_blank" class="no-wrap footer-section__link">
+                                        Contact Support
+                                        <svg class="icon icon-question-curly footer-section__link footer-section-item__q-icon" style="height: 16px; width: 16px;"><use xlink:href="#icons-question-curly"></use></svg>
+                                    </a>
+                                </li>
+                                <li class="footer-section-item">
+                                    <a href="<?= $sm['config']['site_url'];?>2257" class="no-wrap cursor-pointer footer-section__link">18 U.S.C. 2257</a></li>
+                                <li class="footer-section-item">
+                                    <a class="footer-section__link email" href="mailto:<?= $sm['config']['email'];?>" target="_blank" rel="noreferrer"><?= $sm['config']['email'];?></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+
+<?= getAbsolutePage('svg'); ?>
+<?= getAbsolutePage('modals'); ?>
+
+<div class="toast-notifications fade-in-right" id="toast-notification" style="display:none">
+    <div class="toast-notifications__content">
+        <div class="toast-notification" >
+            <div class="toast-notification__wrapper">
+
+                <div class="toast-notification__icon-wrapper" 
+                id="notificationIconOk" style="display:none">
+                    <svg class="icon icon-check-round-fill toast-notification__icon toast-notification__icon--size--small">
+                        <use xlink:href="#icons-check-round-fill"></use>
+                    </svg>
+                </div>
+
+                <div class="toast-notification__icon-wrapper" 
+                id="notificationIconPhoto" style="display:none">
+                    <span class="avatar" style="--avatar-size: 42px; --avatar-border-size: 0px;right: 10px;">
+                        <span class="avatar__img" id="notificationPhoto" style="background-image: url(<?= $sm['user']['profile_photo']; ?>);"></span>
+                    </span>
+                </div>                
+                <div class="toast-notification__content">
+                    <div class="toast-notification__title" id="notificationTitle"></div>
+                    <div class="toast-notification__description" id="notificationBody" style="margin-top:4px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="storytime" data-story="0"></div>
+<div class="preload-photos" style="display:none"></div> 
+
+<!-- like, visit and chat notification -->
+<div class="lw-widget" data-widget="userInteraction">
+    <div class="lw-container" data-widget-container="userInteraction">
+
+    </div>
+</div>
+
+<div id="upload-area" style="display: none" >
+    <input type='file' id="uploadContent" style="display: none" />
+</div>
+<div id="upload-story" style="display: none" >
+    <input type='file' id="uploadStoryContent">
+</div>
+<div id="upload-reel" style="display: none">
+    <input type='file' id="uploadReelContent" style="display: none" />    
+</div> 
+<div id="loadingImages" style="position: absolute;width: 1px;height: 1px;overflow: hidden"></div>
+<div id="loadingVideos" style="position: absolute;width: 1px;height: 1px;overflow: hidden"></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="<?php echo $sm['config']['site_url']; ?>themes/default/js/vendor/jquery.form.min.js"></script>
+<script src="<?php echo $sm['config']['site_url']; ?>themes/default/js/vendor/materialize.js"></script>
+<script src="<?php echo $sm['config']['site_url']; ?>themes/default/js/vendor/classie.js"></script>
+<script src="<?php echo $sm['config']['site_url']; ?>themes/default/js/vendor/fbphotobox.js"></script>
+<script src="<?php echo $sm['config']['site_url']; ?>themes/default/js/vendor/sweetalert.min.js"></script>
+
+<?php if($sm['plugins']['videocall']['enabled'] == 'Yes' || $sm['plugins']['liveDiscover']['enabled'] == "Yes"){ ?>
+<script src="https://unpkg.com/peerjs@latest/dist/peerjs.min.js"></script>
+<?php } ?>
+<script src="<?php echo $sm['config']['site_url']; ?>themes/default/js/vendor/galleria-1.5.7.min.js"></script> 
+<script src="<?php echo $sm['config']['site_url']; ?>themes/default/js/vendor/jquery.preload.js"></script>
+<script src="<?php echo $sm['config']['site_url']; ?>themes/default/js/vendor/autocomplete.js"></script>
+<script src="<?php echo $sm['config']['site_url']; ?>themes/default/js/vendor/jquery-ui.min.js"></script>
+<script src="<?php echo $sm['config']['site_url']; ?>themes/default/js/vendor/TweenMax.min.js"></script>
+<script src="<?php echo $sm['config']['site_url']; ?>themes/default/js/vendor/favico.min.js"></script>
+<script src="<?php echo $sm['config']['site_url']; ?>themes/default/js/vendor/jquery.easing.min.js"></script>
+
+<script src="<?php echo $sm['config']['site_url']; ?>themes/default/js/vendor/slick.min.js"></script>
+
+<script src="<?php echo $sm['config']['site_url']; ?>themes/default/js/vendor/action-sheet.js"></script>
+<script src="<?php echo $sm['config']['site_url']; ?>themes/red/js/vendor/nprogress.js"></script>
+<script src="<?php echo $sm['config']['site_url']; ?>themes/default/js/vendor/jquery.numscroll.js"></script>
+
+<script src="<?php echo $sm['config']['site_url']; ?>themes/default/js/vendor/jquery.dm-uploader.min.js"></script>
+<script src="<?php echo $sm['config']['site_url']; ?>themes/default/js/vendor/slim-lightbox.min.js"></script>
+<script src="<?php echo $sm['config']['site_url']; ?>themes/default/js/vendor/little-widgets.js"></script>
+<script src="<?php echo $sm['config']['site_url']; ?>themes/default/js/vendor/flickity.js"></script>
+<script src="<?php echo $sm['config']['site_url']; ?>themes/default/js/vendor/emoji.js"></script>
+<script src="<?php echo $sm['config']['site_url']; ?>themes/default/js/vendor/tiny-swiper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.16/js/intlTelInput.min.js"></script>
+<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+<script src="<?php echo $sm['config']['site_url']; ?>themes/red/js/red.js"></script>
+
+
+<?php foreach($sm['plugin'] as $plugin){ ?>
+    <?php if(!empty($plugin['js_file'])){
+echo '<script src="'.$sm['config']['site_url'].'themes/plugins/'.$plugin['js_file'].'.js"></script>';
+            } 
+} ?>
+
+<script src="https://cdn.fluidplayer.com/v3/current/fluidplayer.min.js"></script>
+<script src="<?php echo $sm['config']['site_url']; ?>themes/red/js/vendor/fslightbox.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+
+<script src="<?php echo $sm['config']['site_url']; ?>themes/red/js/main.js"></script>
+
+<script type="text/javascript">  
+var currentStory;
+var nextStory = 0;
+var storyPage = '';
+
+if(plugins['story']['enabled'] == "Yes"){
+    var socialStory = new Story({
+        playlist: currentStory
+    });     
+}
+
+</script>
+
+<?= $sm['plugins']['customHtml']['website_footer']; ?>
+</body>
+</html>

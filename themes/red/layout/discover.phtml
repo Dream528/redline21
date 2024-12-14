@@ -1,0 +1,144 @@
+<script>
+url = 'discover';
+</script>
+
+<div class="page" style="padding-top: 15px;">    
+    <div class="page__content">
+
+        <ul class="tabs-ds br__tabs earnings-tabs tabs-ds--style--default discover-tabs" data-tabs-discover="regular">
+            <li class="tab-ds tab-ds--adaptive">
+                <a class="tab-interactive-ds tab-link-ds tab-interactive-medium-ds tab-interactive-active-ds" href="javascript:;" onclick="goTo('discover')">
+                    <svg class="icon icon-people indent-right-small-8" style="min-width: 20px; height: 20px; width: 20px;"><use xlink:href="#icons-people"></use></svg>                    
+                    <span class="before-tablet-hide">Models
+                        <span class="white-color-text-2 indent-left-small-6">
+                            <?= selectC('users','where creator = 1'); ?>
+                        </span>
+                    </span>
+                </a>
+            </li>
+            <li class="tab-ds tab-ds--adaptive">
+                <a class="tab-interactive-ds tab-link-ds tab-interactive-medium-ds" href="javascript:;" onclick="goTo('posts')">
+                    <svg class="icon icon-picture indent-right-small-8" style="min-width: 20px; height: 20px; width: 20px;"><use xlink:href="#icons-picture"></use></svg>                    
+                    <span class="before-tablet-hide">Posts 
+                        <span class="white-color-text-2 indent-left-small-6">
+                            <?= selectC('feed','where visible = 1'); ?>
+                        </span>
+                    </span>
+                </a>
+            </li>
+        </ul>
+
+        <ul class="tabs-ds br__tabs earnings-tabs tabs-ds--style--default discover-tabs" data-tabs-discover="user" style="display: none;">
+            <li class="tab-ds tab-ds--adaptive">
+                <a class="tab-interactive-ds tab-link-ds tab-interactive-medium-ds" href="javascript:;" onclick="goTo('discover','subscribed')" data-discover-tab="subscribed">
+                    <svg class="icon icon-people indent-right-small-8" style="min-width: 20px; height: 20px; width: 20px;"><use xlink:href="#icons-lock-1"></use></svg>                    
+                    <span class="before-tablet-hide">Subscribed
+                        <span class="white-color-text-2 indent-left-small-6">
+                            <?= selectC('users_subscriptions','where u1 = '.$sm['user']['id']); ?>
+                        </span>
+                    </span>
+                </a>
+            </li>        
+            <li class="tab-ds tab-ds--adaptive">
+                <a class="tab-interactive-ds tab-link-ds tab-interactive-medium-ds" data-discover-tab="following" href="javascript:;" onclick="goTo('discover','following')">
+                    <svg class="icon icon-people indent-right-small-8" style="min-width: 20px; height: 20px; width: 20px;"><use xlink:href="#icons-star"></use></svg>                    
+                    <span class="before-tablet-hide">Following
+                        <span class="white-color-text-2 indent-left-small-6">
+                            <?= selectC('users_likes','where u1 = '.$sm['user']['id']); ?>
+                        </span>
+                    </span>
+                </a>
+            </li>                
+            <li class="tab-ds tab-ds--adaptive">
+                <a class="tab-interactive-ds tab-link-ds tab-interactive-medium-ds" href="javascript:;" onclick="goTo('posts','liked')" data-discover-tab="liked">
+                    <svg class="icon icon-picture indent-right-small-8" style="min-width: 20px; height: 20px; width: 20px;"><use xlink:href="#icons-picture"></use></svg>                    
+                    <span class="before-tablet-hide">Liked
+                        <span class="white-color-text-2 indent-left-small-6">
+                            <?= selectC('feed_likes','where uid = '.$sm['user']['id']); ?>
+                        </span>
+                    </span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="bread-crumbs mobile-hide" style="margin-top: 20px;margin-bottom:20px;display: none;" data-tabs-discover="user">
+            <a class="bread-crumbs__item white-color-text" href="javascript:;" onclick="goToProfile(event,<?= $sm['user']['id']; ?>);">
+                <span class="avatar" style="--avatar-size: 40px; --avatar-border-size: 0px;">
+                    <span class="avatar__img" style="background-image: url('<?= $sm['user']['profile_photo']; ?>');"><span class="user-status-icon online" title="Online"></span></span>
+                </span>
+                <span class="name"><?= $sm['user']['username']; ?></span>
+            </a>
+            <span class="bread-crumbs__splitter">/</span>
+            <div class="bread-crumbs__item white-color-text">
+                <span class="pale-text" id="discoverHeader"></span>
+            </div>
+            <div class="bread-crumbs__right">
+
+            </div>
+        </div>
+
+        <div class="bJ__header" data-tabs-discover="regular">
+            <h1 class="trending-header">Discover <span class="accent-color-text">trending models</span>
+            </h1>
+            <div class="bJ__tabs-container">
+                <div class="pill-page-tabs pill-page-tabs--style--primary">
+                    <div class="pill-control pill-control--style--default">
+                        <div class="pill-control__ghost pill-control__ghost--style--default"></div>
+
+                        <div data-filter-model-tab="new" onclick="filterModels('new',false)" class="pill-control__item pill-control__item--style--default ">New</div>
+                        
+                        <div data-filter-model-tab="top" onclick="filterModels('top',false)" class="pill-control__item pill-control__item--style--default ">Top</div>
+                        <div data-filter-model-tab="trending" onclick="filterModels('trending',false)" class="pill-control__item pill-control__item--style--default pill-control__item--active">Trending</div>
+                                   
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="empty-page-content empty-page-content--big" id="nothingYet" style="display:none;margin-top:50px">
+            <svg class="icon icon-album empty-page-content__icon empty-page-content__icon--big"><use xlink:href="#icons-timeline"></use>
+            </svg>
+            <h3 class="empty-page-content__title empty-page-content__title--big">Nothing here... yet<img src="https://localhost/belloored/emoji/smirk.avif" class="smile smile--size--medium"></h3>
+            <div class="empty-page-content__description empty-page-content__description--big">Hey <?= $sm['user']['username'];?> we don't have nothing to show you here yet, why dont you go to <a href="javascript:;" onclick="goTo('discover');" style="font-weight:bold;color:#fff;">discover page</a> so you can follow or subscribe to some creators </div>
+        </div> 
+
+        <div class="bL" id="modelsResult">
+            <?php
+            for ($x = 0; $x <= 19; $x++) {
+                $customStyle = '';
+                if($x == 2 || $x == 5 || $x == 14 || $x == 15){
+                    $customStyle = 'style="grid-column: span 2 / auto;"';
+                }                
+            ?>
+                <div class="bL__item discoverModels" id="model<?=$x; ?>" data-model-loaded="0" <?= $customStyle; ?>>
+                    <div class="a a--hover a--clickable a--top-shadow">
+                        <div class="a__cover a__cover--image loading-feed"></div>
+                        <a class="a__cover" href="#"></a>
+                        <div class="a__bottom-shadow"></div>
+                        <div class="a__controls">
+                            <a class="username-inline-card white-color-text" href="#">
+                                <div class="username-inline-card__avatar-wrapper username-inline-card__avatar-wrapper--space-size--small">
+                                    <span class="avatar" style="--avatar-border-size: 2px;">
+                                        <span class="avatar__story-border"></span>                                    
+                                        <span class="avatar__img loading-story"></span>
+                                    </span>
+                                </div>
+                                <div>
+                                    <div class="displayname displayname--size--small-x">
+                                        <div class="displayname__name displayname__name--text-overflow"></div>
+                                    </div>
+                                    <span class="m__followers"><svg class="icon icon-people indent-right-small-6" style="min-width: 16px; height: 16px; width: 16px;">
+                                        <use xlink:href="#icons-album"></use>
+                                    </svg></span>                                    
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>                                     
+            <?php } ?> 
+        </div>
+
+        <span class="observer-page"></span>
+    </div>
+</div>

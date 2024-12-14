@@ -1,0 +1,291 @@
+<script>
+url = 'profile-me';
+profile_info = <?= json_encode($sm['profile']); ?>
+</script>
+<?php 
+$cover = profileCover($sm['profile']['id']);
+$totalPhotos = selectC('users_photos','WHERE u_id = '.$sm['profile']['id'].' AND video = 0');
+$totalVideos = selectC('users_photos','WHERE u_id = '.$sm['profile']['id'].' AND video = 1');
+$totalMedia = selectC('users_photos','WHERE u_id = '.$sm['profile']['id']);
+$totalMediaFree = selectC('users_photos','WHERE u_id = '.$sm['profile']['id'].' and private = 0');
+$totalMediaPrivate = selectC('users_photos','WHERE u_id = '.$sm['profile']['id'].' and private = 1');
+?>
+<script>
+    var profileTotalPhotos = <?= $totalPhotos; ?>;
+    var profileTotalVideos = <?= $totalVideos; ?>;
+    var profileTotalMedia = <?= $totalMedia; ?>;
+    var profileTotalMediaFree = <?= $totalMediaFree; ?>;
+    var profileTotalMediaPrivate = <?= $totalMediaPrivate; ?>;
+    var currentProfileTab = 'feed';
+</script>
+<?php if($sm['user']['verified'] == 0){ ?> 
+    <div class="header-notifications" style="top: 57px;z-index: 9;">
+        <div class="header-notification header-notification--warning" data-header-notification="email" >
+            <span class="header-notification-body">
+                Please check your inbox and confirm your email.
+            </span>
+            <svg onclick="closeHeaderNotification('email')" class="icon icon-close icon--default-size">
+            <use xlink:href="#icons-close"></use></svg>
+        </div>
+    </div>
+<?php } ?>
+<div class="profile-page">
+    <div class="page">
+        <div class="profile">
+            <div class="profile-cover-wrapper">
+                <div class="br">
+                    <div class="br__media br__media--no-cover">
+                        <div class="br__media-aspect-ratio"></div>
+                    </div>
+                    <div class="br__info">
+                        <div class="br__avatar-wrapper cursor-pointer">
+                            <?php if($sm['user']['id'] == $sm['profile']['id']){ ?>
+                            <span class="avatar" onclick="upProfilePoto()" style="--avatar-size: 124px; --avatar-border-size: 0px;">
+                                <span class="avatar__img" id="myProfileAvatar" style="background-image: url('<?= $sm['profile']['profile_photo']; ?>');"></span>
+                                    <span class="avatar__edit-button">
+                                        <svg class="icon icon-photo-3 icon--default-size">
+                                            <use xlink:href="#icons-photo-3"></use>
+                                        </svg>
+                                    </span>
+                            </span>
+                            <?php } else { ?>
+                            <span class="avatar" style="--avatar-size: 124px; --avatar-border-size: 0px;">
+                                <span class="avatar__img" id="myProfileAvatar" style="background-image: url('<?= $sm['profile']['profile_photo']; ?>');"></span>
+                            </span>
+                            <?php } ?>
+                        </div>
+                        <div class="br__name-wrapper">
+                            <div class="displayname displayname--size--big">
+                                <h1 class="displayname__name">
+                                    <?= $sm['profile']['username']; ?>
+                                </h1>
+                            </div>
+                            <div class="br__username">@<?= strtolower($sm['profile']['username']); ?></div>
+                        </div>
+                        <div class="br__profile-counters">
+                            <span>
+                                <span style="color:#a9f700">Active now</span>
+                            </span>
+                        </div>
+                        <div class="bs">
+                            <p class="bs__text bs--opened" id="user-description">
+                                <?= $sm['user']['bio'];?>
+                            </p>
+                        </div>
+
+                        <div class="bU">
+                            <div class="bU__st">
+
+                                <?php if(!empty($sm['user']['instagram'])){?>
+                                <a class="bU__link" target="_blank" rel="nofollow noreferrer noopener" href="https://instagram.com/@<?= $sm['user']['instagram']; ?>">
+                                    <svg class="icon icon-instagram-original" style="color: rgb(200, 55, 171); min-width: 20px; height: 20px; width: 20px;">
+                                        <use xlink:href="#icons-instagram-original"></use>
+                                    </svg>
+                                </a>
+                                <?php } ?>
+                                <?php if(!empty($sm['user']['twitter'])){?>
+                                <a class="bU__link" target="_blank" rel="nofollow noreferrer noopener" href="https://twitter.com/<?= $sm['user']['twitter']; ?>">
+                                    <svg class="icon icon-twitter" style="color: rgb(29, 155, 240); min-width: 20px; height: 20px; width: 20px;">
+                                        <use xlink:href="#icons-twitter"></use>
+                                    </svg>
+                                </a>
+                                <?php } ?>
+                                <?php if(!empty($sm['user']['tiktok'])){?>
+                                <a class="bU__link" target="_blank" rel="nofollow noreferrer noopener" href="https://tiktok.com/@<?=$sm['user']['tiktok']; ?>">
+                                    <svg class="icon icon-tiktok" style="min-width: 20px; height: 20px; width: 20px;">
+                                        <use xlink:href="#icons-tiktok-color"></use>
+                                    </svg>
+                                </a>
+                                <?php } ?>
+                                <?php if(!empty($sm['user']['snapchat'])){?>
+                                <a class="bU__link" target="_blank" rel="nofollow noreferrer noopener" href="https://snapchat.com/add/<?=$sm['user']['snapchat']; ?>">
+                                    <svg class="icon icon-snapshat" style="min-width: 20px; height: 20px; width: 20px;">
+                                        <use xlink:href="#icons-snapshat-color"></use>
+                                    </svg>
+                                </a>  
+                                <?php } ?> 
+                                <?php if(!empty($sm['user']['telegram'])){?>
+                                <a class="bU__link" target="_blank" rel="nofollow noreferrer noopener" href="https://t.me/<?=$sm['user']['telegram']; ?>">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" fill="url(#paint0_linear_192_30849)"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M6.52657 11.8945C9.44177 10.6244 11.3857 9.78702 12.3583 9.38246C15.1354 8.22737 15.7125 8.02672 16.0886 8.02009C16.1714 8.01863 16.3563 8.03913 16.4761 8.13635C16.5773 8.21844 16.6051 8.32934 16.6184 8.40717C16.6318 8.485 16.6484 8.6623 16.6352 8.80083C16.4847 10.3821 15.8335 14.2193 15.5022 15.9903C15.362 16.7397 15.086 16.991 14.8188 17.0156C14.2381 17.069 13.7971 16.6318 13.2347 16.2631C12.3545 15.6861 11.8573 15.327 11.003 14.764C10.0157 14.1134 10.6557 13.7558 11.2184 13.1714C11.3656 13.0184 13.9243 10.6911 13.9738 10.48C13.98 10.4536 13.9858 10.3552 13.9273 10.3032C13.8688 10.2513 13.7825 10.269 13.7202 10.2832C13.632 10.3032 12.226 11.2325 9.50219 13.0711C9.1031 13.3452 8.74161 13.4787 8.41773 13.4717C8.06068 13.464 7.37385 13.2698 6.86327 13.1039C6.23702 12.9003 5.73929 12.7927 5.78263 12.4469C5.8052 12.2669 6.05318 12.0827 6.52657 11.8945Z" fill="white"></path><defs><linearGradient id="paint0_linear_192_30849" x1="1002" y1="2" x2="1002" y2="1987.17" gradientUnits="userSpaceOnUse"><stop stop-color="#2AABEE"></stop><stop offset="1" stop-color="#229ED9"></stop></linearGradient></defs></svg>
+                                </a>  
+                                <?php } ?>                                                                                                                    
+                            </div>
+                        </div>
+
+                        <?php if($sm['user']['id'] == $sm['profile']['id']){ ?>
+                        <div class="br__content-counters-wrapper">
+                            <div class="br__actions">
+                                <div class="bv">
+                                    <div class="action-buttons-container">
+                                        <div class="bv__right">
+                                            <div class="tile-button favorite-button tile-button--size--regular tile-button--color--dark" onclick="openModal('founds');">
+                                                <svg class="icon icon-settings R__actions-settings-icon R__actions-settings-icon--padded" style="min-width: 18px; height: 18px; width: 18px;margin-right: 10px;"><use xlink:href="#icons-wallet"></use></svg>                                                   
+                                                <?= $sm['plugins']['settings']['currencySymbol']; ?> <?= $sm['user']['credits']; ?> 
+                                            </div>                                     
+                                            <div class="tile-button tile-button--size--regular tile-button--color--dark" onclick="goTo('settings');">
+                                                <svg class="icon icon-settings R__actions-settings-icon R__actions-settings-icon--padded" style="min-width: 18px; height: 18px; width: 18px;"><use xlink:href="#icons-settings"></use></svg>
+                                                <span class="tile-button__text">Account settings</span>
+                                            </div>
+
+                                            <?php if($sm['user']['creator'] == 0){ ?>
+                                            <div class="tile-button tile-button--size--regular  tile-button--color--goal" onclick="goTo('settings','creator');">
+                                                <span class="tile-button__text">Become creator</span>
+                                            </div>   
+                                            <?php } ?>                                          
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php } else { ?>
+                        <div class="br__content-counters-wrapper">
+                            <div class="br__actions">
+                                <div class="bv">
+                                    <div class="action-buttons-container">
+                                        <div class="bv__right">                                
+                                            <div class="tile-button tile-button--size--regular tile-button--color--dark" onclick="openModal('messages','<?= $sm['profile']['id']; ?>,<?= $sm['profile']['username']; ?>,<?= $sm['profile']['profile_photo']; ?>');">
+                                                <svg class="icon icon-message tile-button__icon tile-button__icon--size--regular"><use xlink:href="#icons-comment"></use></svg><span class="tile-button__text">Chat Now</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <?php } ?>
+                    </div>
+
+
+                    <ul class="tabs-ds br__tabs" style="display:none">
+                        <li class="tab-ds">
+                            <a class="tab-interactive-ds tab-link-ds tab-interactive-medium-ds tab-interactive-active-ds" href="javascript:;" onclick="profileMediaTab('photos')" data-profile-tab="photos">
+                                <span>Photos and Videos
+                                    <span class="white-color-text-2 indent-left-small-6">
+                                        <?= $totalMedia; ?>
+                                    </span>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+
+
+            <div class="page__content">
+                <!-- FEED -->
+                <div class="feed" id="feed" >
+                        <div class="empty-page-content empty-page-content--big" id="noFeed" style="display:none"><svg class="icon icon-album empty-page-content__icon empty-page-content__icon--big"><use xlink:href="#icons-diamond"></use></svg><h3 class="empty-page-content__title empty-page-content__title--big">Uhm, <?= $sm['profile']['username']; ?> havent published anything yet</h3><div class="empty-page-content__description empty-page-content__description--big">Send <?= $sm['profile']['username']; ?> a private message for motivate her to publish something ❤️</div></div>                     
+                    <div class="feed-content" id="feed-content" style="display: none;">
+                        <?php
+                        for ($x = 0; $x < 5; $x++) { ?>          
+                            <div class="feed-post" data-loading-feed="<?= $x; ?>">
+                                <div class="tile text-post-tile">
+                                    <div class="feed-my-club__header">
+                                    </div>
+                                    <div class="tile-header">
+                                        <div>
+                                            <a class="avatar-wrapper" href="#">
+                                                <span class="avatar model-avatar" style="--avatar-size: 48px; --avatar-border-size: 0px;">
+                                                    <span class="avatar__img loading-story"></span>
+                                                </span>
+                                            </a>
+                                        </div>
+                                        <div class="content-wrapper">
+
+                                        </div>
+                                    </div>
+                                    <div class="text-post">
+                                        <div class="data-hj-suppress S S--clickable">
+                                            <div class="image-swiper">
+                                                <div class="image-swiper__scroll" style="height: 325px;">
+                                                    <div class="image-swiper__item loading-feed" style="width: 100%;height: 325px;">
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="position:relative;margin-top:15px;width: 350px;
+                                        height: 30px;">
+                                            <div class="loading-feed"></div>
+                                        </div>                                                           
+                                    </div>
+                                    <div class="tile-footer">
+                                        <div class="content" style="height:80px;margin-left: 2px;border:none">
+                                            <div class="left-wrapper">
+                                                <button class="likes-counter likes-counter--size--medium loading-story" style="width: 32px;">
+                                                </button>
+                                                <button class="likes-counter likes-counter--size--medium loading-story" style="width: 24px;height:24px;margin-left: 10px;">
+                                                </button>
+                                                <button class="likes-counter likes-counter--size--medium loading-story" style="width: 32px;margin-left: 10px;">
+                                                </button>                                                     
+      
+                                            </div>
+                                            <div class="right-wrapper">
+                                                <button class="likes-counter likes-counter--size--medium loading-story" style="width: 32px;margin-left: 10px;">
+                                                </button>      
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                    
+                        <?php } ?>
+
+                    </div>
+                </div>
+
+                <!-- MEDIA -->
+                <div class="user-media-content" id="media" style="display:none">
+
+                    <div class="pill-page-tabs pill-page-tabs--style--center">
+                        <div class="pill-control pill-control--style--default">
+
+                            <div class="pill-control__item pill-control__item--style--default pill-control__item--active" 
+                            data-profile-pill="all" onclick="profileMediaPill('all')">
+                                <svg class="icon icon-collection">
+                                    <use xlink:href="#icons-collection"></use>
+                                </svg>
+                                All
+                            </div>
+                            <div class="pill-control__item pill-control__item--style--default" data-profile-pill="free" onclick="profileMediaPill('free')">
+                                <svg class="icon icon-gift">
+                                    <use xlink:href="#icons-gift"></use>
+                                </svg>
+                                Free
+                            </div>
+                            <div class="pill-control__item pill-control__item--style--default" data-profile-pill="paid" onclick="profileMediaPill('paid')">
+                                <svg class="icon icon-diamond">
+                                    <use xlink:href="#icons-diamond"></use>
+                                </svg>
+                                Paid
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h2 class="user-media-content-sub-title title-ds text-title-l2">
+                            <span class="user-media-content-sub-title__title">Media<span class="primary-light-color-text user-media-content-sub-title__title-count"><?= $totalMedia; ?></span></span>
+                        </h2>
+                        
+                        <div class="empty-page-content empty-page-content--big" id="noMedia" style="display:none"><svg class="icon icon-album empty-page-content__icon empty-page-content__icon--big"><use xlink:href="#icons-album"></use></svg><h3 class="empty-page-content__title empty-page-content__title--big">Uhm, <?= $sm['profile']['username']; ?> havent uploaded media yet</h3><div class="empty-page-content__description empty-page-content__description--big">When <?= $sm['profile']['username']; ?> posts photos or videos, you can find them here.</div></div>
+
+                        <div class="empty-page-content empty-page-content--big" id="noPrivateMedia" style="display:none"><svg class="icon icon-album empty-page-content__icon empty-page-content__icon--big"><use xlink:href="#icons-diamond"></use></svg><h3 class="empty-page-content__title empty-page-content__title--big">Uhm, <?= $sm['profile']['username']; ?> havent uploaded private media yet</h3><div class="empty-page-content__description empty-page-content__description--big">When <?= $sm['profile']['username']; ?> post private media, you can find them here.</div></div> 
+
+                        <div class="picture-squad-grid">
+                        <?php
+                        for ($x = 0; $x < 18; $x++) { ?>
+                            <div class="F F--clickable F--with-zoom loading-media " data-profile-media-loaded="0" data-profile-media="<?= $x; ?>" id="profileMedia<?= $x; ?>">
+                            </div>
+                        <?php } ?>
+                        </div>
+                    </div>
+
+                    <span class="observer-page"></span>
+                </div>                 
+
+            </div>
+
+
+        </div>
+    </div>
+</div>

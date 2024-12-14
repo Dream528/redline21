@@ -1,0 +1,1138 @@
+<script>
+url = 'settings';
+</script>
+
+<div class="page-wrapper">
+    <div class="page">
+        <div class="page__content">
+
+        <div class="page-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="bread-crumbs" style="display: flex; align-items: center;">
+                <a class="bread-crumbs__item white-color-text" href="javascript:;" onclick="goToProfile(event, <?= $sm['user']['id']; ?>);">
+                    <span class="avatar" style="--avatar-size: 40px; --avatar-border-size: 0px;">
+                        <span class="avatar__img" style="background-image: url('<?= $sm['user']['profile_photo']; ?>');">
+                            <span class="user-status-icon online" title="Online"></span>
+                        </span>
+                    </span>
+                    <span class="name"><?= $sm['user']['username']; ?></span>
+                </a>
+                <span class="bread-crumbs__splitter">/</span>
+                <div class="bread-crumbs__item white-color-text">
+                    <span class="pale-text" id="profile-settings-section">Account settings</span>
+                </div>
+            </div>
+            <div class="bread-crumbs__right" style="display: flex; align-items: center; gap: 5px;">
+                <?php if ($sm['user']['creator'] == 1) { ?>
+                    <!-- Payment Options -->
+                    <div class="payment-options" style="display: flex; gap: 5px; align-items: center; flex-wrap: nowrap;">
+                        <a href="<?= generateCCBillUrl($sm['user']['username'],$sm['user']['email'], 10); ?>" target="_blank" rel="noopener noreferrer" class="payment-button" style="padding: 5px 10px; background-color: #28a745; color: white; border: none; border-radius: 5px; text-decoration: none; cursor: pointer;">Pay $10</a>
+                        <a href="<?= generateCCBillUrl($sm['user']['username'],$sm['user']['email'], 25); ?>" target="_blank" rel="noopener noreferrer" class="payment-button" style="padding: 5px 10px; background-color: #17a2b8; color: white; border: none; border-radius: 5px; text-decoration: none; cursor: pointer;">Pay $25</a>
+                        <a href="<?= generateCCBillUrl($sm['user']['username'],$sm['user']['email'], 50); ?>" target="_blank" rel="noopener noreferrer" class="payment-button" style="padding: 5px 10px; background-color: #ffc107; color: black; border: none; border-radius: 5px; text-decoration: none; cursor: pointer;">Pay $50</a>
+                        <a href="<?= generateCCBillUrl($sm['user']['username'],$sm['user']['email'], 100); ?>" target="_blank" rel="noopener noreferrer" class="payment-button" style="padding: 5px 10px; background-color: #007bff; color: white; border: none; border-radius: 5px; text-decoration: none; cursor: pointer;">Pay $100</a>
+                        <a href="<?= generateCCBillUrl($sm['user']['username'],$sm['user']['email'], 250); ?>" target="_blank" rel="noopener noreferrer" class="payment-button" style="padding: 5px 10px; background-color: #6c757d; color: white; border: none; border-radius: 5px; text-decoration: none; cursor: pointer;">Pay $250</a>
+                        <a href="<?= generateCCBillUrl($sm['user']['username'],$sm['user']['email'], 500); ?>" target="_blank" rel="noopener noreferrer" class="payment-button" style="padding: 5px 10px; background-color: #dc3545; color: white; border: none; border-radius: 5px; text-decoration: none; cursor: pointer;">Pay $500</a>
+                    </div>
+                <?php } ?>
+            </div>
+        </div>
+
+            <div class="scroll-bar-container settings-navbar scroll-bar-container--overflow-x">
+                <ul class="tabs-ds settings-navbar__tabs">
+                    <li class="tab-ds">
+                        <a class="tab-interactive-ds tab-link-ds tab-interactive-medium-ds tab-interactive-active-ds" data-settings-tab="settings" href="javascript:;" onclick="profileSettigsTab('settings');">Account settings</a>
+                    </li>
+
+                    <?php if($sm['user']['creator'] == 0){ ?>
+                    <li class="tab-ds">
+                        <a class="tab-interactive-ds tab-link-ds tab-interactive-medium-ds" data-settings-tab="documents" href="javascript:;" onclick="profileSettigsTab('documents');">Documents</a>
+                    </li>
+                    <?php } ?>
+                    <?php if($sm['user']['creator'] == 1){ ?>
+
+                    <li class="tab-ds">
+                        <a class="tab-interactive-ds tab-link-ds tab-interactive-medium-ds" data-settings-tab="analytics" href="javascript:;" onclick="profileSettigsTab('analytics');">Analytics</a>
+                    </li>
+
+                    <li class="tab-ds">
+                        <a class="tab-interactive-ds tab-link-ds tab-interactive-medium-ds" data-settings-tab="wallet" href="javascript:;" onclick="profileSettigsTab('wallet');">Wallet</a>
+                    </li>
+
+                    <li class="tab-ds" style="display:none">
+                        <a class="tab-interactive-ds tab-link-ds tab-interactive-medium-ds" data-settings-tab="privacy" href="javascript:;" onclick="profileSettigsTab('privacy');">Privacy</a>
+                    </li>                    
+                    <?php } ?>
+              
+                </ul>
+            </div>
+
+            <?php 
+                $seven_days = time() - 604800; 
+            ?>
+
+            <div class="settings-content" data-setting-page="analytics" style="display: none;">
+                <div>
+                    <div class="scroll-bar-container ps">
+                        <div class="D__tiles">                             
+                            <div class="Esa">
+                                <div class="Esa__left-part">
+                                    <div class="Esa__title">Subscribers</div>
+                                    <div class="Esa__body">
+                                        <span class="white-color-text-4"><?= selectC('users_subscriptions','WHERE u2 = '.$sm['user']['id']); ?></span>
+                                    </div>
+                                    <div class="Esa__description">
+                                        <span>
+                                            <span class="white-color-text-4"><?= selectC('users_subscriptions','WHERE u2 = '.$sm['user']['id'].' AND time > '.$seven_days); ?> </span> subscriptions in the last 7 days
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="Esa__right-part"><span class="help-tooltip Esa__help-tooltip"><svg class="icon icon-info" style="min-width: 20px; height: 20px; width: 20px;"><use xlink:href="#icons-diamond"></use></svg></span></div>
+                            </div>
+                            <div class="Esa">
+                                <div class="Esa__left-part">
+                                    <div class="Esa__title">Paid Posts</div>
+                                    <div class="Esa__body">
+                                        <span class="white-color-text-4">0</span>
+                                    </div>
+                                    <div class="Esa__description">
+                                        <span>
+                                            <span class="white-color-text-4">0 </span> purchases in the last 7 days
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="Esa__right-part"><span class="help-tooltip Esa__help-tooltip"><svg class="icon icon-diamond" style="min-width: 20px; height: 20px; width: 20px;"><use xlink:href="#icons-lock"></use></svg></span></div>
+                            </div>                            
+                            <div class="Esa">
+                                <div class="Esa__left-part">
+                                    <div class="Esa__title">TIPS</div>
+                                    <div class="Esa__body">
+                                        <span class="white-color-text-4"><?= selectC('users_tips','WHERE u2 = '.$sm['user']['id']); ?></span>
+                                    </div>
+                                    <div class="Esa__description">
+                                        <span>
+                                            <span class="white-color-text-4"><?= selectC('users_tips','WHERE u2 = '.$sm['user']['id'].' AND time > '.$seven_days); ?> </span> tips recieved in the last 7 days
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="Esa__right-part"><span class="help-tooltip Esa__help-tooltip"><svg class="icon icon-diamond" style="min-width: 20px; height: 20px; width: 20px;"><use xlink:href="#icons-gift"></use></svg></span></div>
+                            </div>                                                       
+                        </div>
+
+                    </div>
+
+
+                    <?php
+                    global $mysqli;
+                    $analyticsData = array();
+                    $query = $mysqli->query("SELECT * FROM users_subscriptions WHERE u2 = ".$sm['user']['id']." ORDER BY time DESC");
+                    if($query->num_rows >= 1) {
+                        while($result = $query->fetch_object()){
+                            $analyticsData[] = array(
+                                "type" => 'Subscription', 
+                                "uid" => $result->u1,
+                                "time" => $result->time,
+                                "username" => getData('users','username','where id ='.$result->u1),
+                                "photo" => profilePhoto($result->u1),
+                                "amount" => getData('users_subscriptions_prices','amount','where days ='.$result->days)
+                            );
+                        }
+                    }
+
+                    $query = $mysqli->query("SELECT * FROM users_tips WHERE u2 = ".$sm['user']['id']." ORDER BY time DESC");
+                    if($query->num_rows >= 1) {
+                        while($result = $query->fetch_object()){
+                            $analyticsData[] = array(
+                                "type" => 'Tip', 
+                                "uid" => $result->u1,
+                                "time" => $result->time,
+                                "username" => getData('users','username','where id ='.$result->u1),
+                                "photo" => profilePhoto($result->u1),
+                                "amount" => $result->amount
+                            );
+                        }
+                    }
+
+                    $analyticsDataTime  = array_column($analyticsData, 'time');
+                    array_multisort($analyticsDataTime, SORT_DESC, $analyticsData);
+                    ?>
+
+                    <div class="notifications-subscribed-common-table earnings-block-scroll" style="margin-top:25px">
+                        <div class="data-table earnings-table notifications-subscribers-table">
+                            <div class="data-table-head">
+                                <div class="data-table-head-row table-head-row">
+
+                                    <div class="data-table-head-cell table-cell align-left table-cell-username top-align-center" style="flex-basis: 20%;">
+                                        <div class="searchable-head close icon-first">
+                                            User
+                                        </div>
+                                    </div>
+
+                                    <div class="data-table-head-cell table-cell top-align-center align-center" style="width: 120px; max-width: 120px; min-width: 120px;">
+                                        <div role="button" class="Exa"><span>Type</span></div>
+                                    </div>
+
+                                    <div class="data-table-head-cell table-cell top-align-center align-center" style="width: 120px; max-width: 120px; min-width: 120px;">
+                                        <div role="button" class="Exa"><span>Gross</span></div>
+                                    </div>
+
+                                    <div class="data-table-head-cell table-cell top-align-center align-center" style="width: 120px; max-width: 120px; min-width: 120px;">
+                                        <div role="button" class="Exa"><span><?= $sm['config']['name']; ?> Comission</span></div>
+                                    </div>
+
+                                    <div class="data-table-head-cell table-cell top-align-center align-center" style="width: 120px; max-width: 120px; min-width: 120px;">
+                                        <div role="button" class="Exa"><span>Date</span></div>
+                                    </div>                                                                        
+                                    <div class="data-table-head-cell table-cell align-right top-align-center" style="width: 60px; max-width: 60px; min-width: 60px;"></div>
+                                </div>
+                            </div>
+                            <div class="data-table-body">
+
+                            <?php for ($i=0; $i < count($analyticsData); $i++) { ?>
+                            <div id="data-analytics-<?=$i;?>" class="data-table-body-row table-body-row">
+                                <div class="data-table-body-cell table-cell table-cell-body-username align-left table-cell-username top-align-center" style="flex-basis: 20%;">
+                                    <a class="username-inline-card white-color-text" href="javascript:;" onclick="goToProfile(event,<?= $analyticsData[$i]['uid'];?>);">
+                                        <div class="username-inline-card__avatar-wrapper username-inline-card__avatar-wrapper--space-size--medium"><span class="avatar" style="--avatar-size: 32px; --avatar-border-size: 0px;"><span class="avatar__img" 
+                                            style="background-image: url(<?= $analyticsData[$i]['photo']; ?>)"></span></span>
+                                        </div>
+                                        <div class="username-inline-card__username-wrapper">
+                                            <div class="display-full-name">
+                                                <span class="display-full-name__nickname display-full-name__nickname--text-overflow">@<?= $analyticsData[$i]['username'];?></span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="data-table-body-cell table-cell top-align-center align-center" style="width: 120px; max-width: 120px; min-width: 120px;">
+                                    <?= $analyticsData[$i]['type'];?>
+                                </div>
+
+                                <div class="data-table-body-cell table-cell top-align-center align-center" style="width: 120px; max-width: 120px; min-width: 120px;">
+                                    <?=$sm['plugins']['settings']['currency']; ?> <?= $analyticsData[$i]['amount'];?>
+                                </div>
+
+                                <div class="data-table-body-cell table-cell top-align-center align-center" style="width: 120px; max-width: 120px; min-width: 120px;">
+                                    20%
+                                </div>
+
+                                <div class="data-table-body-cell table-cell top-align-center align-center" style="width: 120px; max-width: 120px; min-width: 120px;">
+                                    <?= date('d M h:i',$analyticsData[$i]['time']); ?>
+                                </div>                                                                
+
+                                <div class="data-table-body-cell table-cell align-right top-align-center" style="width: 60px; max-width: 60px; min-width: 60px;">
+                                    <div class="menu-button-dots css-popover">
+                                        <div><button type="button" class="menu-button-dots__menu-button menu-button-dots__menu-button--size--normal menu-button-dots__menu-button--theme--light"><div class="menu-button-dots__icon-wrapper" onclick="toggleDropdown('analytics-dd-<?= $i;?>')"><svg class="icon icon-three-dots menu-icon icon--default-size"><use xlink:href="#icons-three-dots"></use></svg></div></button></div>
+                                        <div class="css-popover-content-bottomright" data-dropdown="analytics-dd-<?= $i;?>">
+                                            <ul class="c c--style--default">      
+                                                
+                                                <li onclick="openModal('messages','<?= $analyticsData[$i]['uid'];?>,<?= $analyticsData[$i]['username'];?>,<?= $analyticsData[$i]['photo'];?>');toggleDropdown('analytics-dd-<?= $i;?>');">
+                                                    <div class="C__menu-item C__menu-item--split" >
+                                                        <svg class="icon icon-wrong-2 C__menu-item-icon icon--default-size"><use xlink:href="#icons-chat-3"></use></svg>Message
+                                                    </div>
+                                                </li>                                                                   
+                                                <li>
+                                                    <div class="C__menu-item C__menu-item--split" onclick="">
+                                                        <svg class="icon icon-wrong-2 C__menu-item-icon icon--default-size"><use xlink:href="#icons-wrong-2"></use></svg>Block
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php } ?>
+
+                         
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-content" data-setting-page="settings" >
+                <div class="settings-wrapper" >
+                    <div class="settings-left">
+                        <div id="personal_information" class="settings-island">
+                            <div class="settings-island-title-wrapper settings-island-title-wrapper--line settings-island-title-wrapper--size--big"><svg class="icon icon-user-2 settings-island-icon" style="min-width: 24px; height: 24px; width: 24px;">
+                                    <use xlink:href="#icons-user-2"></use>
+                                </svg>
+                                <h2 class="settings-island-title title-ds text-title-l2">Personal Information</h2>
+                            </div>
+                            <div class="settings-island-content">
+                                <form class="settings-form settings-form-privacy">
+                                    <div class="settings-field"><label class="settings-label">Username<span class="help-tooltip settings-field__tooltip help-tooltip--border">?</span></label>
+                                        <div class="settings-input">
+                                            <div class="input-wrapper">
+                                                <div class="input-wrapper__text-wrapper"><input class="input text-default theme-default inline-block" type="text" disabled="" value="@<?= $sm['user']['username'];?>"></div>
+                                            </div>
+                                        </div>
+                                        <div class="settings-hint"><a href="<?=$sm['config']['site_url']; ?><?= $sm['user']['username'];?>" target="_blank"><?=$sm['config']['site_url']; ?><?= $sm['user']['username'];?></a></div>
+                                    </div>
+
+                                    <div class="settings-field"><label class="settings-label">Display Name</label>
+                                        <div class="settings-input">
+                                            <div class="input-wrapper">
+                                                <div class="input-wrapper__text-wrapper">
+                                                    <input onkeyup="updateProfileData(this.value,'name')" data-settings="name" data-settings-info class="input text-default theme-default inline-block" type="text" value="<?= $sm['user']['name'];?>">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                    <div class="settings-field"><label class="settings-label"><span>Description <span class="input-optional">(optional)</span></span></label>
+                                        <div class="settings-input">
+                                            <div class="textarea-autosize-wrapper">
+                                                <textarea data-settings="bio" data-settings-info class="textarea textarea-autosize" style="height: 164px;" id="bio-message" onkeyup="updateProfileData(this.value,'bio')"><?= $sm['user']['bio'];?></textarea>
+                                                <span class="textarea-autosize__counter"><span id="bio-length"> </span> / 1000</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="footer-actions-container footer-actions-container--position--right footer-actions-container--spaced-top">
+                                        <div class="buttons-form-list">
+                                            <div class="buttons-form-list__item">
+                                                <button class="btn btn-apply btn-large" disabled="" type="button" id="updateBioBtn" onclick="updateProfileData('updateBio','OK')">Save</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="settings-island settings-island-locked">
+                            <div class="settings-island-title-wrapper settings-island-title-wrapper--line settings-island-title-wrapper--size--big"><svg class="icon icon-envelope-2 settings-island-icon" style="min-width: 24px; height: 24px; width: 24px;">
+                                    <use xlink:href="#icons-envelope-2"></use>
+                                </svg>
+                                <h2 class="settings-island-title title-ds text-title-l2">Email<span class="indent-right-small"></span></h2>
+                            </div>
+
+                            <div class="settings-island-content">
+                                <div class="settings-field" style="margin-top: 25px;"><label class="settings-label">New email</label>
+                                    <div class="settings-input">
+                                        <div class="input-wrapper">
+                                            <div class="input-wrapper__text-wrapper">
+                                                <input onkeyup="updateProfileData(this.value,'email')" data-settings="email" data-settings-info class="input text-default theme-default inline-block" type="email" value="<?= $sm['user']['email'];?>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="settings-island-content-button-container" style="justify-content:right;">
+                                        <button type="button" onclick="updateProfileData('updateEmail','OK')" class="btn btn-large btn-default settings-island-unlock-button">Change Email</button>
+                                    </div>                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-island settings-island-locked">
+                            <div class="settings-island-title-wrapper settings-island-title-wrapper--line settings-island-title-wrapper--size--big"><svg class="icon icon-lock-1 settings-island-icon" style="min-width: 24px; height: 24px; width: 24px;">
+                                    <use xlink:href="#icons-lock-1"></use>
+                                </svg>
+                                <h2 class="settings-island-title title-ds text-title-l2">Password</h2>
+                            </div>
+
+                            <div class="settings-island-content">
+                                <div class="settings-field" style="margin-top: 25px;"><label class="settings-label">New password</label>
+                                    <div class="settings-input">
+                                        <div class="input-wrapper">
+                                            <div class="input-wrapper__text-wrapper">
+                                                <input onkeyup="updateProfileData(this.value,'pass')" data-settings="pass" data-settings-info class="input text-default theme-default inline-block" type="text" placeholder="Update your password">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="settings-island-content-button-container" style="justify-content:right;">
+                                        <button type="button" onclick="updateProfileData('updatePassowrd','OK')" class="btn btn-large btn-default settings-island-unlock-button">Change Password</button>
+                                    </div>                                    
+                                </div>
+                            </div>
+                        </div> 
+
+
+                    </div>
+
+                    <div class="settings-right">
+
+                        <div class="settings-island">
+                            <div class="settings-island-title-wrapper settings-island-title-wrapper--line settings-island-title-wrapper--size--big">
+                                <svg class="icon icon-chain-link settings-island-icon" style="min-width: 24px; height: 24px; width: 24px;"><use xlink:href="#icons-chain-link"></use></svg>
+                                <h2 class="settings-island-title title-ds text-title-l2">Social Links</h2>
+                            </div>
+                            <div class="settings-island-content">
+                                <span class="pale-text text-s14-w500">Add social media links, and they will appear in your profile under your name and description.</span>
+                                <div class="spacer-small-s"></div>
+
+                                <label class="settings-input">
+                                    <div class="input-wrapper">
+                                        <div class="input-wrapper__text-wrapper">
+                                            <span class="input__prefix">
+                                                <div class="flex-align-center">
+                                                    <svg class="icon icon-instagram-original" style="color: rgb(200, 55, 171); min-width: 20px; height: 20px; width: 20px;"><use xlink:href="#icons-instagram-original"></use></svg>
+                                                    <span class="indent-left-small-4">instagram.com/</span>
+                                                </div>
+                                            </span>
+                                            <input onkeyup="updateProfileData(this.value,'instagram')" data-settings="instagram" data-settings-social class="input text-default theme-default inline-block" type="text" maxlength="50" placeholder="username" value="<?= $sm['user']['instagram'];?>" style="padding-left: 131px;" />
+                                        </div>
+                                    </div>
+                                </label>
+                                <label class="settings-input">
+                                    <div class="input-wrapper">
+                                        <div class="input-wrapper__text-wrapper">
+                                            <span class="input__prefix">
+                                                <div class="flex-align-center">
+                                                    <svg class="icon icon-twitter" style="color: rgb(29, 155, 240); min-width: 20px; height: 20px; width: 20px;"><use xlink:href="#icons-twitter"></use></svg><span class="indent-left-small-4">twitter.com/</span>
+                                                </div>
+                                            </span>
+                                            <input onkeyup="updateProfileData(this.value,'twitter')" data-settings="twitter" data-settings-social class="input text-default theme-default inline-block" type="text" maxlength="50" placeholder="username" value="<?= $sm['user']['twitter'];?>" style="padding-left: 110px;" />
+                                        </div>
+                                    </div>
+                                </label>
+                                <label class="settings-input">
+                                    <div class="input-wrapper">
+                                        <div class="input-wrapper__text-wrapper">
+                                            <span class="input__prefix">
+                                                <div class="flex-align-center">
+                                                    <svg class="icon icon-tiktok-color" style="color: rgb(255, 255, 255); min-width: 20px; height: 20px; width: 20px;"><use xlink:href="#icons-tiktok-color"></use></svg>
+                                                    <span class="indent-left-small-4">tiktok.com/@</span>
+                                                </div>
+                                            </span>
+                                            <input onkeyup="updateProfileData(this.value,'tiktok')" data-settings="tiktok" data-settings-social class="input text-default theme-default inline-block" type="text" maxlength="50" placeholder="username" value="<?= $sm['user']['tiktok'];?>" style="padding-left: 116px;" />
+                                        </div>
+                                    </div>
+                                </label>                                
+                                <label class="settings-input">
+                                    <div class="input-wrapper">
+                                        <div class="input-wrapper__text-wrapper">
+                                            <span class="input__prefix">
+                                                <div class="flex-align-center">
+                                                    <svg class="icon icon-snapshat-color" style="min-width: 20px; height: 20px; width: 20px;"><use xlink:href="#icons-snapshat-color"></use></svg><span class="indent-left-small-4">snapchat.com/add/</span>
+                                                </div>
+                                            </span>
+                                            <input onkeyup="updateProfileData(this.value,'snapchat')" data-settings="snapchat" data-settings-social class="input text-default theme-default inline-block" type="text" maxlength="50" placeholder="username" value="<?= $sm['user']['snapchat'];?>" style="padding-left: 153px;" />
+                                        </div>
+                                    </div>
+                                </label>
+
+                                <label class="settings-input">
+                                    <div class="input-wrapper">
+                                        <div class="input-wrapper__text-wrapper">
+                                            <span class="input__prefix">
+                                                <div class="flex-align-center">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" fill="url(#paint0_linear_192_30849)"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M6.52657 11.8945C9.44177 10.6244 11.3857 9.78702 12.3583 9.38246C15.1354 8.22737 15.7125 8.02672 16.0886 8.02009C16.1714 8.01863 16.3563 8.03913 16.4761 8.13635C16.5773 8.21844 16.6051 8.32934 16.6184 8.40717C16.6318 8.485 16.6484 8.6623 16.6352 8.80083C16.4847 10.3821 15.8335 14.2193 15.5022 15.9903C15.362 16.7397 15.086 16.991 14.8188 17.0156C14.2381 17.069 13.7971 16.6318 13.2347 16.2631C12.3545 15.6861 11.8573 15.327 11.003 14.764C10.0157 14.1134 10.6557 13.7558 11.2184 13.1714C11.3656 13.0184 13.9243 10.6911 13.9738 10.48C13.98 10.4536 13.9858 10.3552 13.9273 10.3032C13.8688 10.2513 13.7825 10.269 13.7202 10.2832C13.632 10.3032 12.226 11.2325 9.50219 13.0711C9.1031 13.3452 8.74161 13.4787 8.41773 13.4717C8.06068 13.464 7.37385 13.2698 6.86327 13.1039C6.23702 12.9003 5.73929 12.7927 5.78263 12.4469C5.8052 12.2669 6.05318 12.0827 6.52657 11.8945Z" fill="white"></path><defs><linearGradient id="paint0_linear_192_30849" x1="1002" y1="2" x2="1002" y2="1987.17" gradientUnits="userSpaceOnUse"><stop stop-color="#2AABEE"></stop><stop offset="1" stop-color="#229ED9"></stop></linearGradient></defs></svg><span class="indent-left-small-4">https:
+                                                </div>
+                                            </span>
+                                            <input onkeyup="updateProfileData(this.value,'telegram')" data-settings="telegram" data-settings-social class="input text-default theme-default inline-block" type="text" maxlength="50" placeholder="username" value="<?= $sm['user']['telegram'];?>" style="padding-left: 113px;" />
+                                        </div>
+                                    </div>
+                                </label>                                
+
+
+                                <div class="spacer-large"></div>
+                                <div class="footer-actions-container footer-actions-container--position--right footer-actions-container--spaced-top">
+                                    <div class="buttons-form-list">
+                                        <div class="buttons-form-list__item">
+                                            <button class="btn btn-apply btn-large" id="updateSocialBtn" disabled type="button" onclick="updateProfileData('updateSocial','OK');">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-island">
+                            <div class="settings-island-title-wrapper settings-island-title-wrapper--line settings-island-title-wrapper--size--big"><svg class="icon icon-credit-card settings-island-icon" style="min-width: 24px; height: 24px; width: 24px;">
+                                    <use xlink:href="#icons-credit-card"></use>
+                                </svg>
+                                <h2 class="settings-island-title title-ds text-title-l2">
+                                    Payments history
+                                </h2>
+                            </div>
+                            <div class="settings-island-content"><span class="pale-text text-s12-w400">List of things where you spend your founds in <?= $sm['config']['name']; ?> (suscribe to a profile, unlock content, etc.).</span>
+                                
+                                <div class="settings-form">
+                                    <div class="settings-field spacer-medium">
+                                        <div class="payment-cards-list" style="max-height: 288px;overflow-y: scroll;">
+
+                                        <?php 
+                                        
+
+                                        $activity = getArray('activity','WHERE uid = '.$sm['user']['id'].' AND a_type = "tip" || uid = '.$sm['user']['id'].' AND a_type = "subscribe"','id desc','limit 0,100'); 
+
+                                        foreach ($activity as $value) {  ?>
+                                        <?php if($value['a_type'] == 'like' || $value['a_type'] == 'tip' || $value['a_type'] == 'subscribe'){ 
+                                            $a = json_decode($value['message'], true); 
+
+                                            if($value['a_type'] == 'tip'){
+                                                $notification = '
+                                                    Sent <strong>'.$sm['plugins']['settings']['currencySymbol'].$a['tip']['amount'].'</strong> tip to 
+                                                    <span class="personal-notification__username">
+                                                        '.$a['u2']['name'].'
+                                                    </span>
+                                                ';                    
+                                            }
+
+                                            if($value['a_type'] == 'subscribe'){
+                                                $notification = '
+                                                    Subscribed for <strong>'.$sm['plugins']['settings']['currencySymbol'].$a['sub']['amount'].'</strong> to 
+                                                    <span class="personal-notification__username">
+                                                        '.$a['u2']['name'].'
+                                                    </span>
+                                                ';                    
+                                            }                                         
+
+                                            ?>
+
+                                            <div class="payment-cards-list-item">
+                                                <div class="payment-cards-list-item__left" onclick="goToProfile(event,<?=$a['u2']['id'];?>)">
+                                                    <span class="avatar" style="--avatar-size: 30px; --avatar-border-size: 0px;">
+                                                        <span class="avatar__img" style="background-image: url('<?= $a['u2']['photo']; ?>');"></span>
+                                                    </span>
+                                                    <div class="payment-cards-list-item__number">
+                                                        <?= $notification; ?>
+                                                    </div>
+                                                </div>
+                                                <div class="payment-cards-list-item__right">
+                                                    <span>
+                                                        <?= date('M d H:i',$value['time']); ?>
+                                                    </span>
+                                                </div>
+                                            </div>                                            
+                                        <?php } } ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-island settings-island-locked" style="background:none;">
+                            <div class="settings-island-content" style="padding:0">
+                                <div class="settings-island-content-button-container" style="justify-content: right;">
+                                    <button type="button" class="btn btn-large btn-default settings-island-unlock-button" onclick="deleteProfile()" style="margin-right: 0;background: none;opacity: 0.5;">Delete your account data from <?= $sm['config']['name']; ?></button></div>
+                            </div>
+                        </div> 
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-content" data-setting-page="notifications" style="display: none;">
+                <div class="settings-content__sub-title" style="padding: 10px;">If enabled we will send to your email notifications of the creators you have subscribed or simply following.</div>
+                <div class="notifications-settings-tumblers-block">
+                    <div>
+                        <div  class="multi-check-box-settings multi-check-box-settings--closed">
+                            <div class="multi-check-box-settings__title multi-check-box-settings__title--closed">
+                                Posts
+                                <div class="switcher default on">
+                                    <div class="switcher-wrapper" style="margin-right: 2px;">
+                                        <span class="switcher-switch" style="float:right"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div  class="multi-check-box-settings multi-check-box-settings--closed">
+                            <div class="multi-check-box-settings__title multi-check-box-settings__title--closed">
+                                Messages
+                                <div class="switcher default on">
+                                    <div class="switcher-wrapper" style="margin-right: 2px;">
+                                        <span class="switcher-switch" style="float:right"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                                                                             
+                </div>
+            </div>
+
+            <div class="page-row" data-setting-page="wallet" style="display: none;">
+
+                <div class="page-row__item">
+                    <div class="scroll-bar-container" style="margin-bottom:25px">
+                        <div class="y__tiles">
+                            <div class="za">
+                                <div class="za__left-part">
+                                    <div class="za__title"><?= $sm['user']['username']; ?> Wallet</div>
+                                    <div class="za__body"><span class="white-color-text-4"><?= $sm['user']['credits']; ?> <?=$sm['plugins']['settings']['currency']; ?></span></div>
+                                    <div class="za__description"><span><span class="white-color-text-4">
+                                        You are doing great, keep it up <img src="<?= $sm['config']['site_url']; ?>emoji/partying_face.avif" class="smile smile--size--small">
+                                    </span>
+                                    </div>
+                                </div>
+                                <div class="za__right-part"><span class="help-tooltip za__help-tooltip" style="cursor: pointer;"><svg class="icon icon-info" style="min-width: 20px; height: 20px; width: 20px;"><use xlink:href="#icons-info"></use></svg></span></div>
+                            </div>
+                        </div>
+                    </div>       
+
+                    <div class="settings-island">
+                        <div class="settings-island-title-wrapper settings-island-title-wrapper--line settings-island-title-wrapper--size--big">
+                            <svg class="icon icon-chain-link settings-island-icon" style="min-width: 24px; height: 24px; width: 24px;"><use xlink:href="#icons-dollar"></use></svg>
+                            <h2 class="settings-island-title title-ds text-title-l2">Subscription prices</h2>
+                        </div>
+                        <div class="settings-island-content" style="margin: 0 auto;">
+                            <span class="pale-text text-s14-w500">Determine the cost for each subscription to your page.</span><br>
+
+                            <div class="spacer-large"></div>
+                            <?php              
+                                foreach($sm['config']['subscriptions'] as $entry){ 
+                                $price = $entry['amount'];
+                                $days = $entry['days'];
+                                $discount = $entry['discount'];
+                                $creatorPrice = getData('users_subscriptions_prices','amount','WHERE days = '.$days.' AND uid = '.$sm['user']['id']);
+                                if($creatorPrice != 'noData'){
+                                    $creatorDiscount = getData('users_subscriptions_prices','discount','WHERE days = '.$days.' AND uid = '.$sm['user']['id']);
+                                    $price = $creatorPrice;
+                                    $discount = $creatorDiscount;
+                                }
+                                $discountPercent = $discount;
+                                if($discount > 0){ 
+                                    $discount = round( ($price / 100) * $discount, 2);
+                                    $priceWithDiscount = $price-$discount;
+                                }
+                            ?> 
+
+                            <div class="settings-field" style="display: inline-block;width: 45%;">
+                                <label class="settings-label"><?= $days; ?> days in <?=$sm['plugins']['settings']['currency']; ?></label>
+                                <div class="settings-input" style="align-content: center;">
+                                    <div class="input-wrapper">
+                                        <div class="input-wrapper__text-wrapper">
+                                            <input onchange="updateCreatorPrice(this.value,<?= $days; ?>,'price')" class="input text-default theme-default inline-block" type="number" value="<?= $price;?>" style="width:220px;">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div> 
+                            <div class="settings-field" style="display: inline-block;width: 44%;">
+                                <label class="settings-label" style="display: block;text-align: right;">Discount in %</label>
+                                <div class="settings-input" style="text-align: right;">
+                                    <div class="input-wrapper">
+                                        <div class="input-wrapper__text-wrapper">
+                                            <input onchange="updateCreatorPrice(this.value,<?= $days; ?>,'discount')" class="input text-default theme-default inline-block" type="number" value="<?= $discountPercent;?>" style="width: 100px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                                                          
+
+                            <?php } ?>
+                            <div class="spacer-large"></div>
+                            <center><small>Auto-saving</small></center>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="page-row__item">
+
+                    <div class="settings-island">
+                        <div class="settings-island-title-wrapper settings-island-title-wrapper--line settings-island-title-wrapper--size--big"><svg class="icon icon-upload-2 settings-island-icon" style="min-width: 24px; height: 24px; width: 24px;"><use xlink:href="#icons-dollar"></use></svg>
+                            <h2 class="settings-island-title title-ds text-title-l2">New Payout Request</h2>
+                        </div>
+                        <div class="settings-island-content">
+                            <span class="pale-text text-s14-w500 text-center">The min amount to request a payout is <?= $sm['plugins']['withdrawal']['minRequired']; ?> <?=$sm['plugins']['settings']['currency']; ?></span>
+                            <div class="spacer-large"></div>
+
+                            <div class="m__field-row m__field-row--long">
+                                <label class="m__field-label" style="padding:3px">Requested amount <?=$sm['plugins']['settings']['currency']; ?></label>                
+                                <div class="m__field-input">
+                                    <div class="input-wrapper">
+                                        <div class="input-wrapper__text-wrapper">
+                                            <input class="input text-default theme-default inline-block" type="number" id="payoutAmount" placeholder="" autocomplete="off" value="<?= $sm['user']['credits']; ?>" disabled readonly></div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="m__field-row m__field-row--long" style="margin-top:15px">
+                                <label class="m__field-label" style="padding:3px">Preferred payout method</label>
+                                <div class="m__field-input">
+                                    <div class="radio-pill-controls radio-pill-controls--content--space-between">
+
+                                        <?php 
+                                        $payouts = preg_split('/\r\n|\r|\n/', $sm['plugins']['withdrawal']['payouts']);
+                                        foreach ($payouts as $p) { 
+                                            $onlyEmail = 0;
+                                            if (strpos($p, '(e)') !== false) {
+                                                $onlyEmail = 1;
+                                                $p = str_replace('(e)','',$p);
+                                            }
+                                            $help = '';
+                                            if (strpos($p, '[DESC]') !== false) {
+                                                $help = get_string_between($p,'[DESC]','[/DESC]');
+                                                $p = str_replace('[DESC]','',$p);
+                                                $p = str_replace('[/DESC]','',$p);
+                                                $p = str_replace($help,'',$p);
+                                            }
+                                            $estimateTime = '';
+                                            if (strpos($p, '[TIME]') !== false) {
+                                                $estimateTime = get_string_between($p,'[TIME]','[/TIME]');
+                                                $p = str_replace('[TIME]','',$p);
+                                                $p = str_replace('[/TIME]','',$p);
+                                                $p = str_replace($estimateTime,'',$p);
+                                            }                                                    
+
+                                            $checkData = getData('users_payouts_info','payout_info','WHERE payout_method = "'.$p.'" AND uid = '.$sm['user']['id']);
+
+                                            $dataVal = '';
+                                            if($checkData != 'noData'){
+                                                $dataVal = $checkData;
+                                            }
+
+                                        ?>
+                                        <button data-payout-tab="<?=$p;?>" onclick="selectPayout('<?=$p;?>',<?= $onlyEmail; ?>,'<?=$help;?>','<?=$estimateTime;?>','<?= $dataVal; ?>');" class="radio-pill-controls__item radio-pill-controls__item--grow" type="button"><?= $p; ?></button>                            
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                            </div>                                    
+                            
+                            <div class="m__field-row m__field-row--long" style="display:none" id="payoutEmail">
+                                <label class="m__field-label" style="padding:3px">Payout Email</label>
+                                <div class="settings-hint payoutDetailsHelp" style="padding:3px;margin-bottom: 10px;"></div>                                        
+                                <div class="m__field-input">
+                                    <div class="input-wrapper">
+                                        <div class="input-wrapper__text-wrapper">
+                                            <input class="input text-default theme-default inline-block" type="text" placeholder="" id="payoutEmailInput" autocomplete="off" value=""></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="m__field-row m__field-row--long" style="display:none" id="payoutDetails">
+                                <label class="m__field-label" style="padding:3px">Payout Details</label>
+                                <div class="settings-hint payoutDetailsHelp" style="padding:3px;margin-bottom: 10px;"></div>
+                                <div class="m__field-input">
+                                    <div class="input-wrapper">
+                                        <div class="input-wrapper__text-wrapper">
+                                            <label class="textarea">
+                                                <textarea class="textarea__field textarea__field--size--small textarea__field--hide-focus-placeholder" id="payoutDetailsInput" style="min-height:130px"></textarea>
+                                                <div class="textarea__placeholder textarea__placeholder--size--small textareaplaceholder">
+                                                    <div class="text-area-icon__placeholder" >
+                                                        Provide payout information...
+                                                    </div>
+                                                </div>
+                                            </label>                                              
+                                        </div>
+                                                                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="spacer-large"></div>
+                            <div class="m__field-row m__field-row--long">
+                                <label class="m__field-label" style="padding:3px">Note to <?= $sm['config']['name']; ?> team</label>
+                                <div class="m__field-input">
+                                    <div class="input-wrapper">
+                                        <div class="input-wrapper__text-wrapper">
+                                            <label class="textarea">
+                                                <textarea class="textarea__field textarea__field--size--small textarea__field--hide-focus-placeholder" style="max-height:90px" id="payoutNote" onkeyup="payoutNote(this.value)"></textarea>
+                                                <div class="textarea__placeholder textarea__placeholder--size--small">
+                                                    <div class="text-area-icon__placeholder" >
+                                                        If you want to tell something to our team about this payout request, comment it here
+                                                    </div>
+                                                </div>
+                                            </label>                                              
+                                        </div>
+                                                                                        
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="settings-island-content-button-container" style="justify-content:right;"><button type="button" id="requestPayoutBtn" onclick="" class="btn btn-large btn-primary settings-island-unlock-button disabled">Request payout</button>                                    </div>
+
+                        </div>
+                    </div>
+
+                    <div class="settings-island">
+                        <div class="settings-island-title-wrapper settings-island-title-wrapper--line settings-island-title-wrapper--size--big"><svg class="icon icon-credit-card settings-island-icon" style="min-width: 24px; height: 24px; width: 24px;">
+                                <use xlink:href="#icons-credit-card"></use>
+                            </svg>
+                            <h2 class="settings-island-title title-ds text-title-l2">
+                                Payouts history
+                            </h2>
+                        </div>
+                        <div class="settings-island-content"><span class="pale-text text-s12-w400">List of your payouts information in <?= $sm['config']['name']; ?>.</span>
+                            
+                            <div class="settings-form">
+                                <div class="settings-field spacer-medium">
+                                    <div class="payment-cards-list" style="max-height: 288px;overflow-y: scroll;">
+
+                                        <?php $arr = getArray('users_withdraw','WHERE u_id = '.$sm['user']['id'],'ID DESC',''); 
+                                        foreach ($arr as $a) { 
+                                            if($a['status'] == 'Canceled'){ 
+                                                $statusColor = '#f94646'; 
+                                            } else {
+                                                $statusColor = '#2aa71b';
+                                            }
+                                            if($a['status'] == 'Pending'){ 
+                                               $a['status'] = 'In Progress';
+                                               $statusColor = '#d070ff';
+                                            }                                            
+                                        ?>
+
+                                        <div class="payment-cards-list-item">
+                                            <div class="payment-cards-list-item__left">
+                                                <span class="avatar" style="--avatar-size: 30px; --avatar-border-size: 0px;">
+                                                    <span class="avatar__img" style="background-image: url('<?= $sm['user']['profile_photo']; ?>');"></span>
+                                                </span>
+                                                <div class="payment-cards-list-item__number">
+                                                    <?= $sm['lang'][894]['text']; ?> <strong><?= $sm['plugins']['settings']['currency']; ?> <?=$a['withdraw_amount']; ?></strong> 
+                                                    <?= $sm['lang'][895]['text']; ?> <?=$a['withdraw_method']; ?> <?= $sm['lang'][896]['text']; ?> <strong style="color:<?= $statusColor; ?>"><?= $a['status']; ?></strong>
+                                                </div>
+                                            </div>
+                                            <div class="payment-cards-list-item__right">
+                                                <span>
+                                                    <?= date('d M h:ia',$a['withdraw_sent']); ?>
+                                                </span>
+                                            </div>
+                                        </div>   
+                                        <?php } ?>                                        
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="page-row" data-setting-page="documents" style="display:none">
+                <div class="page-row__item">
+                    <div id="documents-form" class="settings-island">
+                        <div class="settings-island-title-wrapper settings-island-title-wrapper--line settings-island-title-wrapper--size--big"><svg class="icon icon-documents-2 settings-island-icon" style="min-width: 24px; height: 24px; width: 24px;"><use xlink:href="#icons-documents-2"></use></svg>
+                            <h2 class="settings-island-title title-ds text-title-l2">Performer Registration/Data Sheet</h2></div><h5>I acknowledge and expressly agree that my images will be <div> used and publicly displayed on the website once my complete </div>performer application has been submitted and approved. <div>I am also responsible for paying taxes.<div>I also expressly agree to the Terms and Conditions and the<div> Performer Agreement and confirm that I have read them.
+                        </div>
+                        <div class="settings-island-content">
+                            <div>
+                                <div class="documents">
+                                    <div class="m__field-row">
+                                        <label class="m__field-label" for="firstName">First Name</label>
+                                        <div class="m__field-input">
+                                            <div class="input-wrapper">
+                                                <div class="input-wrapper__text-wrapper">
+                                                    <input class="input text-default theme-default inline-block" type="text" placeholder="Enter your first name..." autocomplete="off" value="" data-become-creator="first_name" data-required="1">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="m__field-row"><label class="m__field-label" for="lastName">Last Name</label>
+                                        <div class="m__field-input">
+                                            <div class="input-wrapper">
+                                                <div class="input-wrapper__text-wrapper">
+                                                    <input class="input text-default theme-default inline-block" type="text" placeholder="Enter your last name..." autocomplete="off" value="" data-become-creator="last_name" data-required="1">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="m__field-row"><label class="m__field-label" for="lastName">Phone number</label>
+                                        <div class="m__field-input">
+                                            <div class="input-wrapper">
+                                                <div class="input-wrapper__text-wrapper">
+                                                    <input class="input text-default theme-default inline-block" type="number" placeholder="Enter your phone number..." autocomplete="off" value="" data-become-creator="telephone" data-required="1">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="m__field-row"><label class="m__field-label" for="birthDate">Date of Birth</label>
+                                        <div class="m__field-input">
+                                            <div class="input-wrapper">
+                                                <div class="select has-value select-default" style="width:30%;display: inline-table;">
+                                                    <select class="select-control" data-become-creator="day" data-required="1" style="appearance: none;padding-left: 10px;">
+                                                        <option value="1" disabled selected>Day</option>
+                                                        <?= date_dropdown_landing(1,0,0); ?>
+                                                    </select>
+                                                    <span class="select-arrow-zone">
+                                                        <svg class="icon icon-arrow-down icon--default-size"><use xlink:href="#icons-arrow-down"></use></svg>
+                                                    </span>
+                                                </div>
+                                                <div class="select has-value select-default" style="width:35%;display: inline-table;">
+                                                    <select class="select-control" data-become-creator="month" data-required="1" style="appearance: none;padding-left: 10px;">
+                                                        <option value="1" disabled selected>Month</option>
+                                                        <?= date_dropdown_landing(0,1,0); ?>
+                                                    </select>
+                                                    <span class="select-arrow-zone">
+                                                        <svg class="icon icon-arrow-down icon--default-size"><use xlink:href="#icons-arrow-down"></use></svg>
+                                                    </span>
+                                                </div>
+                                                <div class="select has-value select-default" style="width:32%;display: inline-table;">
+                                                    <select class="select-control" data-become-creator="year" data-required="1" style="appearance: none;padding-left: 10px;">
+                                                        <option value="1995" disabled selected>Year</option> 
+                                                        <?= date_dropdown_landing(0,0,1); ?>
+                                                    </select>
+                                                    <span class="select-arrow-zone">
+                                                        <svg class="icon icon-arrow-down icon--default-size"><use xlink:href="#icons-arrow-down"></use></svg>
+                                                    </span>
+                                                </div>                                                                                           
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="m__row-split"></div>
+                                    <div class="m__field-row">
+                                        <label class="m__field-label" for="idNumber">ID Document Number</label>
+                                        <div class="m__field-input">
+                                            <div class="input-wrapper">
+                                                <div class="input-wrapper__text-wrapper">
+                                                    <input class="input text-default theme-default inline-block" type="text" placeholder="Enter ID Document Number..." autocomplete="off" value="" data-become-creator="id" data-required="1">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="m__field-row">
+                                        <label class="m__field-label" for="vat">TAX Number</label>
+                                        <div class="m__field-input">
+                                            <div class="input-wrapper">
+                                                <div class="input-wrapper__text-wrapper"><input class="input text-default theme-default inline-block" type="text" placeholder="Enter TAX Number..." autocomplete="off" value="" data-become-creator="TAX" data-required="1"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="m__row-split"></div>
+                                    <div class="m__field-row"><label class="m__field-label" for="gender">Gender</label>
+                                        <div class="m__field-input">
+                                            <div class="select has-value select-default">
+                                                <select class="select-control" data-become-creator="gender" data-required="1" style="appearance: none;padding-left: 10px;">
+                                                    <?php
+                                                        foreach($sm['genders'] as $entry){
+                                                            $selected = '';
+                                                            if($entry['text'] == 'Female'){
+                                                                $selected = 'selected';
+                                                            }
+                                                            echo '<option value="'.$entry['id'].'" '.$selected.'>'.$entry['text'].'</option>'; 
+                                                        }
+                                                    ?>
+                                                </select>
+                                                <span class="select-arrow-zone">
+                                                    <svg class="icon icon-arrow-down icon--default-size"><use xlink:href="#icons-arrow-down"></use></svg>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="m__field-row"><label class="m__field-label" for="gender">Country of residence</label>
+                                        <div class="m__field-input">
+                                            <div class="select has-value select-default">
+                                                <select class="select-control" data-become-creator="country" data-required="1" style="appearance: none;padding-left: 10px;">
+                                                    <?php 
+                                                        $countries = getArray('countries','','id asc',''); 
+                                                        foreach ($countries as $c) {
+                                                            $selected = '';
+                                                            if($c['name'] == 'Brasil'){
+                                                                $selected = 'selected';
+                                                            }              
+                                                        ?>
+                                                            <option value="<?= $c['name'];?>" <?= $selected; ?>>
+                                                                <?= $c['name'];?></option>
+                                                    <?php } ?>
+                                                </select>
+                                                <span class="select-arrow-zone">
+                                                    <svg class="icon icon-arrow-down icon--default-size"><use xlink:href="#icons-arrow-down"></use></svg>
+                                                </span>
+                                            </div>  
+                                        </div>
+                                    </div>
+                                    <div class="m__field-row"><label class="m__field-label" for="city">City</label>
+                                        <div class="m__field-input">
+                                            <div class="input-wrapper">
+                                                <div class="input-wrapper__text-wrapper">
+                                                    <input class="input text-default theme-default inline-block" type="text" placeholder="Enter city..." autocomplete="off" value="" data-become-creator="city" data-required="1">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="m__field-row">
+                                        <label class="m__field-label" for="address">
+                                            Residential Address
+                                        </label>
+                                        <div class="m__field-input">
+                                            <div class="input-wrapper">
+                                                <div class="input-wrapper__text-wrapper">
+                                                    <input class="input text-default theme-default inline-block " type="text" placeholder="Enter address..." autocomplete="off" value="" data-become-creator="address" data-required="1">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="m__field-row m__field-row--long" style="display:none">
+                                        <label class="m__field-label" for="website">Website<small class="white-color-text-6"> (if any)</small></label>
+                                        <div class="m__field-input">
+                                            <div class="input-wrapper">
+                                                <div class="input-wrapper__text-wrapper"><input class="input text-default theme-default inline-block" type="text" placeholder="Enter website address..." autocomplete="off" value=""></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="page-row__item">
+                    <div id="documents-selection" class="settings-island">
+                        <div class="settings-island-title-wrapper settings-island-title-wrapper--line settings-island-title-wrapper--size--big"><svg class="icon icon-upload-2 settings-island-icon" style="min-width: 24px; height: 24px; width: 24px;"><use xlink:href="#icons-upload-2"></use></svg>
+                            <h2 class="settings-island-title title-ds text-title-l2">Choose Document to Upload</h2>
+                        </div>
+                        <div class="settings-island-content">
+                            <div class="documents-selection">
+                                <button onclick="selectDocument('id','ID Document')" 
+                                    class="e__item e__item--size--reqular" type="button">
+                                    <div class="e__icon"><svg width="48" height="48" viewBox="0 0 48 48" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 10C5.79086 10 4 11.7909 4 14V34C4 36.2091 5.79086 38 8 38H40C42.2091 38 44 36.2091 44 34V14C44 11.7909 42.2091 10 40 10H8ZM26 26C24.8954 26 24 26.8954 24 28C24 29.1046 24.8954 30 26 30H34C35.1046 30 36 29.1046 36 28C36 26.8954 35.1046 26 34 26H26ZM24 20C24 18.8954 24.8954 18 26 18H38C39.1046 18 40 18.8954 40 20C40 21.1046 39.1046 22 38 22H26C24.8954 22 24 21.1046 24 20ZM14.0002 16.1943C15.8446 16.1943 17.3335 17.6832 17.3335 19.5277C17.3335 21.3721 15.8446 22.861 14.0002 22.861C12.1557 22.861 10.6668 21.3721 10.6668 19.5277C10.6668 17.6832 12.1557 16.1943 14.0002 16.1943ZM7.51034 28.6494C7.39196 28.4855 7.32652 28.284 7.3672 28.0859C7.7811 26.0709 11.8835 24.9721 14.0002 24.9721C16.1062 24.9721 20.2182 26.0709 20.6331 28.0859C20.6738 28.2839 20.6084 28.4855 20.49 28.6494C19.0366 30.6614 16.6668 31.9721 14.0002 31.9721C11.3335 31.9721 8.96377 30.6614 7.51034 28.6494Z" fill="#d60908"></path></svg></div>
+                                    <div
+                                        class="e__text">ID Document</div>
+                                </button>
+                                <button onclick="selectDocument(,'Driver's license')"
+                                    class="e__item e__item--size--reqular" type="button">
+                                    <div class="e__icon"><svg width="48" height="48" viewBox="0 0 48 48" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 10C5.79086 10 4 11.7909 4 14V34C4 36.2091 5.79086 38 8 38H40C42.2091 38 44 36.2091 44 34V14C44 11.7909 42.2091 10 40 10H8ZM26 26C24.8954 26 24 26.8954 24 28C24 29.1046 24.8954 30 26 30H34C35.1046 30 36 29.1046 36 28C36 26.8954 35.1046 26 34 26H26ZM24 20C24 18.8954 24.8954 18 26 18H38C39.1046 18 40 18.8954 40 20C40 21.1046 39.1046 22 38 22H26C24.8954 22 24 21.1046 24 20ZM14.0002 16.1943C15.8446 16.1943 17.3335 17.6832 17.3335 19.5277C17.3335 21.3721 15.8446 22.861 14.0002 22.861C12.1557 22.861 10.6668 21.3721 10.6668 19.5277C10.6668 17.6832 12.1557 16.1943 14.0002 16.1943ZM7.51034 28.6494C7.39196 28.4855 7.32652 28.284 7.3672 28.0859C7.7811 26.0709 11.8835 24.9721 14.0002 24.9721C16.1062 24.9721 20.2182 26.0709 20.6331 28.0859C20.6738 28.2839 20.6084 28.4855 20.49 28.6494C19.0366 30.6614 16.6668 31.9721 14.0002 31.9721C11.3335 31.9721 8.96377 30.6614 7.51034 28.6494Z" fill="#d60908"></path></svg></div>
+                                    <div
+                                        class="e__text">xxx</div>
+                                </button>                                                              
+                                <button class="e__item e__item--size--reqular" type="button" style="display: none;"><div class="e__icon"><svg width="48" height="48" viewBox="0 0 48 48" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M10 8C10 5.79086 11.7909 4 14 4H34C36.2091 4 38 5.79086 38 8V40C38 42.2091 36.2091 44 34 44H14C11.7909 44 10 42.2091 10 40V8ZM20 34C20 32.8954 20.8954 32 22 32H26C27.1046 32 28 32.8954 28 34V36C28 37.1046 27.1046 38 26 38H22C20.8954 38 20 37.1046 20 36V34ZM26.0613 22.2943C26.1712 21.7932 25.7782 21.3334 25.2652 21.3334H22.7345C22.2215 21.3334 21.8284 21.7932 21.9383 22.2943C22.115 23.0996 22.3375 23.8193 22.592 24.4301C22.9188 25.2144 23.2655 25.7402 23.5653 26.0446C23.7105 26.192 23.8235 26.2659 23.8948 26.3009C23.9601 26.3329 23.991 26.3334 23.9998 26.3334C24.0087 26.3334 24.0396 26.3329 24.1049 26.3009C24.1761 26.2659 24.2892 26.192 24.4344 26.0446C24.7342 25.7402 25.0809 25.2144 25.4077 24.4301C25.6622 23.8193 25.8847 23.0996 26.0613 22.2943ZM27.8119 22.0434C27.8868 21.6369 28.2357 21.3334 28.649 21.3334H30.3663C30.967 21.3334 31.3643 21.9495 31.0425 22.4568C30.3722 23.5138 29.4706 24.4096 28.4087 25.0729C27.7719 25.4707 27.0985 24.7454 27.3243 24.0293C27.517 23.4183 27.6811 22.7525 27.8119 22.0434ZM19.591 25.0729C20.2278 25.4707 20.9012 24.7454 20.6754 24.0293C20.4827 23.4183 20.3186 22.7525 20.1878 22.0434C20.1129 21.6369 19.764 21.3334 19.3507 21.3334H17.6334C17.0326 21.3334 16.6354 21.9495 16.9571 22.4568C17.6274 23.5138 18.5291 24.4096 19.591 25.0729ZM22.3347 19.6667C21.8988 19.6667 21.5348 19.3308 21.5175 18.8952C21.5059 18.6016 21.4998 18.303 21.4998 18.0001C21.4998 17.6971 21.5059 17.3985 21.5175 17.105C21.5348 16.6694 21.8987 16.3334 22.3347 16.3334H25.665C26.1009 16.3334 26.4649 16.6694 26.4822 17.105C26.4938 17.3985 26.4998 17.6971 26.4998 18.0001C26.4998 18.303 26.4938 18.6016 26.4822 18.8952C26.4649 19.3308 26.1009 19.6667 25.665 19.6667H22.3347ZM19.8455 17.2258C19.8609 16.743 19.4803 16.3334 18.9972 16.3334H16.5144C16.118 16.3334 15.772 16.6122 15.7252 17.0058C15.6864 17.3318 15.6665 17.6636 15.6665 18.0001C15.6665 18.3365 15.6864 18.6684 15.7252 18.9944C15.772 19.388 16.118 19.6667 16.5144 19.6667H18.9972C19.4803 19.6667 19.8609 19.2572 19.8455 18.7743C19.8373 18.5188 19.8332 18.2606 19.8332 18.0001C19.8332 17.7395 19.8373 17.4813 19.8455 17.2258ZM22.7345 14.6667C22.2215 14.6667 21.8284 14.207 21.9383 13.7059C22.115 12.9005 22.3375 12.1808 22.592 11.57C22.9188 10.7857 23.2655 10.2599 23.5653 9.95554C23.7105 9.80813 23.8235 9.73421 23.8948 9.69921C23.9544 9.66994 23.9854 9.66703 23.997 9.66675L23.9998 9.66675L24.0028 9.66675C24.0145 9.66706 24.0455 9.67005 24.1049 9.69921C24.1761 9.73421 24.2892 9.80813 24.4344 9.95554C24.7342 10.2599 25.0809 10.7857 25.4077 11.57C25.6622 12.1808 25.8847 12.9005 26.0613 13.7059C26.1712 14.207 25.7782 14.6667 25.2652 14.6667H22.7345ZM20.6754 11.9709C20.9012 11.2548 20.2278 10.5295 19.5909 10.9273C18.5291 11.5906 17.6274 12.4863 16.9571 13.5433C16.6354 14.0507 17.0326 14.6667 17.6334 14.6667H19.3507C19.764 14.6667 20.1128 14.3632 20.1878 13.9568C20.3186 13.2477 20.4827 12.5819 20.6754 11.9709ZM27.3243 11.9709C27.0985 11.2548 27.7719 10.5295 28.4087 10.9273C29.4706 11.5906 30.3722 12.4863 31.0425 13.5433C31.3643 14.0507 30.9671 14.6667 30.3663 14.6667H28.649C28.2357 14.6667 27.8868 14.3632 27.8119 13.9568C27.6811 13.2477 27.517 12.5819 27.3243 11.9709ZM29.0025 16.3334C28.5194 16.3334 28.1388 16.743 28.1542 17.2258C28.1624 17.4813 28.1665 17.7395 28.1665 18.0001C28.1665 18.2606 28.1624 18.5188 28.1542 18.7743C28.1388 19.2572 28.5194 19.6667 29.0025 19.6667H31.4853C31.8816 19.6667 32.2277 19.388 32.2745 18.9944C32.3132 18.6684 32.3332 18.3365 32.3332 18.0001C32.3332 17.6636 32.3132 17.3318 32.2745 17.0058C32.2277 16.6122 31.8816 16.3334 31.4853 16.3334H29.0025Z" fill="#d60908"></path></svg></div><div class="e__text">Passport</div>
+                                </button>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div id="documents-upload" class="settings-island" style="display:none">
+                        <div class="settings-island-title-wrapper settings-island-title-wrapper--line settings-island-title-wrapper--size--big">
+                            <button onclick="selectDocument('back')" class="icon__back icon__back--space--regular" type="button"><svg class="icon icon-chevron-left" style="min-width: 14px; height: 14px; width: 14px;"><use xlink:href="#icons-chevron-left"></use></svg>
+                            </button>
+                            <h2 class="settings-island-title title-ds text-title-l2">Upload Documents</h2>
+                        </div>
+                        <div class="settings-island-content">
+                            <div class="documents-container">
+                                <div class="rr">
+                                    <div class="rr__left">
+                                        <div>
+                                            <div class="rr__header">
+                                                <div class="rr__number">1</div>
+                                                <div id="selectedDocumentName"></div>
+                                            </div>
+                                        </div>
+                                        <a href="<?= $sm['config']['site_url']; ?>themes/red/images/idPortrait.webp" target="_blank" class="rr__example">
+                                            <img src="<?= $sm['config']['site_url']; ?>themes/red/images/idPortrait.webp" class="rr__img" alt="">
+                                            <div class="rr__example-expand"><svg class="icon icon-expand-screen" style="min-width: 16px; height: 16px; width: 16px;"><use xlink:href="#icons-expand-screen"></use></svg></div>
+                                            <div class="rr__example-text">Example</div>
+                                        </a>
+                                    </div>
+                                    <div class="rr__right">
+                                        <div class="rr__right-inner">
+                                            <div class="tat tat--size--regular" id="document-front-side" onclick="uploadDocument('#document-front-side')">
+                                                <div class="tat__item">
+                                                    <div class="tat__content">
+                                                        <div class="tat__content-header">
+                                                            <svg class="icon icon-rounded-plus" style="min-width: 20px; height: 20px; width: 20px;"><use xlink:href="#icons-rounded-plus"></use></svg>
+                                                            <div id="document-front-side-text">Front Side</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tat tat--size--regular" id="document-back-side" onclick="uploadDocument('#document-back-side')">
+                                                <div class="tat__item">
+                                                    <div class="tat__content">
+                                                        <div class="tat__content-header"><svg class="icon icon-rounded-plus" style="min-width: 20px; height: 20px; width: 20px;"><use xlink:href="#icons-rounded-plus"></use></svg>
+                                                            <div>Back Side</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="rr">
+                                    <div class="rr__left">
+                                        <div>
+                                            <div class="rr__header">
+                                                <div class="rr__number">2</div>
+                                                <div>Selfie with the document:</div>
+                                            </div>
+                                            <div class="rr__description">
+                                                <div>- Document Front Side<br>- <span><span class="color-warning">handwritten</span> note with your <?= $sm['config']['name']; ?><br>username (@<?= $sm['user']['username']; ?>) and today’s date (<?= date('d/m/y'); ?>)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a href="<?= $sm['config']['site_url']; ?>themes/red/images/faceId.webp" target="_blank" class="rr__example">
+                                            <img src="<?= $sm['config']['site_url']; ?>themes/red/images/faceId.webp" class="rr__img" alt="">
+                                            <div class="rr__example-expand"><svg class="icon icon-expand-screen" style="min-width: 16px; height: 16px; width: 16px;"><use xlink:href="#icons-expand-screen"></use></svg></div>
+                                            <div class="rr__example-text">Example</div>
+                                        </a>                                        
+                                    </div>
+                                    <div class="rr__right">
+                                        <div class="rr__right-inner">
+                                            <div class="tat tat--size--regular" id="document-selfie" onclick="uploadDocument('#document-selfie')">
+                                                <div class="tat__item">
+                                                    <div class="tat__content">
+                                                        <div class="t__content-header"><svg class="icon icon-rounded-plus" style="min-width: 20px; height: 20px; width: 20px;"><use xlink:href="#icons-rounded-plus"></use></svg>
+                                                            <div>Attach photo</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="rr" style="display: none;">
+                                    <div class="rr__left">
+                                        <div>
+                                            <div class="rr__header">
+                                                <div class="rr__number">3</div>
+                                                <div>Agreement</div>
+                                            </div>
+                                            <div class="rr__description">Please read and sign the Agreement.</div>
+                                        </div>
+                                    </div>
+                                    <div class="rr__right">
+                                        <div class="rr__right-inner">
+                                            <div class="tat t--size--regular">
+                                                <div class="tat__item">
+                                                    <div class="tat__content">
+                                                        <div class="tat__content-header"><svg class="icon icon-eye-fill" style="min-width: 20px; height: 20px; width: 20px;"><use xlink:href="#icons-eye-fill"></use></svg>
+                                                            <div>See <?= $sm['config']['name']; ?> Agreement</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div class="line"></div>
+                                    <div class="spacer-medium-x"></div>
+                                    <button class="btn btn-apply btn-large btn--width--wide" type="button" onclick="submitBecomeCreatorRequest()" id="becomeCreatorBtn">Submit Creator Form</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<?php
+
+function determineSubscriptionTypeId($amount) {
+    $subscriptionTypes = [
+        10 => '0000004535:840', 
+        25 => '0000004274:840', 
+        50 => '0000002898:840', 
+        100 => '0000003152:840',
+        250 => '0000004778:840', 
+        500 => '0000003728:840', 
+    ];
+
+    return $subscriptionTypes[$amount] ?? '0000002898:840'; // Default to $10 subscription type
+}
+
+function generateCCBillUrl($username,$email, $amount, $currencyCode = 840, $subscriptionTypeId = '0000002898:840') {
+    $clientAccnum = '953926'; 
+    $clientSubacc = '0004';   
+    $formName = '141cc';      
+
+    
+    $price = number_format($amount, 2, '.', ''); 
+
+    $subscriptionTypeId = determineSubscriptionTypeId($amount);
+    $url = "https://bill.ccbill.com/jpost/signup.cgi";
+    $url .= "?clientAccnum=$clientAccnum";
+    $url .= "&clientSubacc=$clientSubacc";
+    $url .= "&formName=$formName";
+    $url .= "&price=$price";
+    $url .= "&currencyCode=$currencyCode";
+    $url .= "&subscriptionTypeId=$subscriptionTypeId";
+    $url .= "&user_id=$id"; 
+    $url .= "&email=$email";      // Add email address for tracking
+    return $url;
+}
+?>

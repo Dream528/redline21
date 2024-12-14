@@ -1,0 +1,17 @@
+<?php 
+$legal = secureEncode($_GET['page']);
+if(isset($sm['plugins']['terms'][$legal])){
+    $legalText = $sm['plugins']['terms'][$legal];    
+} else {
+    header('Location:'.$sm['config']['site_url']);
+    exit();    
+}
+?>
+<script>
+    url = '<?= $legal; ?>';
+</script>
+<div class="page page--limited-width" style="padding-top: 10px;">
+<div class="page__content" style="padding: 0 10px;">
+<?= $legalText; ?>
+</div>
+</div>
