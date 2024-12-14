@@ -1,0 +1,40 @@
+Payment approved: Email=3364xxx@gmail.com, TransactionID=, Amount=25.00, UserID=alfred
+Payment approved: Email Address=3364xxx@gmail.com, TransactionID=, Amount=25.00, NewCredits=35
+Payment approved: Email=3364xxx@gmail.com, TransactionID=, Amount=25.00, UserID=alfred
+Payment approved: Email Address=3364xxx@gmail.com, TransactionID=, Amount=25.00, NewCredits=60
+Payment approved: Email=3364xxx@gmail.com, TransactionID=, Amount=500.00, UserID=alfred
+Payment approved: Email Address=3364xxx@gmail.com, TransactionID=, Amount=500.00, NewCredits=560
+Payment approved: Email=3364xxx@gmail.com, TransactionID=, Amount=100.00, UserID=alfred
+Payment approved: Email Address=3364xxx@gmail.com, TransactionID=, Amount=100.00, NewCredits=657
+Payment approved: Email=3364xxx@gmail.com, TransactionID=, Amount=10.00, UserID=alfred
+Payment approved: Email Address=3364xxx@gmail.com, TransactionID=, Amount=10.00, NewCredits=60
+Payment approved: Email=3364xxx@gmail.com, TransactionID=, Amount=50.00, UserID=alfred
+Payment approved: Email Address=3364xxx@gmail.com, TransactionID=, Amount=50.00, NewCredits=110
+Payment approved: Email=3364xxx@gmail.com, TransactionID=, Amount=100.00, UserID=
+Payment approved: Email Address=3364xxx@gmail.com, TransactionID=, Amount=100.00, NewCredits=210
+Order inserted successfully: UserID=, Amount=100.00, Package=4
+Payment approved: Email=3364xxx@gmail.com, TransactionID=, Amount=100.00, UserID=
+Payment approved: Email Address=3364xxx@gmail.com, TransactionID=, Amount=100.00, NewCredits=310
+Order inserted successfully: UserID=, Amount=100.00, Package=4
+Payment approved: Email=3364xxx@gmail.com, TransactionID=, Amount=10.00, UserID=
+Payment approved: Email Address=3364xxx@gmail.com, TransactionID=, Amount=10.00, NewCredits=320
+Order inserted successfully: UserID=, Amount=10.00, Package=1
+Payment approved: Email=3364xxx@gmail.com, TransactionID=, Amount=10.00, UserID=
+Payment approved: Email Address=3364xxx@gmail.com, TransactionID=, Amount=10.00, NewCredits=330
+Order inserted successfully: UserID=, Amount=10.00, Package=1
+Payment approved: Email=3364xxx@gmail.com, TransactionID=, Amount=50.00, UserID=
+Payment approved: Email Address=3364xxx@gmail.com, TransactionID=, Amount=50.00, NewCredits=380
+Order inserted successfully: UserID=, Amount=50.00, Package=3
+Payment approved: Email=3364xxx@gmail.com, TransactionID=, Amount=10.00, UserID=
+Payment approved: Email Address=3364xxx@gmail.com, TransactionID=, Amount=10.00, NewCredits=390
+Order inserted successfully: UserID=, Amount=10.00, Package=1
+Payment approved: Email=, TransactionID=, Amount=, UserID=
+Payment approved: Email=, TransactionID=, Amount=, UserID=
+Payment approved: Email=, TransactionID=, Amount=, UserID=
+Payment approved: Email=, TransactionID=, Amount=, UserID=
+Payment approved: Email=, TransactionID=, Amount=, UserID=
+Payment approved: Email=, TransactionID=, Amount=, UserID=
+Payment approved: Email=, TransactionID=, Amount=, UserID=
+Payment approved: Email=ccbill.demo@gmail.com, TransactionID=, Amount=10.00, UserID=
+Payment approved: Email Address=ccbill.demo@gmail.com, TransactionID=, Amount=10.00, NewCredits=10
+Order inserted successfully: UserID=, Amount=10.00, Package=1
